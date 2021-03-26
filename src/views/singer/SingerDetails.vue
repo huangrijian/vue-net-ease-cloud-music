@@ -6,8 +6,8 @@
       <div  class="Topbg">
           <!-- 大背景 -->
       </div>
-    <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="18">
+    <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+    <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
         <div class="grid-content">
                 <!-- 大盒子 -->
                 <div class="Singerbox"  >
@@ -58,7 +58,7 @@
           <router-view  @getMusicMessage="showMusicMessage"></router-view>
        
     </el-col>
-  <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+  <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
 </el-row>
 
 
@@ -152,7 +152,7 @@ export default {
 .Topbg{
   width: 100%;
   height: 460px;
-  background: url('../assets/topBg.jpg');
+  background: url('~assets/img/topBg.jpg');
   background-position:center;
   // 先脱离标准流
   position: absolute;
@@ -162,7 +162,7 @@ export default {
 
 // home背景
 .SingerDetails {
-  background-image: url('../assets/bjgif.gif');
+  background-image: url('~assets/img/bjgif.gif');
 }
 
 // 基础样式

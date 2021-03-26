@@ -1,8 +1,8 @@
 <template>
     <div v-loading="loading">
          <el-row :gutter="10" class="el-row01" style="margin-bottom: 20px">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="18">
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
             <div class="grid-content">
                   <!-- 歌手列表 -->
                  <div class="SingerList" style="dispaly:block">
@@ -23,8 +23,8 @@
                 @current-change="currentChange">
                 </el-pagination>
             </div>
-            </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        </el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
        
     </div>

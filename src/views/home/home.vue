@@ -4,8 +4,8 @@
 
     <!-- 轮播图 -->
     <el-row :gutter="10" class="el-row01" style="margin-bottom: 10px">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="18">
+        <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="18">
             <div class="grid-content">
                  <div class="block">
                     <el-carousel height="200px">
@@ -16,8 +16,8 @@
                     </el-carousel>
                 </div>
             </div>
-            </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        </el-col>
+        <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
 
     <!-- 推荐歌单 -->
@@ -118,13 +118,9 @@
 </template>
 
 <script>
-// 引入头像组件
-import Dialog from './SMcomponents/profile';
+
 
 export default {
-  // 定义组件名称
-  //name:'home',
-  components: { Dialog },
   data() {
       return {
         falg:true,
@@ -295,43 +291,7 @@ export default {
 </script>
 <style lang="less" scoped>
 
-// 登录后的下拉
- .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-  }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
-.pull-down {
-    position: absolute;
-    left: 94px;
-    top: 17px;
-    width: 52px;
-}
-  // end
 
-
-
-// home背景
-// .home {
-//   background-image: url('../assets/bjgif.gif');
-// }
-
-// 基础样式
-a {
-  text-decoration:none;
-  color: #000;
-}
-a:hover{
-  color: rgb(255, 0, 0);
-}
-ul,li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-// end
 
 // 显示或隐藏
 .isshow {
@@ -391,31 +351,7 @@ ul,li {
 .extrusion {
     height: 10px;
 }
-// 布局样式 开始
- .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-// 布局样式 结束
+
 
 // 控制歌单图片
   .img-row {
@@ -454,53 +390,12 @@ ul,li {
     visibility:hidden;
   }
 
-  // 大背景
-  // .home {
-  //   background: url(../assets/imgbg.jpg);
-  // }
-// 
 .bg-purple[data-v-957c9522] {
   
     background: rgba(0,0,0,0);
 }
 
 
-// 导航栏
-.homenav {
-  padding: 8px 0 ;
-  /*flex 布局*/
-    display: flex;
-    /*实现垂直居中*/
-    align-items: center;
-    position: relative;
-}
-
-.navigation li{
-  padding: 0 20px;
-  font-size: 14px;
-}
-
-.logo img{
-  width: 220px;
-}
-.floatLeft {
-  float: left;
-    // 鼠标小手
-  cursor:pointer;
-}
-.SearchAndLogin {
-    position: absolute;
-    font-size: 14px;
-    right: 86px;
-    // 居中
-    top: 55%;
-    transform: translate(0, -50%);
-    .SearchAndLoginImg {
-      border-radius: 50%;
-      width:35px 
-    }
-}
-//导航栏end 
 
 
 

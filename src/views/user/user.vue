@@ -6,7 +6,7 @@
 
     <!-- 个人中心 -->
     <el-row :gutter="10" class="el-row01">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
         <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="4" class="personalLeft">
             <div class="grid-content">
             <!-- 左边 -->
@@ -83,42 +83,38 @@
                 
                  <!-- 所有时间 -->
                 <!-- 第二层 -->
-                <div class="main02"  v-show="(flag2)">
-                  <h3>所有时间</h3>
-                    <ul>
-                      <li>
-                        序号
+                 <div class="grid-content">
+                    <!-- 最近一周 -->
+                    <play-song  v-show="(flag1)">
+                      <li slot="songli" :key="index" v-for="(item,index) in recordWeek">
+                        <div>{{index + 1 }}</div>
+                        <div>
+                          <img :src="item.song.al.picUrl" alt="">
+                          <span>{{item.song.name}}</span>
+                        </div>
+                        <div>{{item.song.ar[0].name}}</div>
+                        <div></div>
+                        <div>03:35</div>
                       </li>
-                      <li :key="index" v-for="(item,index) in record">
-                        <span class="spanNum">{{index + 1 }}</span>
-                        <img :src="item.song.al.picUrl" alt="">
-                        <span class="spanSinger">{{item.song.ar[0].name}}</span>
-                        <span class="spanAlbum">{{item.song.name}}</span>
-                        <span class="spanTime">03:35</span>
+                    </play-song>
+
+                    <!-- 所有时间 -->
+                    <play-song  v-show="(flag2)">
+                      <li slot="songli" :key="index" v-for="(item,index) in record">
+                        <div><span>{{index + 1 }}</span></div>
+                        <div>
+                          <img :src="item.song.al.picUrl" alt="">
+                          <span>{{item.song.name}}</span>
+                        </div>
+                        <div><span>{{item.song.ar[0].name}}</span></div>
+                        <div><span>{{item.song.al.name}}</span></div>
+                        <div><span>03:35</span></div>
                       </li>
-                    </ul>
-                </div>
+                    </play-song>
+                 </div>
             </div>
 
-            <!-- 最近一周 -->
-             <div class="grid-content">
-                <!-- 第二层 -->
-                <div class="main02" v-show="(flag1)">
-                   <h3>最近一周</h3>
-                    <ul>
-                      <li>
-                        序号
-                      </li>
-                      <li :key="index" v-for="(item,index) in recordWeek">
-                        <span class="spanNum">{{index + 1 }}</span>
-                        <img :src="item.song.al.picUrl" alt="">
-                        <span class="spanSinger">{{item.song.ar[0].name}}</span>
-                        <span class="spanAlbum">{{item.song.name}}</span>
-                        <span class="spanTime">03:35</span>
-                      </li>
-                    </ul>
-                </div>
-            </div>
+            
          </el-col>
          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="4" class="personalRight">
             <div class="grid-content">
@@ -158,17 +154,21 @@
               </div>
             </div>
         </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
-
+   
   </div>
   
 
 </template>
 
 <script>
+import PlaySong from '@/components/common/play_song/PlaySong'
 export default {
   name:'user',
+  components:{
+    PlaySong
+  },
   data() {
     return {
 
@@ -264,6 +264,7 @@ export default {
         }
         // 用户播放记录
          this.record = result.data.allData
+         console.log(this.record);
     },
 
 
@@ -294,7 +295,7 @@ export default {
 .userbg {
     width: 100%;
     height: 600px;
-    background: url("../assets/userbg.jpg");
+    background: url("~assets/img/userbg.jpg");
     background-position: 68% 70%;
 }
 .grid-content {

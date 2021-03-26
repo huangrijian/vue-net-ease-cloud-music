@@ -2,14 +2,14 @@
     <div>
              <!-- 导航栏 -->
     <el-row :gutter="10" class="el-row01" style="margin-bottom: 20px">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="18">
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
             <div class="grid-content homenav">
                 <!-- 按钮层 -->
               <div>
                   <!-- 第一层 语言-->
                   <div>
-                       <div class="btn" :class="{btnActive:languageflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in language">{{item}}</div>
+                       <div class="btn" :class="{btnActive:areaflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in area">{{item}}</div>
                   </div>
                    <!-- 第二层 -->
                   <div>
@@ -17,53 +17,51 @@
                   </div>
                    <!-- 第三层 -->
                   <div>
-                       <div class="btn" :class="{btnActive:alphabetflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in alphabet">{{item}}</div>
+                       <div class="btn" :class="{btnActive:orderflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in order">{{item}}</div>
                   </div>
               </div>
             </div>
             </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
-    <router-view :currentlanguage="currentlanguage" :currenttype="currenttype" :currentalphabet="currentalphabet"></router-view>
+    <router-view :currentarea="currentarea" :currenttype="currenttype" :currentorder="currentorder"></router-view>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            language:['全部','华语','欧美','日本','韩国','其他'],
-            type:['全部','男歌手','女歌手','乐队'],
-            alphabet:['热门','A','B','C','D','E','F','G',
-                      'H','I','J','K','L','N','M','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-            ],
+            area:['全部','内地','港台','欧美','韩国','日本'],
+            type:['全部','官方版','原生','现场版','网易出品'],
+            order:['上升最快','最热','最新',],
             // 默认第一个被选中
-            languageflag:0,
+            areaflag:0,
             typeflag:0,
-            alphabetflag:0,
+            orderflag:0,
 
             // 当前选择的歌手类型
-            currentlanguage:'',
+            currentarea:'',
             currenttype:'',
-            currentalphabet:'',
+            currentorder:'',
 
             // 需要传给子路由的数组
             dataAarry:[]
         }
     },
     methods: {
-
-        // 点击改变样式
         languageStyle(index,item){
-         this.languageflag = index;
-         this.currentlanguage = item;
+            // 改样式
+         this.areaflag = index;
+        //  存数值
+         this.currentarea = item;
         },
         typeStyle(index,item){
             this.typeflag = index;
             this.currenttype = item;
         },
         alphabetStyle(index,item){
-            this.alphabetflag = index;
-            this.currentalphabet = item;
+            this.orderflag = index;
+            this.currentorder = item;
         },
 
     },

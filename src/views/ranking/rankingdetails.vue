@@ -1,25 +1,10 @@
 <template>
   <div class="SingerDetails">
 
-<!-- 弹出框 -->
 
-<el-dialog
-  title="珍惜所有的不期而遇，看淡所有的不辞而别。"
-  :visible.sync="dialogVisible"
-  width="30%">
-  <el-input prefix-icon="el-icon-search" v-model="input" placeholder="请输入关键词"></el-input>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-</el-dialog>
-
-
-    
-  
      <!-- mian -->
      <el-row :gutter="10" class="mian">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
         <!-- 左侧 -->
         <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="12">
             <div class="grid-content">
@@ -48,28 +33,19 @@
                           <el-button round>收藏</el-button>
                         </div>
                     </div>
-                    <!-- 左下 -->
-                     <div class="bottom">
-                         <ul>
-                            <li class="Songli">
-                              <div class="num"><span>序号</span></div>
-                              <div class="song">歌曲</div>
-                              <div class="album">专辑</div>
-                              <div class="time">时长</div>
-                            </li>
-                            <li class="Songli Songlifont" :key="index" v-for="(item,index) in Songcontent" @click="sendurl(item.id,item.al)">
-                              <div class="num"><span>{{index + 1}}</span></div>
-                              <div class="song">
-                                <img :src="item.al.picUrl" alt="" class="Songimg">
-                                <div style="float: left;">{{item.al.name}}</div>
-                              </div>
-                              <div class="album">
-                                <span>{{item.al.name}}</span>
-                              </div>
-                              <div class="time">没做完ʕ•ﻌ•ʔ</div>
-                            </li>
-                      </ul>
-                    </div>
+
+                     <play-song>
+                        <li slot="songli" :key="index" v-for="(item,index) in Songcontent" @click="sendurl(item.id,item.al)">
+                        <div><span>{{index + 1 }}</span></div>
+                        <div>
+                          <img :src="item.al.picUrl"  alt="">
+                          <span>{{item.al.name}}</span>
+                        </div>
+                        <div><span>{{item.al.name}}</span></div>
+                        <div><span>{{item.al.name}}</span></div>
+                        <div><span>没做完ʕ•ﻌ•ʔ</span></div>
+                      </li>
+                    </play-song>
                 </div>
             </div>
         </el-col>
@@ -109,14 +85,19 @@
                 </div>
             </div>
         </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
 
   </div>
 </template>
 
 <script>
+import PlaySong from '@/components/common/play_song/PlaySong'
+
 export default {
+  components:{
+    PlaySong
+  },
   name:'rankingdetails',
   //局部刷新组件要用到的数据 
   inject: ['reload'],
@@ -158,22 +139,6 @@ export default {
 
 
   methods: {
-
-    // getsongname(id){
-    //     console.log(id);
-    //       // 获取歌曲详细信息
-    // this.$http.get("/song/detail?ids="+ id).
-    // then(result1 => {
-    //     if (result1.status !== 200) {
-    //       return this.$message.error("获取失败！");
-    // }
-    // console.log("歌曲详细");
-    // console.log(result1.data.songs[0].name);
-  
-    //     this.name.push(result1.data.songs[0].name);
-    //     console.log(this.name);
-    // })
-    // },
 
     // 获取歌单描述
     async getSongDetails(){
@@ -299,7 +264,7 @@ export default {
 
 // home背景
 .SingerDetails {
-  background-image: url('../assets/bjgif.gif');
+  background-image: url('~assets/img/bjgif.gif');
 }
 
 // 基础样式
@@ -361,26 +326,7 @@ ul,li {
     transform: translate(0, -50%);
 }
 
-/* 布局样式  start*/
-  .el-col {
-    border-radius: 4px;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
 
-.el-row {
-    box-sizing: border-box;
-    margin-left: 0!important;
-    margin-right: 0!important;
-}
-
- .Determinelocation {
-    width: 100%;
-    height: 100%;
-  }
-/* 布局样式  end*/
 
 
 // main 布局
@@ -400,10 +346,8 @@ ul,li {
 // 左上
 .main-left .top {
      width: 100%;
-     height: 270px;
+     height: 220px;
      padding: 20px;
-    //  长宽定死
-     box-sizing: border-box;
      img {
        width: 200px;
        margin-right: 25px;
@@ -433,60 +377,14 @@ ul,li {
       //  描述
       p {
         width: 685px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:3;//以此类推，3行4行直接该数字就好啦
       }
 
      }
-}
-// 左下
-.main-left  .bottom {
-     width: 100%;
-      // 歌曲列表
-      // 每一个li行
-        .Songli {
-          width: 100%;
-          height: 60px;
-           /*flex 布局*/
-          display: flex;
-          /*实现垂直居中*/
-          align-items: center;
-          // li里面的div
-          div {
-            float: left;
-          }
-          // 四个选项
-          .num {
-            width: 10%;
-            span {
-              margin-left: 15px;
-            }
-
-          }
-          .song {
-            width: 40%;
-              /*flex 布局*/
-          display: flex;
-          /*实现垂直居中*/
-          align-items: center;
-            .Songimg {
-              float: left;
-              width:45px;
-              border-radius: 10px;
-              margin-right: 10px;
-            }
-          }
-          .album {
-            width: 40%;
-          }
-          .time {
-            width: 10%;
-          }
-        }
-        .Songli:hover {
-          background: rgb(222, 226, 217)!important;
-        }
-        .Songli:nth-child(even){
-          background: rgb(239, 241, 237);
-        }
 }
 
 // 右上

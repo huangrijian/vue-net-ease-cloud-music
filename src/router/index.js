@@ -1,47 +1,54 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 // 登录
-import login from '../components/login.vue'
+import login from '@/views/login/login.vue'
 // 家
-import home from '../components/home.vue'
+import home from '@/views/home/home.vue'
+
 // 用户
-import user from '../components/user.vue'
+import user from '@/views/user/user.vue'
+
 // 排行榜
-import ranking from '../components/ranking.vue'
+import ranking from '@/views/ranking/ranking.vue'
 // 排行榜细节
-import rankingdetails from '../components/rankingdetails.vue'
+import rankingdetails from '@/views/ranking/rankingdetails.vue'
+
+
 // 歌手
-import Singer from '../components/Singer.vue'
-// MV
-import MV from '../components/MV.vue'
-// 歌单
-import SongList from '../components/SongList.vue'
-
-// 艺人详情页组件
-import SingerDetails from '../components/SingerDetails.vue'
-// 艺人详情页组件子路由 -> 艺人介绍
-import artistMessage from '../components/artist/artistMessage.vue'
-// 艺人详情页组件子路由 -> 艺人热门作品
-import hotworks from '../components/artist/hotworks.vue'
-// 艺人详情页组件子路由 -> 艺人所有专辑
-import allAlbum from '../components/artist/allAlbum.vue'
-// 艺人详情页组件子路由 -> 艺人所有MV
-import allMV from '../components/artist/allMV.vue'
-
+import Singer from '@/views/singer/Singer.vue'
 // 歌手子路由 -> 歌手列表
-import Singerlist from '../components/Singerlist.vue'
+import Singerlist from '@/views/singer/Singerlist.vue'
+// 艺人详情页组件
+import SingerDetails from '@/views/singer/SingerDetails.vue'
+
+// 艺人详情页组件子路由 -> 艺人介绍
+import artistMessage from '@/views/singer/artist/artistMessage.vue'
+// 艺人详情页组件子路由 -> 艺人热门作品
+import hotworks from '@/views/singer/artist/hotworks.vue'
+// 艺人详情页组件子路由 -> 艺人所有专辑
+import allAlbum from '@/views/singer/artist/allAlbum.vue'
+// 艺人详情页组件子路由 -> 艺人所有MV
+import allMV from '@/views/singer/artist/allMV.vue'
+
+
+// MV
+import MV from '@/views/MVList/MV.vue'
+// 歌单
+import SongList from '@/views/songlist/SongList.vue'
+
 // MV子路由 -> MV列表
-import MVList from '../components/MVList.vue'
+import MVList from '@/views/MVList/MVList.vue'
 // MV子路由 -> MV列表子路由 -> MV详情页面
-import MVdetails from '../components/MVdetails.vue'
+import MVdetails from '@/views/MVList/MVdetails.vue'
 
 // 搜索
-import search from '../components/search/search.vue'
+import search from '@/views/search/search.vue'
 // 搜索子路由
-import searchDetails from '../components/search/searchDetails.vue'
+import searchDetails from '@/views/search/searchDetails.vue'
 
 // 歌曲详情
-import SongDetails from '../components/Song/SongDetails.vue'
+import SongDetails from '@/views/Song/SongDetails.vue'
 
 // 全局使用路由
 Vue.use(VueRouter)

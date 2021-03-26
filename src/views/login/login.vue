@@ -3,7 +3,7 @@
     <!-- 登录box -->
     <div class="login_box">
       <!-- 登录logo -->
-      <img src="../assets/logo.png" alt="" />
+      <img src="~assets/img/logo.png" alt="" />
       <!-- 登录表单 -->
       <el-form
         class="login_form"
@@ -79,19 +79,6 @@ export default {
           // 获取token
           var token = result.data.token;
 
-                  /*
-                    1.将登录成功之后,会得到一个token值,将其保存到客户端的sessionStorage中
-                        1.1 项目中除了登录以外的api，都需要token值才能正常访问
-                        1.2 token只应在当前网站打开期间生效，所以将token保存在localStorage
-
-                        localStorage和sessionStorage一样都是用来存储客户端临时信息的对象。
-
-                他们均只能存储字符串类型的对象（虽然规范中可以存储其他原生类型的对象，但是目前为止没有浏览器对其进行实现）。
-
-                localStorage生命周期是永久，这意味着除非用户显示在浏览器提供的UI上清除localStorage信息，否则这些信息将永远存在。
-
-                sessionStorage生命周期为当前窗口或标签页，一旦窗口或标签页被永久关闭了，那么所有通过sessionStorage存储的数据也就被清空了。
-                */
            //存放userTokenb
           window.sessionStorage.setItem('userToken', token);
           console.log(window.sessionStorage.getItem("userToken"))
@@ -100,16 +87,11 @@ export default {
 
         }else return this.$message.error("登录失败");
 
-        //    2.通过编程式导航跳转到user主页，路由地址是/home    把用户id传入，  home页面通过参数取值  -- this.$route.params.key
-        this.$router.push({name:'home',params: {UserId:this.id}})
-
-        this.$emit('getMessage', this.id);
-
-        
-        
-      })
-
-      
+        // 跳转到首页
+        this.$router.push('/home')
+        this.$emit('getUserid', this.id);
+        console.log(this.id);
+      })    
     },
   },
 };
@@ -119,7 +101,7 @@ export default {
 .login {
   height: 100%;
   width: 100%;
-  background: url("../assets/bg.jpg");
+  background: url("~assets/img/bg.jpg");
   background-size: 100% 100%;
 
   .login_box {

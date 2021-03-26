@@ -114,7 +114,7 @@ export default {
     /*实现水平居中*/
     justify-content: center;
     color:#fff;
-    background: url('../../assets/snow.jpg');
+    background: url('~assets/img/snow.jpg');
     background-position: 50% 42%;
     }
     .inputbox {

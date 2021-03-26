@@ -2,7 +2,7 @@
   <div>
     <!-- 个人中心 -->
     <el-row :gutter="10" class="el-row01">
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
         <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="13" class="personalLeft">
             <div class="grid-content">
                 <div class="videobox">
@@ -116,7 +116,7 @@
               </div>
             </div>
         </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
 
   </div>
