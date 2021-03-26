@@ -1,19 +1,21 @@
-# vue_project_music
+# vue_project_music 仿网易云音乐网站
 
-## Project setup
-```
-npm install
-```
+## 后端项目地址 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
-### Compiles and minifies for production
+## 安装运行
 ```
-npm run build
-```
+$后端
+$ git clone https://github.com/Binaryify/NeteaseCloudMusicApi
+$ cd NeteaseCloudMusicApi
+$ npm install
+$ npm start
+$ 成功后访问localhost:3000是否正常，正常下一步
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+$前端
+$ git clone https://gitee.com/huang-rijian/vue-net-ease-cloud-music.git
+$ cd vue_project_music
+$ npm install
+$ npm run serve
+```
