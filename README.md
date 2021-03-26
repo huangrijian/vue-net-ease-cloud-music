@@ -15,7 +15,7 @@ $ 成功后访问localhost:3000是否正常，正常下一步
 
 $前端
 $ git clone https://gitee.com/huang-rijian/vue-net-ease-cloud-music.git
-$ cd vue_project_music
+$ cd vue-net-ease-cloud-music
 $ npm install
 $ npm run serve
 ```
