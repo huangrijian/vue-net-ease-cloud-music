@@ -6,14 +6,14 @@
                 <div class="grid-content">
                    <div class="top">
                        <div class="top-left">
-                           <img :src="data.picUrl" alt="">
+                           <img :src="currentData.picUrl" alt="">
                        </div>
                         <div class="top-right">
                             <div>
                                 <span class="el-icon-loading"></span>
-                                <span class="title">{{data.picname}}</span>
+                                <span class="title">{{currentData.picname}}</span>
                             </div>
-                            <div>歌手：{{data.Singer}}</div>
+                            <div>歌手：{{currentData.Singer}}</div>
                             <div>所属专辑：Joy</div>
                         </div>
                          <div class="top-right-btn">
@@ -91,13 +91,20 @@ export default {
             // 接收的是对象
             data:this.$route.query.data,
             hotComments:'',
-            textarea:''
+            textarea:'',
+            // 当前数据
+            currentData:''
         }
     },
     methods: {
+
+      GetData(data){
+       this.currentData = data
+      },
+
         // 获取热门评论
         async getHotComment(){
-            const result = await this.$http.get("/comment/hot?id="+this.Songid +"&type=0");
+            const result = await this.$http.get("/comment/hot?id="+ this.Songid +"&type=0");
              if (result.status !== 200) {
                 return this.$message.error(" 获取热门评论失败！");
             }
@@ -128,6 +135,7 @@ export default {
     // DOM渲染完毕可执行
     mounted() {
         this.getHotComment();
+        this.GetData(this.data);
     },
 }
 </script>

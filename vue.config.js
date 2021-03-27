@@ -12,5 +12,6 @@ module.exports = {
             .set('assets',resolve('./src/assets'))
             .set('common',resolve('./src/common'))
             .set('views',resolve('./src/views'))
+            .set('network',resolve('./src/network'))
     }
 };

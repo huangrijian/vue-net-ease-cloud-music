@@ -110,17 +110,19 @@
         </el-col>
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="3"><div class="grid-content visibilityBox">4</div></el-col>
     </el-row>
-
-
-
-  
   </div>
 </template>
 
 <script>
-
+import { GetRecommendPlaylist,
+         GetLatestAlbum,
+         GetLatestSong,
+         GetLyric,
+         GetSongUrl
+} from '@/network/home.js'
 
 export default {
+  name:'home',
   data() {
       return {
         falg:true,
@@ -160,57 +162,84 @@ export default {
   },
   methods: {
 
-    showdiv(index){
+  showdiv(index){
       this.isshowturediv = index
     },
-   
-  //  歌单点击通往 歌单详细
+
+  
+  /*
+  *
+  * 以下是路由跳转相关的方法
+  * 
+  */ 
+  //  去歌单详细
    gotolistdetails(id){
       this.$router.push("/rankingdetails/" + id);
    },
+  // 去歌曲详细
+  GotoSongDetails(id,musicdata){
+    this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+  },
 
-    // 推荐歌单
-    async RecommendPlaylist(){
-        const result = await this.$http.get("/personalized?limit=24");
-        if (result.status !== 200) {
-          return this.$message.error("获取推荐歌单失败！");
-        }
-        //  this.$message.success("获取推荐歌单获取成功！");
-        console.log("歌单");
-        console.log(result.data);
-         this.Recommendresult1 = result.data.result.slice(0,8);
-         this.Recommendresult2 = result.data.result.slice(8,16);
-         this.Recommendresult3 = result.data.result.slice(16);
-        //  arrayObject.slice(start,end) 截取数组
-        // console.log(result.data.result);
-    },
-    // 首页发现
-    async latestAlbum(){
-        const result = await this.$http.get("/homepage/block/page");
-        if (result.status !== 200) {
-          return this.$message.error("获取最新专辑失败！");
-        }
-        //  this.$message.success("获取最新专辑成功！");
-         console.log(result.data.data.blocks[0].extInfo.banners);
-         this.latestAlbum1 = result.data.data.blocks[0].extInfo.banners.slice(0,5);
-         this.latestAlbum2 = result.data.data.blocks[0].extInfo.banners.slice(5,10);
-        console.log(this.latestAlbum1);
-    },
-     // 获取最新音乐
-    async getlatestSong(){
-        const result = await this.$http.get("/personalized/newsong");
-        if (result.status !== 200) {
-          return this.$message.error("获取最新音乐失败！");
-        }
-        //  this.$message.success("获取最新音乐成功！");
-        this.latestsong = result.data.result;
-        this.Singer = result.data.result;
-        console.log("最新音乐");
-        console.log(result.data);
-        console.log(this.latestsong);
+  /*
+  *
+  * 以下是网络请求相关的方法
+  * 
+  */ 
+  // 获取推荐歌单
+  GetRecommendPlaylist(){
+    GetRecommendPlaylist(24).then(res => {
+      this.Recommendresult1 = res.result.slice(0,8);
+      this.Recommendresult2 = res.result.slice(8,16);
+      this.Recommendresult3 = res.result.slice(16);
+    })
+  },
 
-    },
-    // 播放音乐，添加图片,添加歌名,显示隐藏
+  // 获取轮播图
+  GetLatestAlbum(){
+    GetLatestAlbum().then(res => {
+      this.latestAlbum1 = res.data.blocks[0].extInfo.banners.slice(0,5);
+      this.latestAlbum2 = res.data.blocks[0].extInfo.banners.slice(5,10);
+    })
+  },
+
+  // 获取最新音乐
+  GetLatestSong(){
+    GetLatestSong().then(res => {
+      this.latestsong = res.result;
+      this.Singer = res.result;
+    })
+      
+  },
+
+  // playSong(SongUrlid,img,name,singername){
+  //   this.SongUrlid = SongUrlid;
+  //   console.log(SongUrlid);
+  //   // 获取音乐播放地址
+  //   GetSongUrl(SongUrlid).then(res => {
+  //     console.log(res);
+  //     this.playUrl = res.data[0].url;
+  //     this.picUrl = img;
+  //     this.picname = name;
+  //     this.flag = true;
+  //     this.Singer = singername;
+  //   }).then(
+  //     GetLyric(SongUrlid).then(res => {
+  //       var musicdata = {
+  //       playUrl:this.playUrl,
+  //       picUrl:this.picUrl,
+  //       picname:this.picname,
+  //       Singer:this.Singer,
+  //       lyric:res,
+  //     }
+  //     //发送给app.vue
+  //     this.$emit('getMusicMessage', musicdata);
+  //     this.GotoSongDetails(SongUrlid,musicdata);
+  //     }))
+  // },
+
+
+  //播放音乐，添加图片,添加歌名,显示隐藏
     async playSong(SongUrlid,img,name,singername){
       console.log(SongUrlid);
       // 保存id
@@ -244,12 +273,9 @@ export default {
       });
     },
 
-      // GotoSongDetails
-      GotoSongDetails(id,musicdata){
-         this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-      },
+
     
-    // 获取歌词
+    //获取歌词
     async getlyric(SongUrlid){
       const result = await this.$http.get("/lyric?id=" + SongUrlid );
       if (result.status !== 200) {
@@ -261,7 +287,6 @@ export default {
     // 热门歌手
     async gethotSinger (){
       const result = await this.$http.get("/top/artists?offset=0&limit=30");
-      
       console.log("热门歌手");
       console.log(result.data.artists);
       this.hotSinger = result.data.artists
@@ -274,16 +299,14 @@ export default {
     // 路由跳转
     this.$router.push('/SingerDetails/' + id )
   },
-
   },
-
 
 
    // 生命周期函数  页面刷新时调用
     mounted() {
-      this.RecommendPlaylist()
-      this.latestAlbum()
-      this.getlatestSong()
+      this.GetLatestAlbum()
+      this.GetRecommendPlaylist()
+      this.GetLatestSong()
       this.gethotSinger()
       // 获取用户详细信息
     }
