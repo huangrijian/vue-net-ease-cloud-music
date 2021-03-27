@@ -1,13 +1,207 @@
 <template>
     <div>
-        <h1>歌单</h1>
+      <!-- 导航 -->
+      <layout>
+        <song-list-nav :tags="HotPlaylist" @GetSongType="GetSongType" @GetHotOrNew="GetHotOrNew"></song-list-nav>
+      </layout>
+
+      <!-- 内容 -->
+      <layout>
+        <song-list>
+          <li slot="songlist" :key="index" v-for="(item,index) in playlists" @click="GotorankingDetails(item.id)">
+            <img :src="item.coverImgUrl" alt="">
+            <div>{{item.name}}</div>
+          </li>
+          
+        </song-list>
+      </layout>
+
+      <!-- 分页 -->
+      <layout class="PagingBox">
+        <div class="paging">
+          <el-pagination
+            :key="elementui_page_component_key"
+            background
+            layout="prev, pager, next"
+            :total="220"
+            :current-page="currentPage"
+            @prev-click="prev"
+            @next-click="next"
+            @current-change="currentChange">
+          </el-pagination>
+        </div>
+
+      </layout>
     </div>
 </template>
 <script>
+import layout from '@/components/content/layout/layout.vue'
+import SongListNav from './component/SongListNav'
+import SongList from '@/components/content/song_list/SongList.vue'
+
+import { GetHotPlaylist, GetPlaylistContent } from '@/network/SongList.js'
 export default {
+    components:{
+      SongListNav,
+      SongList,
+      layout
+    },
+    data() {
+      return {
+        // 热门标签
+        HotPlaylist:[],
+
+        // 当前页码
+        currentPage:1,
+        // 当前key -> 用于解决当前页码不能手动刷新的问题
+        elementui_page_component_key:1,
+
+        // 默认数据
+        order:'hot',
+        cat:'全部',
+        limit:60,
+        offset:0,
+
+        // 当前展示的数据数组
+        playlists:[],
+
+      }
+    },
+    methods: {
     
+    // 用于解决当前页码不能手动刷新的问题
+    autoIncrasePageComKey() {
+        this.elementui_page_component_key ++
+    },
+
+
+    // goto 排行榜详情页
+    GotorankingDetails(id){
+       this.$router.push("/rankingdetails/" + id);
+    },
+
+    /*
+    *
+    * 页码相关方法
+    * 
+    */
+    GetSongType(index){
+        // 华语流行摇滚民谣电子另类/独立轻音乐综艺影视原声ACG
+        console.log(index);
+        switch(index) {
+          case 0: 
+            this.InitializePage('华语')
+            break;
+          case 1:
+            this.InitializePage('流行')
+            break;
+          case 2: 
+            this.InitializePage('摇滚')
+            break;
+          case 3:
+            this.InitializePage('民谣')
+            break;
+          case 4: 
+            this.InitializePage('电子')
+            break;
+          case 5:
+            this.InitializePage('另类/独立')
+            break;
+          case 6: 
+            this.InitializePage('轻音乐')
+            break;
+          case 7:
+            this.InitializePage('综艺')
+            break;
+          case 8: 
+            this.InitializePage('影视原声')
+            break;
+          case 9: 
+            this.InitializePage('ACG')
+            break;
+        }
+      },
+
+      // 点击热门标签 -> 初始化数据
+      InitializePage(cat){
+        this.cat = cat;
+        this.offset = 0;
+        // 用于解决当前页码不能手动刷新的问题
+        this.autoIncrasePageComKey();
+        this.currentPage = 1;
+        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+      },
+
+      // 点击热门或最新按钮 -> 初始化数据
+      GetHotOrNew(index){
+        switch(index){
+          case 1:
+            this.order = 'hot'
+            this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+            break;
+          case 2:
+            this.order = 'new'
+            this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+            break;
+        }
+      },
+      // 上一页
+      prev(){
+        this.offset -= 60
+        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+      },
+
+      // 下一页
+      next(){
+        this.offset += 60
+        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+      },
+     
+    //  当前页数改变
+      currentChange(currentPage){
+       this.offset = (currentPage-1) * 60
+       this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+      },
+
+      /*
+      *
+      * 网络请求相关
+      * 
+      */ 
+    //  热门歌单分类
+     GetHotPlaylist(){
+       GetHotPlaylist().then(res => {
+         console.log(res);
+         this.HotPlaylist = res.tags
+       })
+     },
+
+    //  获取歌单
+     GetPlaylistContent(order,cat,limit,offset){
+        GetPlaylistContent(order,cat,limit,offset).then(res => {
+          console.log("歌单数据");
+          console.log(res);
+          this.playlists = res.playlists
+        })
+      },
+
+    },
+    mounted() {
+      // 展示默认热门标签
+      this.GetHotPlaylist();
+      // 展示默认数据
+      this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+    },
 }
 </script>
 <style lang="less" scoped>
-
+//分页
+.PagingBox {
+  position: relative;
+}
+.paging {
+  position:absolute;
+  right: 50%;
+  transform: translateX(50%);
+}
 </style>

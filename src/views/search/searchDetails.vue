@@ -55,11 +55,6 @@
                                     <img :src="item.picUrl" alt="">
                                     <div class="rankingNameglobal">{{item.name}}</div>
                                 </li>
-
-                                <!-- <li>
-                                    <img src="https://p1.music.126.net/sBzD11nforcuh1jdLSgX7g==/18740076185638788.jpg" alt="">
-                                    <div class="rankingNameglobal">aa</div>
-                                </li> -->
                             </ul>
                          </div>
                     </div>

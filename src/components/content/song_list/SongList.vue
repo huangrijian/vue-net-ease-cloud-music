@@ -1,16 +1,10 @@
 <template>
-     <el-row :gutter="10" class="el-row01">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
-            <div class="grid-content">
-              <h2>{{title}}</h2>
-              <ul class="rankingUl">
-                 <slot name="songlist"></slot>
-              </ul>
-            </div>
-            </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    </el-row>
+  <div class="grid-content">
+    <h2>{{title}}</h2>
+     <ul class="rankingUl">
+       <slot name="songlist"></slot>
+     </ul>
+  </div>
 </template>
 <script>
 export default {
@@ -20,14 +14,16 @@ export default {
 <style lang="less">
 .rankingUl {
   width: 100%;
+  display: flex;
+  flex-wrap:wrap;
   li {
-    float: left;
     width: 10%;
     margin-top: 15px;
   }
   img{
     width: 100px;
     border-radius: 10px;
+    box-shadow: 6px 6px 3px -1px rgba(37, 37, 37, 0.3);
 }
 }
 
@@ -35,7 +31,7 @@ export default {
   .rankingUl>li>div {
     width: 100px;
     font-size: 12px;
-    transform: translateX(30%);
+    transform: translateX(5%);
   }
   .rankingNameglobal {
     width: 95px;

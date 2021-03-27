@@ -1,26 +1,33 @@
 <template>
   <div v-loading="loading">
-    <song-list title="云村特色版">
-      <li slot="songlist" :key="index" v-for="(item,index) in featureRanking" @click="GotorankingDetails(item.id)">
-        <img :src="item.coverImgUrl" alt="">
-        <div>{{item.name}}</div>
-      </li>
-    </song-list>
+    
+    <layout>
+      <song-list title="云村特色版">
+        <li slot="songlist" :key="index" v-for="(item,index) in featureRanking" @click="GotorankingDetails(item.id)">
+          <img :src="item.coverImgUrl" alt="">
+          <div>{{item.name}}</div>
+        </li>
+      </song-list>
+    </layout>
 
-    <song-list  title="全球媒体榜">
-      <li slot="songlist" :key="index" v-for="(item,index) in featureRankingglobal" @click="GotorankingDetails(item.id)">
-        <img :src="item.coverImgUrl" alt="">
-        <div>{{item.name}}</div>
-      </li>
-    </song-list>
+    <layout>
+      <song-list  title="全球媒体榜">
+        <li slot="songlist" :key="index" v-for="(item,index) in featureRankingglobal" @click="GotorankingDetails(item.id)">
+          <img :src="item.coverImgUrl" alt="">
+          <div>{{item.name}}</div>
+        </li>
+      </song-list>
+    </layout>
   </div>
 </template>
 
 <script>
+import layout from '@/components/content/layout/layout.vue'
 import SongList from '@/components/content/song_list/SongList.vue'
 export default {
   components:{
-    SongList
+    SongList,
+    layout
   },
   data() {
     return {

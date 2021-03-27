@@ -152,7 +152,6 @@ export default {
                 // 一共几页
                 console.log(this.pageNum);
 
-
                  for (let i = 0; i < this.pageNum; i++) {
                 // 每一页都是一个数组 形如 [['第一页的数据'],['第二页的数据'],['第三页数据']]
                 // 根据每页显示数量 将后台的数据分割到 每一页,假设pageSize为5， 则第一页是1-5条，即slice(0,5)，
@@ -187,8 +186,7 @@ export default {
         get(){
             this.loading = false;
         }
-        
-
+      
     },
     mounted() {
         this.getSingerlist()
