@@ -2,7 +2,14 @@
     <div>
       <!-- 导航 -->
       <layout>
-        <song-list-nav :tags="HotPlaylist" @GetSongType="GetSongType" @GetHotOrNew="GetHotOrNew"></song-list-nav>
+        <song-list-nav 
+        :tags="HotPlaylist"
+        :categories="categories"
+        :ArrayData="ArrayData"
+        @GetSongType="GetSongType"
+        @GetAllSongType="GetAllSongType"
+        @GetHotOrNew="GetHotOrNew"
+        ></song-list-nav>
       </layout>
 
       <!-- 内容 -->
@@ -39,7 +46,7 @@ import layout from '@/components/content/layout/layout.vue'
 import SongListNav from './component/SongListNav'
 import SongList from '@/components/content/song_list/SongList.vue'
 
-import { GetHotPlaylist, GetPlaylistContent } from '@/network/SongList.js'
+import { GetHotPlaylist, GetPlaylistContent, GetAllPlaylist } from '@/network/SongList.js'
 export default {
     components:{
       SongListNav,
@@ -65,6 +72,11 @@ export default {
         // 当前展示的数据数组
         playlists:[],
 
+        // 歌单全部分类名称
+        categories:[],
+
+        // 具体分类数据 -> 二维数组
+       ArrayData:[]
       }
     },
     methods: {
@@ -74,6 +86,33 @@ export default {
         this.elementui_page_component_key ++
     },
 
+    // 过滤数组
+    FilterData(arr){
+      let res0 = arr.filter(function(item){
+        // 将需要的分类数据过滤，并且保存
+        return (item.category == 0);
+      });
+      let res1 = arr.filter(function(item){
+        // 将需要的分类数据过滤，并且保存
+        return (item.category == 1);
+      });
+      let res2 = arr.filter(function(item){
+        // 将需要的分类数据过滤，并且保存
+        return (item.category == 2);
+      });
+      let res3 = arr.filter(function(item){
+        // 将需要的分类数据过滤，并且保存
+        return (item.category == 3);
+      });
+      let res4 = arr.filter(function(item){
+        // 将需要的分类数据过滤，并且保存
+        return (item.category == 4);
+      });
+      // 把得到的数据再push到一个新数组  得到一个二维数组
+      this.ArrayData.push(res0,res1,res2,res3,res4)
+      console.log("9999999");
+      console.log(this.ArrayData);
+    },
 
     // goto 排行榜详情页
     GotorankingDetails(id){
@@ -85,7 +124,11 @@ export default {
     * 页码相关方法
     * 
     */
-    GetSongType(index){
+   GetAllSongType(data){
+     this.InitializePage(data)
+   },
+
+   GetSongType(index){
         // 华语流行摇滚民谣电子另类/独立轻音乐综艺影视原声ACG
         console.log(index);
         switch(index) {
@@ -120,7 +163,7 @@ export default {
             this.InitializePage('ACG')
             break;
         }
-      },
+    },
 
       // 点击热门标签 -> 初始化数据
       InitializePage(cat){
@@ -184,13 +227,25 @@ export default {
           this.playlists = res.playlists
         })
       },
+    // 获取全部歌单分类
+    GetAllPlaylist(){
+      GetAllPlaylist().then(res => {
+        console.log("全部歌单");
+        console.log(res);
+        this.categories = res.categories
+        // 过滤数据
+        this.FilterData(res.sub)
+      })
+    }
 
     },
     mounted() {
-      // 展示默认热门标签
+      // 展示默认热门歌单分类
       this.GetHotPlaylist();
       // 展示默认数据
       this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+      // 展示全部歌单分类
+      this.GetAllPlaylist();
     },
 }
 </script>

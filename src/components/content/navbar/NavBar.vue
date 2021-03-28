@@ -16,7 +16,7 @@
                   <li class="floatLeft" :class="{fontcolor: fontlist == 6 }" @click="Gotosearch();changefontdiv(6)">搜索<div :class="{fontdiv: fontlist == 6 }"></div></li>
                 </ul>
                 <div class="SearchAndLogin">
-                  <el-button class="el-icon-search" type="text"></el-button>
+                  <el-button class="el-icon-search" type="text" @click="Search"></el-button>
                   <span style="padding:0 15px">|</span>
                   <span  @click="login" v-if="islogin">登录</span>
                    <Dialog v-if="dialogFlag"></Dialog> 
@@ -69,7 +69,10 @@ export default {
       }
     },
   methods:{
-     
+    
+  Search(){
+  this.$emit("ClickSearch")
+  },
   // 点击改变样式
     changefontdiv(index){
       this.fontlist = index
@@ -224,7 +227,9 @@ export default {
     transform: translate(0, -50%);
     .SearchAndLoginImg {
       border-radius: 50%;
-      width:35px 
+      width:35px;
+      transform: translateY(5px);
+
     }
 }
 

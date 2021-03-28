@@ -259,17 +259,17 @@ export default {
       this.getlyric(SongUrlid).then(res => {
         // 歌词
         console.log(res);
-         var musicdata = {
-        playUrl:this.playUrl,
-        picUrl:this.picUrl,
-        picname:this.picname,
-        Singer:this.Singer,
-        lyric:res,
-      }
+        var musicdata = {
+          playUrl:this.playUrl,
+          picUrl:this.picUrl,
+          picname:this.picname,
+          Singer:this.Singer,
+          lyric:res,
+        }
       // 发送给app.vue
-      this.$emit('getMusicMessage', musicdata);
-
-      this.GotoSongDetails(SongUrlid,musicdata);
+        this.$emit('getMusicMessage', musicdata);
+      // 跳转到歌曲详情
+        this.GotoSongDetails(SongUrlid,musicdata);
       });
     },
 

@@ -19,3 +19,10 @@ export function GetPlaylistContent(order,cat,limit,offset){
     }
   })
 }
+
+// 获取全部歌单 /playlist/catlist
+export function GetAllPlaylist(){
+  return request({
+    url:'/playlist/catlist'
+  })
+}

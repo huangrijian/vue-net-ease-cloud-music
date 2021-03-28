@@ -157,7 +157,7 @@ export default {
 
     // 获取歌单收藏者
       async getSongCollector(){
-      const result = await this.$http.get("/playlist/subscribers?id="+ this.rankingId +"&limit=18");
+      const result = await this.$http.get("/playlist/subscribers?id="+ this.rankingId +"&limit=27");
       if (result.status !== 200) {
           return this.$message.error("获取失败！");
       }
@@ -352,6 +352,7 @@ ul,li {
        width: 200px;
        margin-right: 25px;
        border-radius: 10px;
+       box-shadow: 6px 6px 3px -1px rgba(37, 37, 37, 0.3);
      }
      .top-description {
        font-size: 14px;
@@ -405,9 +406,9 @@ ul,li {
        margin-bottom: 5px;
      }
      .loveThat {
-       overflow: hidden;
+       display: flex;
+       flex-wrap: wrap;
        li {
-         float: left;
          margin: 4px;
          .loveThatPic {
            width: 40px;
