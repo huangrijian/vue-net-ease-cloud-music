@@ -5,7 +5,7 @@
             <div class="grid-content homenav">
                 <!-- logo -->
                 <div class="logo floatLeft">
-                  <!-- <img src="G/bg.jpg" alt=""> -->
+                  <img src="~@/assets/img/homeLogo.png" alt="">
                 </div>
                 <ul class="navigation">
                   <li class="floatLeft" :class="{fontcolor: fontlist == 1 }" @click="GoHome();changefontdiv(1)">发现音乐<div :class="{fontdiv: fontlist == 1 }"></div></li>
@@ -182,7 +182,7 @@ export default {
 }
 // 导航栏 start
 .homenav {
-  padding: 8px 0 ;
+  padding: 13px 0 ;
   /*flex 布局*/
     display: flex;
     /*实现垂直居中*/
