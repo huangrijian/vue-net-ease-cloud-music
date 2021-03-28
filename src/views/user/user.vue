@@ -226,7 +226,6 @@ export default {
       console.log(result);
     },
     
-
     // 获取用户详情
     async getUserDetails(){
       console.log("用户参数");
@@ -287,6 +286,7 @@ export default {
       this.getUserRecordWeek();
 
       this.getUserstatus();
+
     }
 };
 </script>

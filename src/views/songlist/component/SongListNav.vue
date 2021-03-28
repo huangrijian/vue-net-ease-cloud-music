@@ -1,15 +1,15 @@
 <template>
   <div class="SongListNav">
       <ul>
-        <li class="all"  @click="show = !show">全部  ↓</li>
+        <li class="all"  @click="show = !show">全部 <i class="My-new-iconbianji"></i></li>
         <li class="HotLaybel">热门标签：</li>
         <li :key="index" v-for="(item,index) in tags"
          @click="ChangeColor(index)" 
          :class="{activeColor: index === currentItim}">
          {{item.name}}
         </li>
-        <li class="LastListHot"><span class="hot" :class="{activeBackgroundColor: 1 == currentRightItim}" @click="(ChangerRightColor(1))">热门</span></li>
-        <li class="LastListNew"><span class="new" :class="{activeBackgroundColor: 2 == currentRightItim}" @click="(ChangerRightColor(2))">最新</span></li>
+        <li class="LastListHot"><span class="hot" :class="{activeBackgroundColor: 1 == currentRightItim}" @click="(ChangerRightColor(1))"><i class="My-new-iconhuore"></i>热门</span></li>
+        <li class="LastListNew"><span class="new" :class="{activeBackgroundColor: 2 == currentRightItim}" @click="(ChangerRightColor(2))"><i class="My-new-iconshuaxin"></i>最新</span></li>
       </ul>
 
       <div class="unfold">
@@ -21,7 +21,7 @@
              -->
             <div class="transition-box-box" :key="index" v-for="(item,index) in ArrayData">
               <div class="transition-box-box-top">
-                <i class="My-iconzhishi"></i>{{categories[index]}}
+                <i :class="Myicon[index]"></i>{{categories[index]}}
               </div>
               <div class="transition-box-box-bottom">
                 <span :key="index" v-for="(item,index) in item"
@@ -69,7 +69,16 @@ export default {
 
       // 所有分类
       currentAllItem:'',
-      show:false
+      show:false,
+// My-new-iconbianji1
+      // 图标数组
+      Myicon:[
+        'My-new-iconyuyan',
+        'My-new-iconhuangguan',
+        'My-new-iconyouxi',
+        'My-new-iconyaoqing',
+        'My-new-iconliangdu',
+      ]
     }
   },
   methods: {

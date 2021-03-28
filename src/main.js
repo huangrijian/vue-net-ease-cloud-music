@@ -5,8 +5,8 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store/index'
-// 引入iconfont.css
-import './assets/css/icon/iconfont.css';
+// 引入NewIcon.css
+import './assets/css/NewIcon/iconfont.css';
 // 导入axios
 import axios from 'axios'
 // 配置请求的跟路径

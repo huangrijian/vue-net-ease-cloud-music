@@ -22,12 +22,10 @@
       <keep-alive exclude="search,SongDetails,rankingdetails,MVdetails,SingerDetails,user">
         <router-view @getUserid="UserId" @getMusicMessage="showMusicMessage"  v-if="isRouterShow"></router-view>
       </keep-alive>
-    <!-- :searchKeyword="searchKeyword" -->
+    
 
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-    <div @mouseover="mouseover" :class="{IsShow:!IsShow}">
-      <aplayer :music="audio[0]"  :showLrc="true" :autoplay="true"  class="Aplayer"></aplayer>
-    </div>
+    <aplayer  v-show="show2" :music="audio[0]" :showLrc="true" :autoplay="true"  class="Aplayer"></aplayer>
     
 
   <!-- 底部 -->
@@ -72,8 +70,9 @@ export default {
 
       IsShow:false,
 
-      input:''
+      input:'',
 
+       show2: true
     }
   },
   methods: {
@@ -89,10 +88,12 @@ export default {
   ClickSearch(){
       this.dialogVisible = true
   },
-    mouseover(){
+
+  // 鼠标悬浮事件处理函数
+  mouseover(){
       console.log(99);
-      // this.IsShow = !this.IsShow
-    },
+
+  },
     // 将登录后传入的用户id再次
     UserId(val){
       console.log(val);
@@ -135,7 +136,7 @@ export default {
 <style  lang="less">
 @import '~@/assets/css/base.less';
 
-  // 音乐组件
+  //音乐组件
 .Aplayer {
   width: 100%;
   position: fixed!important;
@@ -143,6 +144,7 @@ export default {
   left: -5px;
   z-index: 1;
 }
+
 
 // 弹出框的样式
 

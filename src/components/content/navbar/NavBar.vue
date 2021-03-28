@@ -8,12 +8,12 @@
                   <img src="~@/assets/img/homeLogo.png" alt="">
                 </div>
                 <ul class="navigation">
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 1 }" @click="GoHome();changefontdiv(1)">发现音乐<div :class="{fontdiv: fontlist == 1 }"></div></li>
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 2 }" @click="Goranking();changefontdiv(2)">排行榜<div :class="{fontdiv: fontlist == 2 }"></div></li>
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 3 }" @click="GOtoSongList();changefontdiv(3)">歌单<div :class="{fontdiv: fontlist == 3 }"></div></li>
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 4 }" @click="GotoSinger();changefontdiv(4)">歌手<div :class="{fontdiv: fontlist == 4 }"></div></li>
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 5 }" @click="GotoMV();changefontdiv(5)">MV<div :class="{fontdiv: fontlist == 5 }"></div></li>
-                  <li class="floatLeft" :class="{fontcolor: fontlist == 6 }" @click="Gotosearch();changefontdiv(6)">搜索<div :class="{fontdiv: fontlist == 6 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 1 }" @click="GoHome();changefontdiv(1)"><i class="My-new-iconfaxian1"></i>发现音乐<div :class="{fontdiv: fontlist == 1 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 2 }" @click="Goranking();changefontdiv(2)"><i class="My-new-iconpaihangbang"></i>排行榜<div :class="{fontdiv: fontlist == 2 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 3 }" @click="GOtoSongList();changefontdiv(3)"><i class="My-new-iconbiaodan"></i>歌单<div :class="{fontdiv: fontlist == 3 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 4 }" @click="GotoSinger();changefontdiv(4)"><i class="My-new-iconyinle1"></i>歌手<div :class="{fontdiv: fontlist == 4 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 5 }" @click="GotoMV();changefontdiv(5)"><i class="My-new-iconzhibo"></i>MV<div :class="{fontdiv: fontlist == 5 }"></div></li>
+                  <li class="floatLeft" :class="{fontcolor: fontlist == 6 }" @click="Gotosearch();changefontdiv(6)"><i class="My-new-iconsousuo"></i>搜索<div :class="{fontdiv: fontlist == 6 }"></div></li>
                 </ul>
                 <div class="SearchAndLogin">
                   <el-button class="el-icon-search" type="text" @click="Search"></el-button>
@@ -28,7 +28,7 @@
                           {{nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item icon="el-icon-plus" command="u" >个人主页</el-dropdown-item>
+                          <el-dropdown-item icon="el-icon-plus" command="u">个人主页</el-dropdown-item>
                           <el-dropdown-item icon="el-icon-circle-check"  command="e" >退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
@@ -98,7 +98,7 @@ export default {
       // 个人主页
       if(command == 'u'){
         //    跳转到登录页
-        this.$router.push("/user/"+ this.UserId);
+        this.$router.push("/user/"+ window.sessionStorage.getItem("UserId"));
       }
 
       },
@@ -194,6 +194,9 @@ export default {
   padding: 0 20px;
   font-size: 14px;
   position: relative;
+  i {
+    margin-right: 2px;;
+  }
  
 }
  .fontdiv {
