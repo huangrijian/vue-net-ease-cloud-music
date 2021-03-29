@@ -25,7 +25,7 @@
                    <div class="bottom">
                        <div class="dec">
                            <span>评论</span>
-                           <span>共141260条评论</span>
+                           <span>共999+条评论</span>
                        </div>
                        <div class="CommentInput">
                            <img src="http://p1.music.126.net/hcx4MIKS1fc_JuSdu_W9lA==/109951165000584159.jpg" alt="">
@@ -37,7 +37,8 @@
                             class="inputbox"
                             size="350"
                             maxlength="350"
-                            resize="none">
+                            resize="none"
+                            @keyup.13.native="SendComment(textarea)">
                            </el-input>
 
                        </div>
@@ -55,11 +56,34 @@
                                             <span>{{item.content}}</span>
                                         </div>
                                         <div class="timerorlike">
-                                            <span class="timer">2017年12月15日</span>
+                                            <span class="timer">{{item.time | filtrationTime(that)}}</span>
                                             
-                                            <span class="el-icon-thumb" @click="clickLike(item.commentId)"></span>
+                                            <span class="My-new-icondianzan" @click="clickLike(item.commentId,$event)">{{item.likedCount}}</span>
+                                            <span class="vertical">|</span>
+                                            <span>回复</span>
                                             
-                                            <span>({{item.likedCount}})</span>
+                                        </div>
+                                    </div>
+                               </div>
+                           </li>
+                       </ul>
+
+                        <ul class="Commentarea">
+                           <h3>最新评论</h3>
+                            <li :key="index" v-for="(item,index) in AllComments">
+                               <div class="Commentareabox">
+                                   <div class="pic">
+                                        <img :src="item.user.avatarUrl" alt="">
+                                   </div>
+                                    <div class="side">
+                                        <div class="CommentTitle">
+                                            <span class="nickname">{{item.user.nickname}}：</span>
+                                            <span>{{item.content}}</span>
+                                        </div>
+                                        <div class="timerorlike">
+                                            <span class="timer">{{item.time | filtrationTime(that)}}</span>
+                                            
+                                           <span class="My-new-icondianzan" @click="clickLike(item.commentId,$event)">{{item.likedCount}}</span>
                                             <span class="vertical">|</span>
                                             <span>回复</span>
                                             
@@ -93,13 +117,52 @@ export default {
             hotComments:'',
             textarea:'',
             // 当前数据
-            currentData:''
+            currentData:'',
+            that:this,
+            // AllComments
+            AllComments:'',
+
+            flag:"false"
         }
     },
+    filters:{
+      filtrationTime(val,that){
+        var newTime = new Date(val);
+        var year = newTime.getFullYear()+'年';
+        var month = that.zeroize(newTime.getMonth()+1)+'月';
+        var date = that.zeroize(newTime.getDate())+'日'+' ';
+        var Hours = that.zeroize(newTime.getHours())+':';
+        var Minutes = that.zeroize(newTime.getMinutes());
+         return [year,month,date,Hours,Minutes].join('')
+      },
+
+      capitalize(e){
+        console.log("capitalize");
+        console.log(e.target);
+      }
+    },
     methods: {
+      setlike(val,e){
+        console.log(e);
+        return val++
+      },
+      // 补零函数
+      zeroize(date){
+        return date > 10 ? date : '0' + date
+      },
 
       GetData(data){
        this.currentData = data
+      },
+
+      // 发表评论
+      async SendComment(content){
+        let cookie = window.sessionStorage.getItem('cookie', cookie);
+        const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+cookie);
+        console.log(result.data);
+        this.textarea = '';
+        console.log("再次获取评论");
+        this.getAllComment();
       },
 
         // 获取热门评论
@@ -113,21 +176,43 @@ export default {
             this.hotComments = result.data.hotComments
         },
 
+        // 获取全部评论
+        async getAllComment(){
+            const result = await this.$http.get("/comment/music?id="+ this.Songid +'&limit=50');
+            console.log("获取全部评论");
+            console.log(result.data.comments);
+            this.AllComments = result.data.comments
+        },
+
         // 给评论点赞 /comment/like 
-        async clickLike(commentId){
-            
+        clickLike(commentId,e){
             // 先判断用户有没有登录 /comment/like?id=29178366&cid=12840183&t=1&type=0
             if(window.sessionStorage.getItem("userToken")){
-                this.$message.success(" 点击了");
-                 const result = await this.$http.get("/comment/like?id="+this.Songid +"&cid=" + commentId + "&t=1&type=0");
-                // const result = await this.$http.get("/comment/like?id=29178366&cid=12840183&t=1&type=0");
-                 if(result.status !== 200) {
-                    return this.$message.error(" 获取点赞失败！");
-                 }
-                 console.log("点赞");
-                 console.log(result);
+              // 先判断有没有点过赞
+              if(e.target.getAttribute("data-islike")){
+                 // 如果已经点赞了
+                  return
 
+              } else {
+              // 如果没有点赞
+              // 给点击的对象添加自定义属性以及红色样式 然后给数字+1 
+                e.target.setAttribute("data-islike","1");
+                e.target.textContent = parseInt(e.target.textContent)+1;
+                e.target.setAttribute('style', 'color: red');
+                  // 获取cookie 然后发起点赞请求接口
+                var cookie = window.sessionStorage.getItem("cookie");
+                // 然后发起点赞请求接口
+                 this.$http.get("/comment/like?id=" +
+                  this.Songid + "&cid=" +
+                  commentId + "&t=1&type=0"+
+                  "&cookie=" + cookie)
+                  // .then(res => {
+                  //   console.log("点赞回调");
+                  //   console.log(res);
+                  // })
+              }
             }else {
+              // 没登录则请登录后再操作
                 return  this.$message.error(" 请登录后再操作！");
             }
         }
@@ -136,6 +221,8 @@ export default {
     mounted() {
         this.getHotComment();
         this.GetData(this.data);
+
+        this.getAllComment();
     },
 }
 </script>
@@ -238,5 +325,10 @@ export default {
 }
 .el-textarea {
     width: 89%!important;
-}   
+}
+
+.My-new-icondianzan {
+      // 鼠标小手
+  cursor:pointer;
+}
 </style>

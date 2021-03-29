@@ -84,7 +84,10 @@ export default {
           console.log(window.sessionStorage.getItem("userToken"))
           //存放userid
           window.sessionStorage.setItem('UserId', this.id);
-
+          console.log(result.data.cookie);
+          // 保存 cookie (大部分需要登录的接口都要用到) encodeURIComponent()用于编译cookie
+          var cookie = encodeURIComponent(result.data.cookie)
+          window.sessionStorage.setItem('cookie', cookie);
         }else return this.$message.error("登录失败");
 
         // 跳转到首页

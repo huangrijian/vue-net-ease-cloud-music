@@ -18,7 +18,7 @@
                 <div class="SearchAndLogin">
                   <el-button class="el-icon-search" type="text" @click="Search"></el-button>
                   <span style="padding:0 15px">|</span>
-                  <span  @click="login" v-if="islogin">登录</span>
+                  <span  @click="login" v-if="islogin"><i class="My-new-iconwode1" style="margin-right:3px"></i>登录</span>
                    <Dialog v-if="dialogFlag"></Dialog> 
                   <img :src="avatarUrls" v-if="dialogFlag" alt=""  class="SearchAndLoginImg">
                   <!-- 登录后的下拉选项 -->
