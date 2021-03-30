@@ -14,6 +14,7 @@
                   <li class="floatLeft" :class="{fontcolor: fontlist == 4 }" @click="GotoSinger();changefontdiv(4)"><i class="My-new-iconyinle1"></i>歌手<div :class="{fontdiv: fontlist == 4 }"></div></li>
                   <li class="floatLeft" :class="{fontcolor: fontlist == 5 }" @click="GotoMV();changefontdiv(5)"><i class="My-new-iconzhibo"></i>MV<div :class="{fontdiv: fontlist == 5 }"></div></li>
                   <li class="floatLeft" :class="{fontcolor: fontlist == 6 }" @click="Gotosearch();changefontdiv(6)"><i class="My-new-iconsousuo"></i>搜索<div :class="{fontdiv: fontlist == 6 }"></div></li>
+                   <li class="floatLeft" :class="{fontcolor: fontlist == 7 }" @click="GOtoFriend();changefontdiv(7)"><i class="My-new-iconpintuan"></i>朋友<div :class="{fontdiv: fontlist == 7 }"></div></li>
                 </ul>
                 <div class="SearchAndLogin">
                   <el-button class="el-icon-search" type="text" @click="Search"></el-button>
@@ -128,6 +129,10 @@ export default {
     // GOtoSongList
     GOtoSongList(){
       this.$router.push('/SongList')
+    },
+    // 
+    GOtoFriend(){
+      this.$router.push('/friend')
     },
 
      // 获取用户详情

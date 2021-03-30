@@ -50,6 +50,9 @@ import searchDetails from '@/views/search/searchDetails.vue'
 // 歌曲详情
 import SongDetails from '@/views/Song/SongDetails.vue'
 
+// 朋友
+import friend from '@/views/friend/friend.vue'
+
 // 全局使用路由
 Vue.use(VueRouter)
     // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
@@ -153,6 +156,14 @@ const routes = [{
                 }
             },
         ]
+    },
+    {
+      path:'/friend',
+      component:friend,
+      name:'friend',
+      meta: {
+        title:'朋友'
+      }
     },
     // MV
     {

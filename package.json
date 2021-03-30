@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "better-scroll": "^2.2.1",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.1",
     "popper.js": "^1.16.1",

@@ -206,10 +206,6 @@ export default {
                   this.Songid + "&cid=" +
                   commentId + "&t=1&type=0"+
                   "&cookie=" + cookie)
-                  // .then(res => {
-                  //   console.log("点赞回调");
-                  //   console.log(res);
-                  // })
               }
             }else {
               // 没登录则请登录后再操作
