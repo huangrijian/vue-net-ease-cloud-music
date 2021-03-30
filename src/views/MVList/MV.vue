@@ -63,10 +63,6 @@ export default {
             this.orderflag = index;
             this.currentorder = item;
         },
-
-    },
-    mounted() {
-
     },
 }
 </script>

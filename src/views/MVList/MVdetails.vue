@@ -131,7 +131,6 @@ export default {
   data() {
     return {
 
-
        // 接受动态路由传来的参数(用户id)
       MVid: this.$route.params.id,
 
@@ -195,7 +194,6 @@ export default {
        this.changeSelectStyle = index;
      },
 
-
     // 获取相似MV
     async getsimiMV(){
         const result = await this.$http.get("/simi/mv?mvid=" + this.MVid);
@@ -206,15 +204,12 @@ export default {
         console.log(result.data);
         this.mvs = result.data.mvs
     },
-    
-    // 
+    // 去mv详情
      GoToMVdetails(id){
        this.$router.push({name:'MVdetails',params: {id:id}});
       //  局部刷新当前组件
        this.reload();
-    },
-      
-  
+    },     
     // 获取MV详细
     async getMVdetails(){
         const result = await this.$http.get("/mv/detail?mvid=" + this.MVid);
@@ -402,11 +397,8 @@ export default {
         }
       }
     }
-
-   
-    
   }
-  
+
   .dot {
     display: inline-block;
     width: 6px;
@@ -470,11 +462,7 @@ export default {
   }
 }
 
-
 // 右
-// personalRight {
-
-// }
 .grid-content-right {
     margin: 10px;
     border-radius: 5px;
@@ -499,7 +487,6 @@ export default {
   }
   .mycover {
     width: 100%;
-
     .introduce-time {
       margin-top: 15px;
     }
