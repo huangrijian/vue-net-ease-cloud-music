@@ -7,14 +7,13 @@
         <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content bg-purple"></div></el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="18">
             <div class="grid-content">
-                 <div class="block">
-                    <el-carousel height="200px">
-                        <el-carousel-item v-for="(item,index) in latestAlbum1" :key="index">
-                        <!-- <h3 class="small">{{ item }}</h3> -->
-                        <img v-for="(item,index) in latestAlbum2" :key="index" :src="item.pic" alt="" class="img-row-2">
-                        </el-carousel-item>
-                    </el-carousel>
-                </div>
+                  <el-carousel :interval="4000" type="card" height="245px">
+                    <el-carousel-item v-for="(item,index) in latestAlbum" :key="index">
+                      <a :href="item.url">
+                        <img :src="item.imageUrl" alt="" class="img-row-2">
+                      </a>
+                    </el-carousel-item>
+                  </el-carousel>
             </div>
         </el-col>
         <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content"></div></el-col>
@@ -25,7 +24,7 @@
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox">1</div></el-col>
         <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
             <div class="grid-content">
-              <h3>推荐歌单</h3>
+              <h3 class="recommendTit">推荐歌单</h3>
               <el-row>
                 <el-col :span="3" :key="index" v-for="(item,index) in Recommendresult1">
                   <div class="grid-content bg-purple" @click="gotolistdetails(item.id)">
@@ -137,10 +136,8 @@ export default {
           Recommendresult1 : '',
           Recommendresult2 : '',
           Recommendresult3 : '',
-
         // 最近专辑
-        latestAlbum1 : '',
-        latestAlbum2 : '',
+        latestAlbum:'',
 
         // 推荐歌曲
         latestsong : '',
@@ -198,8 +195,10 @@ export default {
   // 获取轮播图
   GetLatestAlbum(){
     GetLatestAlbum().then(res => {
-      this.latestAlbum1 = res.data.blocks[0].extInfo.banners.slice(0,5);
-      this.latestAlbum2 = res.data.blocks[0].extInfo.banners.slice(5,10);
+      console.log(res);
+      // this.latestAlbum1 = res.data.blocks[0].extInfo.banners.slice(0,5);
+      // this.latestAlbum2 = res.data.blocks[0].extInfo.banners.slice(5,10);
+      this.latestAlbum = res.banners
     })
   },
 
@@ -322,7 +321,9 @@ export default {
   display: inline-block;
   color: red;
 }
-
+.recommendTit {
+  margin-top: 0;
+}
 .RecommendSong li {
     position: relative;
     float: left;
@@ -378,9 +379,9 @@ export default {
   .img-row {
     width: 75%;
     border-radius: 5px;
+    box-shadow: 6px 6px 3px -1px rgba(37, 37, 37, 0.3);
   }
   .img-row-2 {
-      width: 32%;
       height: 100%;
       margin-right: 10px;
   }

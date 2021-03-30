@@ -10,12 +10,19 @@ export function GetRecommendPlaylist(limit){
   })
 }
 
+// // 获取轮播图
+// export function GetLatestAlbum(){
+//   return request({
+//     url:'/homepage/block/page',
+//   })
+// }
 // 获取轮播图
 export function GetLatestAlbum(){
   return request({
-    url:'/homepage/block/page',
+    url:'/banner?type=0',
   })
 }
+
 
 // 获取最新音乐
 export function GetLatestSong(){

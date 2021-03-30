@@ -15,6 +15,8 @@
       </span>
     </el-dialog>
 
+    <back-top></back-top>
+
         <!-- 导航栏 -->
       <nav-bar :UserId="Uid" @ClickSearch="ClickSearch"></nav-bar>
 
@@ -41,13 +43,15 @@ import aplayer from "vue-aplayer";
 import Bottom from '@/components/content/Bottom'
 import PopupSearchBox from '@/components/content/PopupSearchBox'
 import NavBar from '@/components/content/navbar/NavBar'
+import BackTop from './components/common/backTop/backTop.vue';
 
 export default {
   components: { 
     aplayer,
     Bottom,
     PopupSearchBox,
-    NavBar
+    NavBar,
+    BackTop
   },
 
   //局部刷新组件要用到的方法 

@@ -262,29 +262,6 @@ export default {
 </script>
 <style lang="less" scoped>
 
-// home背景
-.SingerDetails {
-  background-image: url('~assets/img/bjgif.gif');
-}
-
-// 基础样式
-a {
-  text-decoration:none;
-  color: #000;
-}
-a:hover{
-  color: rgb(255, 0, 0);
-}
-li {
-    // 鼠标小手
-  cursor:pointer;
-}
-ul,li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 // 导航栏
 .homenav {
   padding: 8px 0 ;
@@ -337,10 +314,11 @@ ul,li {
 .grid-content .main-right,
 .grid-content .main-left {
     width: 100%;
+    box-shadow: 3px 25px 35px 3px rgba(233, 232, 232,0.5);
+    margin-top: 5px;
 }
 .main-left {
     border-radius: 10px;
-    border:1px solid rgba(5, 5, 5,0.1);
 }
 
 // 左上
@@ -396,7 +374,6 @@ ul,li {
   border-radius: 10px;
   //  长宽定死
   box-sizing: border-box;
-  border:1px solid rgba(5, 5, 5,0.1);
      .top-title {
        span {
          color: red;
@@ -422,7 +399,6 @@ ul,li {
   margin-top: 15px;
   width: 100%;
   border-radius: 10px;
-  border:1px solid rgba(5, 5, 5,0.1);
   padding: 10px;
       //  长宽定死
      box-sizing: border-box;

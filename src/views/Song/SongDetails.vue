@@ -1,5 +1,6 @@
 <template>
     <div>
+
           <el-row :gutter="10">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox"></div></el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="12">
@@ -107,6 +108,7 @@
 </template>
 
 <script>
+import { getDocumentTop,getWindowHeight, getScrollHeight } from '@/assets/js/downLoad.js'
 export default {
     name:'SongDetails',
     data() {
@@ -120,9 +122,12 @@ export default {
             currentData:'',
             that:this,
             // AllComments
-            AllComments:'',
+            AllComments:[],
 
-            flag:"false"
+            flag:"false",
+
+            // 默认偏移量
+            offset:0
         }
     },
     filters:{
@@ -142,6 +147,14 @@ export default {
       }
     },
     methods: {
+
+       //下拉加载事件内容
+     scrollHander(){
+     if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+        //当滚动条到底时,这里是触发内容
+          this.getAllComment(this.Songid,this.offset);
+        }
+     },
       setlike(val,e){
         console.log(e);
         return val++
@@ -177,11 +190,13 @@ export default {
         },
 
         // 获取全部评论
-        async getAllComment(){
-            const result = await this.$http.get("/comment/music?id="+ this.Songid +'&limit=50');
+        async getAllComment(Songid, offset){
+            const result = await this.$http.get("/comment/music?id="+ Songid +'&limit=50&offset='+ offset);
             console.log("获取全部评论");
             console.log(result.data.comments);
-            this.AllComments = result.data.comments
+            // this.AllComments = result.data.comments
+            this.AllComments.push(...result.data.comments)
+            this.offset += 50
         },
 
         // 给评论点赞 /comment/like 
@@ -217,9 +232,16 @@ export default {
     mounted() {
         this.getHotComment();
         this.GetData(this.data);
+        this.getAllComment(this.Songid,this.offset);
 
-        this.getAllComment();
+        window.addEventListener( 'scroll', this.scrollHander)
+        
     },
+    // vue实例销毁时
+    destroyed () {
+      // 移除下拉监听事件
+	      window.removeEventListener('scroll', this.scrollHander)
+    }
 }
 </script>
 
@@ -327,4 +349,5 @@ export default {
       // 鼠标小手
   cursor:pointer;
 }
+
 </style>
