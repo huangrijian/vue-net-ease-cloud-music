@@ -41,8 +41,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        phone: "13030190129",
-        password: "IOP760198",
+        phone: "",
+        password: "",
       },
       id:'',
       rules: {

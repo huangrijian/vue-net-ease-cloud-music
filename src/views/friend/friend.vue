@@ -159,16 +159,21 @@ export default {
   },
   methods:{
      BackTop(e){
-     
+    //  设置起点坐标和终点坐标
       let start = 100;
       let end = 870;
       let animation = setInterval(() => {
+        // 每毫秒向上移动5px
         start += 5
        e.target.setAttribute('style', ' bottom: '+ start +'px;');
+      //  当达到终点坐标时
        if(start > end) {
           this.flag = true;
+          // 清除定时器
           clearInterval(animation);
+          // 回退起点
           e.target.setAttribute('style', ' bottom:100px;');
+          // 播放800毫秒的特效
           setTimeout(() => {
               this.flag = false;
           },800)
