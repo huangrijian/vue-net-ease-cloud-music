@@ -1,126 +1,98 @@
 <template>
   <div class="home">
-    
-
+  
     <!-- 轮播图 -->
-    <el-row :gutter="10" class="el-row01" style="margin-bottom: 10px">
-        <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="18">
-            <div class="grid-content">
-                  <el-carousel :interval="4000" type="card" height="245px">
-                    <el-carousel-item v-for="(item,index) in latestAlbum" :key="index">
-                      <a :href="item.url">
-                        <img :src="item.imageUrl" alt="" class="img-row-2">
-                      </a>
-                    </el-carousel-item>
-                  </el-carousel>
-            </div>
-        </el-col>
-        <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="3"><div class="grid-content"></div></el-col>
-    </el-row>
+  <div class="layoutBox">
+    <layout class="layoutBox">
+      <el-carousel :interval="4000" type="card" height="245px">
+        <el-carousel-item v-for="(item,index) in latestAlbum" :key="index">
+          <a :href="item.url">
+            <img :src="item.imageUrl" alt="" class="img-row-2">
+          </a>
+        </el-carousel-item>
+      </el-carousel>
+    </layout>
+  </div>
 
-    <!-- 推荐歌单 -->
-    <el-row :gutter="10">
-        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox">1</div></el-col>
-        <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-            <div class="grid-content">
-              <h3 class="recommendTit">推荐歌单</h3>
-              <el-row>
-                <el-col :span="3" :key="index" v-for="(item,index) in Recommendresult1">
-                  <div class="grid-content bg-purple" @click="gotolistdetails(item.id)">
-                    <img :src="item.picUrl" alt="" class="img-row">
-                    <div>{{item.name}}</div>
-                  </div>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="3" :key="index" v-for="(item,index) in Recommendresult2">
-                  <div class="grid-content bg-purple" @click="gotolistdetails(item.id)">
-                    <img :src="item.picUrl" alt="" class="img-row">
-                     <div>{{item.name}}</div>
-                  </div>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="3" :key="index" v-for="(item,index) in Recommendresult3">
-                  <div class="grid-content bg-purple" @click="gotolistdetails(item.id)">
-                    <img :src="item.picUrl" alt="" class="img-row">
-                     <div>{{item.name}}</div>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
-        </el-col>
-        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content visibilityBox">4</div></el-col>
-    </el-row>
+  <div class="layoutBox">
+     <layout class="layoutBox">
+        <song-list title="推荐歌单">
+          <li slot="songlist" :key="index" v-for="(item,index) in Recommendresult">
+            <img :src="item.picUrl" alt="" >
+            <div>{{item.name}}</div>
+          </li>
+        </song-list>
+     </layout>
+  </div>
 
     <!-- 推荐新歌 -->
-    <el-row :gutter="10">
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="3"><div class="grid-content bg-purple visibilityBox">1</div></el-col>
-        <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="18">
-            <div class="grid-content">
-                <h3>推荐新歌曲</h3>
-                <ul class="RecommendSong">
-                  <li :key="index" v-for="(item,index) in latestsong" @mouseover="showdiv(index + 1 )"  @click="playSong(item.id,item.picUrl,item.name,item.song.artists[0].name)">
-                    <div style="display:inline-block;padding-left:25px">
-                      <a href="javascript:;" class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index+1 }"></a>
-                      <span class="marginbox" :class="{isshow: isshowturediv == index+1 }" >0{{index + 1 }}</span>
-                    </div>
-                    <!-- 歌曲封面 -->
-                    <img :src="item.picUrl" alt="" class="img-sm">
-                    <!-- 歌名与歌手名称 -->
-                    <div style="display:inline-block">
-                      <div>{{item.name}}</div>
-                      <div style="margin-top:15px">{{item.song.artists[0].name}}</div>
-                    </div>
-                    <!-- 专辑名称 -->
-                    <div style="display:inline-block" class="album">
-                      <div>《{{item.song.album.name}}》</div>
-                    </div>
-                    <!-- 歌曲时长 -->
-                    <div class="time">
-                      <div>03:27</div>
-                    </div>
-                  </li>
-                </ul>
+  <div class="layoutBox">
+    <layout>
+      <title-box title="推荐新歌"></title-box>
+      <ul class="RecommendSong">
+        <li :key="index" v-for="(item,index) in latestsong" @mouseover="showdiv(index + 1 )"  @click="playSong(item.id,item.picUrl,item.name,item.song.artists[0].name)">
+            <div style="display:inline-block;padding-left:25px">
+              <a href="javascript:;" class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index+1 }"></a>
+              <span class="marginbox" :class="{isshow: isshowturediv == index+1 }" >0{{index + 1 }}</span>
             </div>
-        </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="3"><div class="grid-content visibilityBox">4</div></el-col>
-    </el-row>
+            <!-- 歌曲封面 -->
+            <img :src="item.picUrl" alt="" class="img-sm">
+            <!-- 歌名与歌手名称 -->
+            <div style="display:inline-block">
+              <div>{{item.name}}</div>
+              <div style="margin-top:15px">{{item.song.artists[0].name}}</div>
+            </div>
+            <!-- 专辑名称 -->
+            <div style="display:inline-block" class="album">
+              <div>《{{item.song.album.name}}》</div>
+            </div>
+            <!-- 歌曲时长 -->
+            <div class="time">
+              <div>03:27</div>
+            </div>
+         </li>
+      </ul>          
+    </layout>
+  </div>
 
     <!-- 推荐歌手 -->
-    <el-row :gutter="10">
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="3"><div class="grid-content bg-purple visibilityBox">1</div></el-col>
-        <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="18">
-            <div class="grid-content">
-               <h3>推荐歌手</h3>
-                <ul class="RecommendSinger">
-                  <li :key="index" v-for="(item,index) in hotSinger" @click="goSingerdetails(item.id)">
-                    <img :src="item.img1v1Url" alt="" class="hotSingerimg">
-                    <div class="hotSingerdiv">
-                      <span>{{item.name}}</span>
-                      <div>单曲数：{{item.musicSize}}</div>
-                    </div>
-                  </li>
-                </ul>
+   <div class="layoutBox">
+    <layout class="layoutBox">
+      <title-box title="推荐歌手"></title-box>
+      <ul class="RecommendSinger">
+        <li :key="index" v-for="(item,index) in hotSinger" @click="goSingerdetails(item.id)">
+          <img :src="item.img1v1Url" alt="" class="hotSingerimg">
+            <div class="hotSingerdiv">
+              <span>{{item.name}}</span>
+              <div>单曲数：{{item.musicSize}}</div>
             </div>
-        </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="3"><div class="grid-content visibilityBox">4</div></el-col>
-    </el-row>
+        </li>
+      </ul>
+    </layout>
+   </div>
+
   </div>
 </template>
 
 <script>
 import { GetRecommendPlaylist,
          GetLatestAlbum,
-         GetLatestSong,
-         GetLyric,
-         GetSongUrl
+         GetLatestSong
 } from '@/network/home.js'
+// 布局组件
+import layout from '../../components/content/layout/layout.vue';
+// 歌单组件
+import SongList from '@/components/content/song_list/SongList.vue'
+// 小标题组件
+import TitleBox from '../../components/common/Title/title.vue';
+
 
 export default {
+  components: { 
+    layout,
+    SongList,
+    TitleBox
+  },
   name:'home',
   data() {
       return {
@@ -133,9 +105,7 @@ export default {
         input:'',
 
         // 推荐歌单
-          Recommendresult1 : '',
-          Recommendresult2 : '',
-          Recommendresult3 : '',
+        Recommendresult:'',
         // 最近专辑
         latestAlbum:'',
 
@@ -162,8 +132,6 @@ export default {
   showdiv(index){
       this.isshowturediv = index
     },
-
-  
   /*
   *
   * 以下是路由跳转相关的方法
@@ -185,10 +153,8 @@ export default {
   */ 
   // 获取推荐歌单
   GetRecommendPlaylist(){
-    GetRecommendPlaylist(24).then(res => {
-      this.Recommendresult1 = res.result.slice(0,8);
-      this.Recommendresult2 = res.result.slice(8,16);
-      this.Recommendresult3 = res.result.slice(16);
+    GetRecommendPlaylist(30).then(res => {
+      this.Recommendresult = res.result
     })
   },
 
@@ -324,6 +290,9 @@ export default {
 .recommendTit {
   margin-top: 0;
 }
+.recommendBox {
+  display: flex;
+}
 .RecommendSong li {
     position: relative;
     float: left;
@@ -418,7 +387,9 @@ export default {
 }
 
 
-
+.layoutBox {
+  margin-bottom: 30px;
+}
 
 
 </style>

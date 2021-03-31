@@ -1,9 +1,14 @@
 <template>
   <div class="grid-content">
-    <h2>{{title}}</h2>
+    <div class="grid-content-tit">
+      <div class="TitSpan"></div>
+      <span>{{title}}</span>
+    </div>
+
      <ul class="rankingUl">
        <slot name="songlist"></slot>
      </ul>
+
   </div>
 </template>
 <script>
@@ -44,5 +49,21 @@ export default {
     -webkit-box-orient:vertical;
     -webkit-line-clamp:1;//以此类推，3行4行直接该数字就好啦
   }
+.grid-content-tit {
+  display: flex;
+  margin-bottom: 10px;
+  // 垂直居中
+  align-items: center;
+  span {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .TitSpan{
+      width: 3px;
+      height: 20px;
+      background-color: red;
+      margin-right: 7px;
+  }
+}
 
 </style>

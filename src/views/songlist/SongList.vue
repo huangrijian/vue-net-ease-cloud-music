@@ -19,7 +19,6 @@
             <img :src="item.coverImgUrl" alt="">
             <div>{{item.name}}</div>
           </li>
-          
         </song-list>
       </layout>
 
