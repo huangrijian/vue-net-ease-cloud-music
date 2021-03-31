@@ -224,7 +224,8 @@ export default {
               }
             }else {
               // 没登录则请登录后再操作
-                return  this.$message.error(" 请登录后再操作！");
+                this.$message.warning(" 请登录后再操作！");
+                return  this.$router.push("/login");
             }
         }
     },
