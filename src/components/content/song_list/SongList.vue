@@ -1,19 +1,21 @@
 <template>
   <div class="grid-content">
     <div class="grid-content-tit">
-      <div class="TitSpan"></div>
-      <span>{{title}}</span>
+      <title-box :title="title"></title-box>
     </div>
-
      <ul class="rankingUl">
        <slot name="songlist"></slot>
      </ul>
-
   </div>
 </template>
 <script>
+// 小标题组件
+import TitleBox from '@/components/common/Title/title.vue';
 export default {
-  props:['title']
+  props:['title'],
+  components:{
+    TitleBox
+  }
 }
 </script>
 <style lang="less">

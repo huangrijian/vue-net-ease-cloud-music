@@ -14,10 +14,11 @@
     </layout>
   </div>
 
+  <!-- 推荐歌单 -->
   <div class="layoutBox">
      <layout class="layoutBox">
         <song-list title="推荐歌单">
-          <li slot="songlist" :key="index" v-for="(item,index) in Recommendresult">
+          <li slot="songlist" :key="index" v-for="(item,index) in Recommendresult" @click="gotolistdetails(item.id)">
             <img :src="item.picUrl" alt="" >
             <div>{{item.name}}</div>
           </li>

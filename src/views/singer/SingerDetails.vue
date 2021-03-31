@@ -160,55 +160,8 @@ export default {
   z-index: -1;
 }
 
-// home背景
-.SingerDetails {
-  background-image: url('~assets/img/bjgif.gif');
-}
 
-// 基础样式
-a {
-  text-decoration:none;
-  color: #000;
-}
-a:hover{
-  color: rgb(255, 0, 0);
-}
-ul,li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-// 导航栏
-.homenav {
-  padding: 8px 0 ;
-  /*flex 布局*/
-    display: flex;
-    /*实现垂直居中*/
-    align-items: center;
-    position: relative;
-}
-
-.navigation li{
-  padding: 0 20px;
-  font-size: 14px;
-}
-
-.logo img{
-  width: 220px;
-}
-.floatLeft {
-  float: left;
-  // 鼠标小手
-  cursor:pointer;
-  .reddot {
-    width: 5px;
-    height: 5px;
-    background: red;
-    border-radius: 50%;
-    margin: 5px auto;
-  }
-}
 
 .SearchAndLogin {
     position: absolute;

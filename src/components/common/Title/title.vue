@@ -1,13 +1,27 @@
 <template>
     <div class="grid-content-tit">
-      <div class="TitSpan"></div>
+      <div class="TitSpan" v-if="flag"></div>
       <span>{{title}}</span>
     </div>
 </template>
 <script>
 export default {
-  props:['title']
+  props:{
+      title:{
+        type: String,
+        default(){
+          return null
+        }
+      },
+  },
+  computed:{
+    flag(){
+      if(this.title) return true
+      return false
+    }
+  }
 }
+
 </script>
 <style lang="less" scoped>
 .grid-content-tit {
