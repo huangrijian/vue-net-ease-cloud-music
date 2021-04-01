@@ -1,71 +1,70 @@
 <template>
     <div>
-        <el-row :gutter="10">
-            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox"></div></el-col>
-            <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-                <div class="grid-content">
-                    <div class="top">
-                        <div class="top-title">搜索结果</div>
-                        <div :class="{fontcolor: current == 1 }" @click="changefontdiv(1);changeflag0()">单曲</div>
-                        <div :class="{fontcolor: current == 2 }" @click="changefontdiv(2);changeflag1()" >歌手</div>
-                        <div :class="{fontcolor: current == 3 }" @click="changefontdiv(3);changeflag2()" >专辑</div>
-                        <div :class="{fontcolor: current == 4 }" @click="changefontdiv(4);changeflag3()" >歌单</div>
+      <layout>
+         <div class="top">
+            <div class="top-title">搜索结果</div>
+            <div :class="{fontcolor: current == 1 }" @click="changefontdiv(1);changeflag0()">单曲</div>
+            <div :class="{fontcolor: current == 2 }" @click="changefontdiv(2);changeflag1()" >歌手</div>
+            <div :class="{fontcolor: current == 3 }" @click="changefontdiv(3);changeflag2()" >专辑</div>
+            <div :class="{fontcolor: current == 4 }" @click="changefontdiv(4);changeflag3()" >歌单</div>
+        </div>
+        <div class="main">
+            <!-- 单曲 -->
+              <div v-show="flag0">
+                <h1 style="visibility:hidden">热门作品</h1>
+                <ul>
+                    <li class="Songli">
+                    <div class="num">序号</div>
+                    <div class="song">歌曲</div>
+                    <div class="album">专辑</div>
+                    <div class="time">时长</div>
+                    </li>
+                    <li class="Songli Songlifont" :key="index" v-for="(item,index) in searchVal"  @mouseover="showdiv(index + 1 )"   @click="playMisic(item.id)">
+                    <div class="font-box">
+                        <div :class="{isshow: isshowturediv == index + 1 }">{{index + 1}}</div>
+                        <span class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index + 1 }"></span>
                     </div>
-                    <div class="main">
-                        <!-- 单曲 -->
-                         <div v-show="flag0">
-                            <h1 style="visibility:hidden">热门作品</h1>
-                            <ul>
-                                <li class="Songli">
-                                <div class="num">序号</div>
-                                <div class="song">歌曲</div>
-                                <div class="album">专辑</div>
-                                <div class="time">时长</div>
-                                </li>
-                                <li class="Songli Songlifont" :key="index" v-for="(item,index) in searchVal"  @mouseover="showdiv(index + 1 )"   @click="playMisic(item.id)">
-                                <div class="font-box">
-                                    <div :class="{isshow: isshowturediv == index + 1 }">{{index + 1}}</div>
-                                    <span class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index + 1 }"></span>
-                                </div>
-                                <div class="song">
-                                    <img :src="item.al.picUrl" alt="" class="Songimg">
-                                    <div style="float: left;">{{item.name}}</div>
-                                </div>
-                                <div class="album">
-                                    <span>{{item.al.name}}</span>
-                                </div>
-                                <div class="time">还没做时长ʕ•ﻌ•ʔ...</div>
+                    <div class="song">
+                        <img :src="item.al.picUrl" alt="" class="Songimg">
+                        <div style="float: left;">{{item.name}}</div>
+                    </div>
+                    <div class="album">
+                        <span>{{item.al.name}}</span>
+                    </div>
+                    <div class="time">还没做时长ʕ•ﻌ•ʔ...</div>
 
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- 歌手 -->
-                         <div v-show="flag1" class="SingerList" style="dispaly:block">
-                            <div class="SingerListLi" :key="index" v-for="(item,index) in searchValSinger" @click="goSingerdetails(item.id)">
-                                <img :src="item.picUrl" alt="">
-                                <div class="name">{{item.name}}</div>
-                                <span>专辑数: {{item.albumSize}}</span>
-                            </div>
-                         </div>
-                         <!-- 专辑 -->
-                         <div v-show="flag2">
-                            <ul class="rankingUl">
-                                <!-- featureRankingglobal -->
-                                <li :key="index" v-for="(item,index) in searchValAlbums" @click="GotorankingDetails(item.id)">
-                                    <img :src="item.picUrl" alt="">
-                                    <div class="rankingNameglobal">{{item.name}}</div>
-                                </li>
-                            </ul>
-                         </div>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 歌手 -->
+              <div v-show="flag1" class="SingerList" style="dispaly:block">
+                <div class="SingerListLi" :key="index" v-for="(item,index) in searchValSinger" @click="goSingerdetails(item.id)">
+                    <img :src="item.picUrl" alt="">
+                    <div class="name">{{item.name}}</div>
+                    <span>专辑数: {{item.albumSize}}</span>
                 </div>
-            </el-col>
-            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content visibilityBox"></div></el-col>
-        </el-row>
+              </div>
+              <!-- 专辑 -->
+              <div v-show="flag2">
+                <ul class="rankingUl">
+                    <!-- featureRankingglobal -->
+                    <li :key="index" v-for="(item,index) in searchValAlbums" @click="GotorankingDetails(item.id)">
+                        <img :src="item.picUrl" alt="">
+                        <div class="rankingNameglobal">{{item.name}}</div>
+                    </li>
+                </ul>
+              </div>
+        </div>
+      </layout>
     </div>
 </template>
 <script>
+import layout from '@/components/content/layout/layout.vue'
+import {playMisic } from '@/network/PlayMisic.js'
 export default {
+  components:{
+    layout
+  },
     // 从父组件接受参数
   props: ['searchVal','keyword1','searchValSinger','searchValAlbums'],
   data() {
@@ -142,55 +141,17 @@ export default {
         this.flag3 = true;
     },
 
-      async playMisic(SongUrlid){
-       
-      // 获取音乐播放地址
-      const result = await this.$http.get("/song/url?id=" + SongUrlid );
-      console.log(result.data.data[0].url);
+  playMisic(id){
+    // 调用引入的playMisic.js 返回一个 promise对象的结果  因为promise是异步操作得到的结果所以注意必须加.then才能获取到值
+    playMisic(id).then(musicdata => {
 
-          //2. 获取歌曲详细信息 歌名 -> 作者 
-    const result1 = await this.$http.get("/song/detail?ids="+ SongUrlid);
-        if (result.status !== 200) {
-          return this.$message.error("获取失败！");
-    }
-    console.log("歌曲详细");
-    console.log(result1.data.songs[0]);
-    var songname = result1.data.songs[0].name
-    var songpic = result1.data.songs[0].al.picUrl
-    var singer = result1.data.songs[0].ar[0].name
-    //3. 获取歌词 /lyric?id=
-    const result2 = await this.$http.get("/lyric?id="+ SongUrlid);
-        if (result2.status !== 200) {
-          return this.$message.error("获取失败！");
-    }
-
-      this.playUrl =  result.data.data[0].url
-
-      
-    if(result2.data.nolyric){
-         var musicdata = {
-        playUrl:this.playUrl,
-        picUrl:songpic,
-        picname:songname,
-        Singer:singer,
-         lyric:'[00:00.00]  暂无歌词 那我给大家跳段街舞好了 ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ',
-      }
-    }else {
-         var musicdata = {
-        playUrl:this.playUrl,
-        picUrl:songpic,
-        picname:songname,
-        Singer:singer,
-        lyric:result2.data.lrc.lyric,
-      }
-    }
-        
-      // 发送给父亲.vue
-      this.$emit('getMusicMessage', musicdata);
-    
+      // 通过事件总线发送事件并传入数据
+    this.$bus.$emit('getMusicMessage',musicdata)
     // 跳转到评论区
-     this.$router.push({name:'SongDetails',query: {id:SongUrlid,data:musicdata}})
-  },
+     this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+    });
+  }
+
   },
    mounted() {
     //    进入页面后默认第一个显示（歌曲）
@@ -200,39 +161,20 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-// 基础样式
-            a {
-            text-decoration: none;
-            color: #000;
-            }
-            a:hover {
-            color: rgb(255, 0, 0);
-            }
-            ul,
-            li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            }
-            ul {
-            width: 100%;
-            }
-// 基础样式 end
-    .top {
-        margin-top: 20px;
-        overflow: hidden;
-        div {
-          float: left;
-          margin: 0 25px;
-          font-size: 14px;
-        }
-       
-        .top-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
+.top {
+    margin-top: 20px;
+    overflow: hidden;
+    div {
+      float: left;
+      margin: 0 25px;
+      font-size: 14px;
     }
+    
+    .top-title {
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
 
     .main {
     // 单曲

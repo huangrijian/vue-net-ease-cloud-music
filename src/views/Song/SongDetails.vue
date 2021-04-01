@@ -1,6 +1,5 @@
 <template>
     <div>
-
           <el-row :gutter="10">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox"></div></el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="12">
@@ -33,7 +32,7 @@
                            <el-input
                             type="textarea"
                             :rows="3"
-                            placeholder="请输入内容"
+                            placeholder="请输入内容并按回车键发送"
                             v-model="textarea"
                             class="inputbox"
                             size="350"
@@ -131,6 +130,7 @@ export default {
         }
     },
     filters:{
+      // 格式化时间
       filtrationTime(val,that){
         var newTime = new Date(val);
         var year = newTime.getFullYear()+'年';
@@ -140,21 +140,18 @@ export default {
         var Minutes = that.zeroize(newTime.getMinutes());
          return [year,month,date,Hours,Minutes].join('')
       },
-
-      capitalize(e){
-        console.log("capitalize");
-        console.log(e.target);
-      }
     },
     methods: {
 
        //下拉加载事件内容
      scrollHander(){
      if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+       console.log(1);
         //当滚动条到底时,这里是触发内容
           this.getAllComment(this.Songid,this.offset);
         }
      },
+    //  点赞+1
       setlike(val,e){
         console.log(e);
         return val++
@@ -172,10 +169,10 @@ export default {
       async SendComment(content){
         let cookie = window.sessionStorage.getItem('cookie', cookie);
         const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+cookie);
-        console.log(result.data);
+        // 清空输入域
         this.textarea = '';
-        console.log("再次获取评论");
-        this.getAllComment();
+        // 新增数据
+        this.AllComments.unshift(result.data.comment)
       },
 
         // 获取热门评论
@@ -184,17 +181,13 @@ export default {
              if (result.status !== 200) {
                 return this.$message.error(" 获取热门评论失败！");
             }
-            console.log("评论");
-            console.log(result.data.hotComments);
             this.hotComments = result.data.hotComments
         },
 
-        // 获取全部评论
+        // 获取全部评论 
         async getAllComment(Songid, offset){
             const result = await this.$http.get("/comment/music?id="+ Songid +'&limit=50&offset='+ offset);
-            console.log("获取全部评论");
-            console.log(result.data.comments);
-            // this.AllComments = result.data.comments
+            // 解构对象
             this.AllComments.push(...result.data.comments)
             this.offset += 50
         },
@@ -229,14 +222,15 @@ export default {
             }
         }
     },
+    created(){
+       this.getAllComment(this.Songid,this.offset);
+      //  添加下拉监听事件函数
+       window.addEventListener( 'scroll', this.scrollHander)
+    },
     // DOM渲染完毕可执行
     mounted() {
         this.getHotComment();
         this.GetData(this.data);
-        this.getAllComment(this.Songid,this.offset);
-
-        window.addEventListener( 'scroll', this.scrollHander)
-        
     },
     // vue实例销毁时
     destroyed () {

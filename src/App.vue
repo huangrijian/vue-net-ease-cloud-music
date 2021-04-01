@@ -15,26 +15,25 @@
       </span>
     </el-dialog>
 
+    <!-- 返回顶部 -->
     <back-top></back-top>
 
         <!-- 导航栏 -->
       <nav-bar :UserId="Uid" @ClickSearch="ClickSearch"></nav-bar>
 
-      <!-- 局部刷新以下页面 -->
+      <!-- 局部刷新以下页面  keep-alive 保存状态-->
       <keep-alive exclude="search,SongDetails,rankingdetails,MVdetails,SingerDetails,user">
-        <router-view @getUserid="UserId" @getMusicMessage="showMusicMessage"  v-if="isRouterShow"></router-view>
+        <router-view @getUserid="UserId"  v-if="isRouterShow"></router-view>
       </keep-alive>
     
 
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-    <aplayer  v-show="show2" :music="audio[0]" :showLrc="true" :autoplay="true"  class="Aplayer"></aplayer>
+      <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>
     
-
   <!-- 底部 -->
   <Bottom></Bottom>
 
   </div>
-
 
 </template>
 
@@ -76,10 +75,43 @@ export default {
 
       input:'',
 
-       show2: true
+      aplayerFlag : false
     }
   },
+  created(){
+    // 接收音乐数据
+    this.$bus.$on('getMusicMessage', (val) => {
+           // 音乐组件做一次上移操作
+        {
+          let Aplayer = document.querySelector('.Aplayer')
+          let strat = -90;
+          let end = -5;
+          let timer = setInterval(() => {
+            if(!this.aplayerFlag){
+                Aplayer.setAttribute('style','bottom:'+ ++strat +'px')
+                if(strat == end ) {
+                  // 上移操作只会执行一次
+                  this.aplayerFlag = true;
+                  // 清空定时器
+                  clearInterval(timer)
+                } 
+            } else return 
+          },1)
+        }
+      //  获取得到的音乐数据 
+        var data = {
+            src: val.playUrl,
+            title:val.picname,
+            artist:val.Singer,
+            pic:val.picUrl,
+            lrc: val.lyric,
+        }
+        // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
+        this.$set(this.audio,0,data);
+    })
+  },
   methods: {
+
   //  搜索弹框处理函数 
   GotosearchDetails(keyword){
   // 跳转路由并把关键词传过去
@@ -93,11 +125,6 @@ export default {
       this.dialogVisible = true
   },
 
-  // 鼠标悬浮事件处理函数
-  mouseover(){
-      console.log(99);
-
-  },
     // 将登录后传入的用户id再次
     UserId(val){
       console.log(val);
@@ -111,20 +138,6 @@ export default {
       this.isRouterShow = true
     },
 
-      // 接收音乐地址等相关数据  进入路由自动执行一次
-      showMusicMessage(val){
-        console.log("音乐相关");
-        console.log(val);
-        var data = {
-            src: val.playUrl,
-            title:val.picname,
-            artist:val.Singer,
-            pic:val.picUrl,
-            lrc: val.lyric,
-        }
-        // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
-        this.$set(this.audio,0,data);
-      },
 },
 
 
@@ -144,7 +157,7 @@ export default {
 .Aplayer {
   width: 100%;
   position: fixed!important;
-  bottom: -5px;
+  bottom: -90px;
   left: -5px;
   z-index: 1;
 }

@@ -4,7 +4,7 @@
             <el-input v-model="keyword" placeholder="请输入内容" class="inputbox" @change="GotoSearchDetails(keyword);GotoSearchSinger(keyword);GotoSearchAlbum(keyword)"></el-input>
         </div>
             <!-- 路由占位符 -->
-        <router-view :searchVal="searchVal" :searchValSinger="searchValSinger" :searchValAlbums="searchValAlbums"  @getMusicMessage="showMsg"></router-view>
+        <router-view :searchVal="searchVal" :searchValSinger="searchValSinger" :searchValAlbums="searchValAlbums"></router-view>
     </div>
 
 </template>
@@ -43,11 +43,6 @@ export default {
       }
     },
     methods: {
-
-        showMsg (val) {   // val即为子组件传过来的值
-        console.log(val);
-        this.$emit('getMusicMessage', val);
-        },
             // 去搜索详情（发送歌曲）   搜索接口 /search?keywords= 
             async GotoSearchDetails(keyword){
                 // 

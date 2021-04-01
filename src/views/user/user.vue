@@ -86,7 +86,7 @@
                  <div class="grid-content">
                     <!-- 最近一周 -->
                     <play-song  v-show="(flag1)">
-                      <li slot="songli" :key="index" v-for="(item,index) in recordWeek">
+                      <li slot="songli" :key="index" v-for="(item,index) in recordWeek" @click="playMusic(item.song.id)">
                         <div>{{index + 1 }}</div>
                         <div>
                           <img :src="item.song.al.picUrl" alt="">
@@ -100,7 +100,7 @@
 
                     <!-- 所有时间 -->
                     <play-song  v-show="(flag2)">
-                      <li slot="songli" :key="index" v-for="(item,index) in record">
+                      <li slot="songli" :key="index" v-for="(item,index) in record" @click="playMusic(item.song.id)">
                         <div><span>{{index + 1 }}</span></div>
                         <div>
                           <img :src="item.song.al.picUrl" alt="">
@@ -164,6 +164,7 @@
 
 <script>
 import PlaySong from '@/components/common/play_song/PlaySong'
+import {playMisic } from '@/network/PlayMisic.js'
 export default {
   name:'user',
   components:{
@@ -171,7 +172,6 @@ export default {
   },
   data() {
     return {
-
 
        // 接受动态路由传来的参数(用户id)
       UserId: this.$route.params.userdetailid,
@@ -214,6 +214,15 @@ export default {
       this.flag1 = true;
     },
 
+    playMusic(id){
+
+    playMisic(id).then(musicdata => {
+      // 通过事件总线发送事件并传入数据
+    this.$bus.$emit('getMusicMessage',musicdata)
+    // 跳转到评论区
+     this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+    });
+    },
 
      changeStyle(index){
        this.changeSelectStyle = index;
@@ -258,11 +267,9 @@ export default {
     // 获取用户播放记录(所有时间) /user/record?uid=32953014&type=1 
           async getUserRecord(){
         const result = await this.$http.get("/user/record?uid=" + this.UserId + "&type=0");
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
         // 用户播放记录
          this.record = result.data.allData
+         console.log("所有时间");
          console.log(this.record);
     },
 
@@ -270,9 +277,6 @@ export default {
      // 获取用户播放记录(最近一周) /user/record?uid=32953014&type=1 
         async getUserRecordWeek(){
         const result = await this.$http.get("/user/record?uid=" + this.UserId + "&type=1");
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
         // 用户播放记录
         this.recordWeek = result.data.weekData
     },

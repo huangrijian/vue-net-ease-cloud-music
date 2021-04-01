@@ -31,7 +31,7 @@
     <layout>
       <title-box title="推荐新歌"></title-box>
       <ul class="RecommendSong">
-        <li :key="index" v-for="(item,index) in latestsong" @mouseover="showdiv(index + 1 )"  @click="playSong(item.id,item.picUrl,item.name,item.song.artists[0].name)">
+        <li :key="index" v-for="(item,index) in latestsong" @mouseover="showdiv(index + 1 )"  @click="playSong(item.id)">
             <div style="display:inline-block;padding-left:25px">
               <a href="javascript:;" class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index+1 }"></a>
               <span class="marginbox" :class="{isshow: isshowturediv == index+1 }" >0{{index + 1 }}</span>
@@ -86,7 +86,8 @@ import layout from '../../components/content/layout/layout.vue';
 import SongList from '@/components/content/song_list/SongList.vue'
 // 小标题组件
 import TitleBox from '../../components/common/Title/title.vue';
-
+// 播放音乐的js
+import {playMisic } from '@/network/PlayMisic.js'
 
 export default {
   components: { 
@@ -113,17 +114,8 @@ export default {
         // 推荐歌曲
         latestsong : '',
         Singer:'',
-        // 音乐地址
-        playUrl:'',
-        // 音乐照片
-        picUrl:'',
-        // 音乐名称
-        picname:'',
-        flag: false,
-
         // 热门歌手
         hotSinger:'',
-        lyric:'',
 
         SongUrlid:''
       }
@@ -162,9 +154,6 @@ export default {
   // 获取轮播图
   GetLatestAlbum(){
     GetLatestAlbum().then(res => {
-      console.log(res);
-      // this.latestAlbum1 = res.data.blocks[0].extInfo.banners.slice(0,5);
-      // this.latestAlbum2 = res.data.blocks[0].extInfo.banners.slice(5,10);
       this.latestAlbum = res.banners
     })
   },
@@ -178,83 +167,18 @@ export default {
       
   },
 
-  // playSong(SongUrlid,img,name,singername){
-  //   this.SongUrlid = SongUrlid;
-  //   console.log(SongUrlid);
-  //   // 获取音乐播放地址
-  //   GetSongUrl(SongUrlid).then(res => {
-  //     console.log(res);
-  //     this.playUrl = res.data[0].url;
-  //     this.picUrl = img;
-  //     this.picname = name;
-  //     this.flag = true;
-  //     this.Singer = singername;
-  //   }).then(
-  //     GetLyric(SongUrlid).then(res => {
-  //       var musicdata = {
-  //       playUrl:this.playUrl,
-  //       picUrl:this.picUrl,
-  //       picname:this.picname,
-  //       Singer:this.Singer,
-  //       lyric:res,
-  //     }
-  //     //发送给app.vue
-  //     this.$emit('getMusicMessage', musicdata);
-  //     this.GotoSongDetails(SongUrlid,musicdata);
-  //     }))
-  // },
+  // 播放音乐
+  playSong(SongUrlid){
+    playMisic(SongUrlid).then(musicdata => {
+      this.$bus.$emit('getMusicMessage',musicdata)
+      this.$router.push({name:'SongDetails',query: {id:SongUrlid,data:musicdata}})
+    });
+  },
 
-
-  //播放音乐，添加图片,添加歌名,显示隐藏
-    async playSong(SongUrlid,img,name,singername){
-      console.log(SongUrlid);
-      // 保存id
-      this.SongUrlid = SongUrlid;
-      // 先获取id,再根据id调接口获取音乐播放地址
-      const result = await this.$http.get("/song/url?id=" + SongUrlid );
-      console.log(result.data.data[0].url);
-
-      this.playUrl =  result.data.data[0].url;
-      this.picUrl = img;
-      this.picname = name;
-      // 显示隐藏变量
-      this.flag = true;
-      // 歌手名称
-      this.Singer = singername;
-      // 获取歌词 -> getlyric是异步的方法 直接打印会出现提示：Promise {<pending>}  Promise 要用 then() 接收或者 async await 来修饰
-      this.getlyric(SongUrlid).then(res => {
-        // 歌词
-        console.log(res);
-        var musicdata = {
-          playUrl:this.playUrl,
-          picUrl:this.picUrl,
-          picname:this.picname,
-          Singer:this.Singer,
-          lyric:res,
-        }
-      // 发送给app.vue
-        this.$emit('getMusicMessage', musicdata);
-      // 跳转到歌曲详情
-        this.GotoSongDetails(SongUrlid,musicdata);
-      });
-    },
-
-
-    
-    //获取歌词
-    async getlyric(SongUrlid){
-      const result = await this.$http.get("/lyric?id=" + SongUrlid );
-      if (result.status !== 200) {
-          return this.$message.error("获取最新音乐失败！");
-        }
-      return  result.data.lrc.lyric
-    },
 
     // 热门歌手
     async gethotSinger (){
       const result = await this.$http.get("/top/artists?offset=0&limit=30");
-      console.log("热门歌手");
-      console.log(result.data.artists);
       this.hotSinger = result.data.artists
     },
   // 跳转歌手详情
@@ -262,7 +186,6 @@ export default {
     console.log(id);
     // 传递参数  -- this.$router.push({name: ' 路由的name ', params: {key: value}})
     // 参数取值  -- this.$route.params.key
-    // 路由跳转
     this.$router.push('/SingerDetails/' + id )
   },
   },
@@ -274,7 +197,6 @@ export default {
       this.GetRecommendPlaylist()
       this.GetLatestSong()
       this.gethotSinger()
-      // 获取用户详细信息
     }
 };
 </script>

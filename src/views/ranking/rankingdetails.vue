@@ -35,7 +35,7 @@
                     </div>
 
                      <play-song>
-                        <li slot="songli" :key="index" v-for="(item,index) in Songcontent" @click="sendurl(item.id,item.al)">
+                        <li slot="songli" :key="index" v-for="(item,index) in Songcontent" @click="playMisic(item.id)">
                         <div><span>{{index + 1 }}</span></div>
                         <div>
                           <img :src="item.al.picUrl"  alt="">
@@ -93,7 +93,7 @@
 
 <script>
 import PlaySong from '@/components/common/play_song/PlaySong'
-
+import {playMisic } from '@/network/PlayMisic.js'
 export default {
   components:{
     PlaySong
@@ -107,10 +107,6 @@ export default {
         
       // 接受动态路由传来的参数
       rankingId: this.$route.params.id,
-
-      // 弹出框相关变量
-      dialogVisible: false,
-      input:'',
 
       // 榜单名称
       rankingname:'',
@@ -175,71 +171,18 @@ export default {
       this.Songcontent = result.data.playlist.tracks;
     },
 
-    // 获取音乐地址等信息后发起请求 /song/url?id=
-   async sendurl(id,item){
-
-    //1.  获取音乐url地址
-       const result = await this.$http.get("/song/url?id="+ id);
-        if (result.status !== 200) {
-          return this.$message.error("获取失败！");
-      }
-      // 音乐url
-       console.log(result.data.data[0].url);
-       console.log(item);
-
-    //2. 获取歌曲详细信息 歌名 -> 作者 
-    const result1 = await this.$http.get("/song/detail?ids="+ id);
-        if (result.status !== 200) {
-          return this.$message.error("获取失败！");
-    }
-    console.log("歌曲详细");
-    console.log(result1.data.songs[0]);
-
-    //3. 获取歌词 /lyric?id=
-    const result2 = await this.$http.get("/lyric?id="+ id);
-        if (result2.status !== 200) {
-          return this.$message.error("获取失败！");
-    }
-    console.log("歌词详细");
-    // console.log(result2.data.lrc.lyric);
-    // console.log(result2.data.nolyric);
-
-    if(result2.data.nolyric){
-       var musicdata = {
-        playUrl:result.data.data[0].url,
-        picUrl:item.picUrl,
-        picname:result1.data.songs[0].name,
-        Singer:result1.data.songs[0].ar[0].name,
-        lyric:'[00:00.00]  暂无歌词 那我给大家跳段街舞好了 ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ ኈ ቼ ዽ ጿ',
-      }
-    }else {
-       var musicdata = {
-        playUrl:result.data.data[0].url,
-        picUrl:item.picUrl,
-        picname:result1.data.songs[0].name,
-        Singer:result1.data.songs[0].ar[0].name,
-        lyric:result2.data.lrc.lyric,
-      }
-    }
-    
-       
-      // 发送给app.vue
-      this.$emit('getMusicMessage', musicdata);
-
-      // go to SongDetails
+    // 播放歌曲
+    playMisic(id){
+      playMisic(id).then(musicdata => {
+      this.$bus.$emit('getMusicMessage',musicdata)
       this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-
+      });
     },
 
     // 获取相关歌单  likeness
       async getSongLikeness(){
       const result = await this.$http.get("/related/playlist?id="+ this.rankingId);
-      if (result.status !== 200) {
-          return this.$message.error("获取失败！");
-      }
-        // console.log("相关歌单");
-        // console.log(result.data);
-        this.playlists = result.data.playlists
+      this.playlists = result.data.playlists
     },
 
     // 点击相关推荐
