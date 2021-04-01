@@ -89,9 +89,6 @@ export default {
   methods: {
 
     showMusicMessage(val){
-      console.log("爸爸中的val");
-      console.log(val);
-
       this.$emit('getMusicMessage', val);
     },
 

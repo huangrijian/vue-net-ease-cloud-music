@@ -19,10 +19,10 @@ export default {
             key:this.$route.query.key,
             keyword:'',
             // 歌曲data
-            searchVal:'',
+            searchVal:[],
 
             // 歌手data
-            searchValSinger:'',
+            searchValSinger:[],
 
             // 专辑
             searchValAlbums:'',
@@ -52,7 +52,6 @@ export default {
                 }
                 //  将歌曲数据传给子组件
                 this.searchVal = result.data.result.songs;
-                // console.log(this.searchVal);   // 在需要传值的方法中处理
             },
             
              // 去搜索详情（发送歌手）   搜索接口 /search?keywords= 

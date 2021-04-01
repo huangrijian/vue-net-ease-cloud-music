@@ -190,7 +190,7 @@ export default {
   },
     // 补零函数
     zeroize(date){
-      return date > 10 ? date : '0' + date
+      return date >= 10 ? date : '0' + date
     },
     // 获取朋友动态
     GetDynamic(pagesize,lasttime,cookie){

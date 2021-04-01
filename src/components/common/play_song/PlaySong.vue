@@ -1,6 +1,7 @@
 <template>
   <div>
-    <ul>
+    <!-- user.vue的数据展示-->
+    <ul v-if="SongData">
         <li class="TopSongli" style="color:rgb(100, 100, 100)">
           <div>序号</div>
           <div>歌曲</div>
@@ -10,22 +11,103 @@
         </li>
 
         <div class="Songli">
-            <slot name="songli">
-            </slot>    
+          <li slot="songli" :key="index" v-for="(item,index) in SongData" @click="playMusic(item.song.id)" @mouseover="ChangeIsShow(index)">
+            <div>
+              <!-- <span class="My-new-iconyinle" v-show="currentShow == index" ></span> -->
+              <span>
+                <i class="My-new-iconyinle icnColor" v-show="currentShow == index" ></i>
+                <span v-show="currentShow !== index">{{index + 1 }}</span>
+              </span>
+            </div>
+            <div>
+              <img :src="item.song.al.picUrl" alt="">
+              <span>{{item.song.name}}</span>
+            </div>
+            <div><span>{{item.song.ar[0].name}}</span></div>
+            <div><span>{{item.song.al.name}}</span></div>
+            <div><span>{{item.song.dt | GetTime()}}</span></div>
+          </li>   
         </div>
-       
+    </ul>
+
+    <!-- searchDetails.vue的数据展示 -->
+     <ul v-if="SearchSongData">
+        <li class="TopSongli" style="color:rgb(100, 100, 100)">
+          <div>序号</div>
+          <div>歌曲</div>
+          <div>歌手</div>
+          <div>专辑</div>
+          <div>时长</div>
+        </li>
+
+        <div class="Songli">
+          <li slot="songli" :key="index" v-for="(item,index) in SearchSongData" @click="playMusic(item.id)" @mouseover="ChangeIsShow(index)">
+            <div>
+              <span>
+                <i class="My-new-iconyinle icnColor" v-show="currentShow == index" ></i>
+                <span v-show="currentShow !== index">{{index + 1 }}</span>
+              </span>
+            </div>
+            <div>
+              <img :src="item.al.picUrl" alt="">
+              <span>{{item.name}}</span>
+            </div>
+            <div><span>{{item.ar[0].name}}</span></div>
+            <div><span>{{item.dt | GetTime()}}</span></div>
+          </li>   
+        </div>
     </ul>
   </div>
 </template>
 
 <script>
+import {playMisic } from '@/network/PlayMisic.js'
+// 格式化时间
+import { filtrationTime } from '@/assets/js/SongTime.js'
 export default {
+  props:{
+    // 来自用户模块的歌曲数据
+    SongData:{
+      type:Array,
+      default: () => false
+    },
+    // 来自搜索模块的歌曲数据
+     SearchSongData:{
+      type:Array,
+      default: () => false
+    }
+  },
+  filters:{
+    GetTime(val){
+     return filtrationTime(val);
+    }
+  },
+  data() {
+    return {
+      currentShow:null,
+    }
+  },
+  methods:{
+  ChangeIsShow(index){
+    this.currentShow = index;
+  },
+  playMusic(id){
 
+    playMisic(id).then(musicdata => {
+      // 通过事件总线发送事件并传入数据
+    this.$bus.$emit('getMusicMessage',musicdata)
+    // 跳转到评论区
+     this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+    });
+    },
+  }
 }
 </script>
 
 <style lang="less" scoped>
-
+.icnColor {
+  color: red;
+}
 .Songli li:hover {
    background-color: rgba(207, 204, 204, 0.5)!important;
 }
@@ -83,7 +165,7 @@ export default {
   }
   // 歌手
   div:nth-of-type(3) {
-    flex: 2;
+    flex: 1.5;
   }
    // 专辑
   div:nth-of-type(4) {

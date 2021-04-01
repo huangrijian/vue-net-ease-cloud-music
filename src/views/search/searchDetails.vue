@@ -10,32 +10,9 @@
         </div>
         <div class="main">
             <!-- 单曲 -->
-              <div v-show="flag0">
-                <h1 style="visibility:hidden">热门作品</h1>
-                <ul>
-                    <li class="Songli">
-                    <div class="num">序号</div>
-                    <div class="song">歌曲</div>
-                    <div class="album">专辑</div>
-                    <div class="time">时长</div>
-                    </li>
-                    <li class="Songli Songlifont" :key="index" v-for="(item,index) in searchVal"  @mouseover="showdiv(index + 1 )"   @click="playMisic(item.id)">
-                    <div class="font-box">
-                        <div :class="{isshow: isshowturediv == index + 1 }">{{index + 1}}</div>
-                        <span class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index + 1 }"></span>
-                    </div>
-                    <div class="song">
-                        <img :src="item.al.picUrl" alt="" class="Songimg">
-                        <div style="float: left;">{{item.name}}</div>
-                    </div>
-                    <div class="album">
-                        <span>{{item.al.name}}</span>
-                    </div>
-                    <div class="time">还没做时长ʕ•ﻌ•ʔ...</div>
+            <play-song v-show="flag0" :SearchSongData="searchVal"></play-song>
 
-                    </li>
-                </ul>
-            </div>
+            
             <!-- 歌手 -->
               <div v-show="flag1" class="SingerList" style="dispaly:block">
                 <div class="SingerListLi" :key="index" v-for="(item,index) in searchValSinger" @click="goSingerdetails(item.id)">
@@ -60,10 +37,12 @@
 </template>
 <script>
 import layout from '@/components/content/layout/layout.vue'
-import {playMisic } from '@/network/PlayMisic.js'
+// import {playMisic } from '@/network/PlayMisic.js'
+import PlaySong from '@/components/common/play_song/PlaySong'
 export default {
   components:{
-    layout
+    layout,
+    PlaySong
   },
     // 从父组件接受参数
   props: ['searchVal','keyword1','searchValSinger','searchValAlbums'],
@@ -88,14 +67,15 @@ export default {
     
     };
   },
-  watch: {
-      searchVal: function (val) {       
-       console.log(val);   // 接收父组件的值
-      },
-      keyword1: function (val) {       
-       console.log(val);   // 接收父组件的值
-      }
-    },
+  // watch: {
+  //     searchVal: function (val) {   
+  //       console.log("searchVal");    
+  //      console.log(typeof val);   // 接收父组件的值
+  //     },
+  //     keyword1: function (val) {       
+  //      console.log(val);   // 接收父组件的值
+  //     }
+  //   },
    methods: {
     
     showdiv(index){
@@ -141,16 +121,16 @@ export default {
         this.flag3 = true;
     },
 
-  playMisic(id){
-    // 调用引入的playMisic.js 返回一个 promise对象的结果  因为promise是异步操作得到的结果所以注意必须加.then才能获取到值
-    playMisic(id).then(musicdata => {
+  // playMisic(id){
+  //   // 调用引入的playMisic.js 返回一个 promise对象的结果  因为promise是异步操作得到的结果所以注意必须加.then才能获取到值
+  //   playMisic(id).then(musicdata => {
 
-      // 通过事件总线发送事件并传入数据
-    this.$bus.$emit('getMusicMessage',musicdata)
-    // 跳转到评论区
-     this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-    });
-  }
+  //     // 通过事件总线发送事件并传入数据
+  //   this.$bus.$emit('getMusicMessage',musicdata)
+  //   // 跳转到评论区
+  //    this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+  //   });
+  // }
 
   },
    mounted() {

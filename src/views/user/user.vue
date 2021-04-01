@@ -85,31 +85,11 @@
                 <!-- 第二层 -->
                  <div class="grid-content">
                     <!-- 最近一周 -->
-                    <play-song  v-show="(flag1)">
-                      <li slot="songli" :key="index" v-for="(item,index) in recordWeek" @click="playMusic(item.song.id)">
-                        <div>{{index + 1 }}</div>
-                        <div>
-                          <img :src="item.song.al.picUrl" alt="">
-                          <span>{{item.song.name}}</span>
-                        </div>
-                        <div>{{item.song.ar[0].name}}</div>
-                        <div></div>
-                        <div>03:35</div>
-                      </li>
+                    <play-song  v-show="(flag1)" :SongData="recordWeek" >
                     </play-song>
 
                     <!-- 所有时间 -->
-                    <play-song  v-show="(flag2)">
-                      <li slot="songli" :key="index" v-for="(item,index) in record" @click="playMusic(item.song.id)">
-                        <div><span>{{index + 1 }}</span></div>
-                        <div>
-                          <img :src="item.song.al.picUrl" alt="">
-                          <span>{{item.song.name}}</span>
-                        </div>
-                        <div><span>{{item.song.ar[0].name}}</span></div>
-                        <div><span>{{item.song.al.name}}</span></div>
-                        <div><span>03:35</span></div>
-                      </li>
+                    <play-song  v-show="(flag2)" :SongData="record">
                     </play-song>
                  </div>
             </div>
@@ -156,15 +136,12 @@
         </el-col>
         <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
     </el-row>
-   
   </div>
   
-
 </template>
 
 <script>
 import PlaySong from '@/components/common/play_song/PlaySong'
-import {playMisic } from '@/network/PlayMisic.js'
 export default {
   name:'user',
   components:{
@@ -199,9 +176,10 @@ export default {
       playlist:'',
 
       // 用户播放记录(所有时间)
-      record:'',
+      record:[],
       // 用户播放记录(一周)
-      recordWeek:''
+      recordWeek:[]
+
     }
   },
   methods: {
@@ -214,35 +192,15 @@ export default {
       this.flag1 = true;
     },
 
-    playMusic(id){
-
-    playMisic(id).then(musicdata => {
-      // 通过事件总线发送事件并传入数据
-    this.$bus.$emit('getMusicMessage',musicdata)
-    // 跳转到评论区
-     this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-    });
-    },
-
      changeStyle(index){
        this.changeSelectStyle = index;
      },
 
-    // 获取登陆状态  /login/status
-    async getUserstatus(){
-      const result = await this.$http.get("/login/status");
-      console.log("登陆");
-      console.log(result);
-    },
-    
     // 获取用户详情
     async getUserDetails(){
       console.log("用户参数");
       console.log(this.UserId);
         const result = await this.$http.get("/user/detail?uid=" + this.UserId);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
         // 昵称
         this.nickname = result.data.profile.nickname
         // 用户头像
@@ -257,9 +215,6 @@ export default {
   // 获取用户歌单  /user/playlist
       async getUserPlaylist(){
         const result = await this.$http.get("/user/playlist?uid=" + this.UserId);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
         // 用户歌单
         this.playlist = result.data.playlist
     },
@@ -269,8 +224,6 @@ export default {
         const result = await this.$http.get("/user/record?uid=" + this.UserId + "&type=0");
         // 用户播放记录
          this.record = result.data.allData
-         console.log("所有时间");
-         console.log(this.record);
     },
 
 
@@ -288,9 +241,6 @@ export default {
       this.getUserPlaylist();
       this.getUserRecord();
       this.getUserRecordWeek();
-
-      this.getUserstatus();
-
     }
 };
 </script>

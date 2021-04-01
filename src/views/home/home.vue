@@ -49,7 +49,7 @@
             </div>
             <!-- 歌曲时长 -->
             <div class="time">
-              <div>03:27</div>
+              <div>{{item.song.mMusic.playTime | GetTime()}}</div>
             </div>
          </li>
       </ul>          
@@ -88,7 +88,8 @@ import SongList from '@/components/content/song_list/SongList.vue'
 import TitleBox from '../../components/common/Title/title.vue';
 // 播放音乐的js
 import {playMisic } from '@/network/PlayMisic.js'
-
+// 格式化时间
+import { filtrationTime } from '@/assets/js/SongTime.js'
 export default {
   components: { 
     layout,
@@ -96,6 +97,11 @@ export default {
     TitleBox
   },
   name:'home',
+  filters:{
+    GetTime(val){
+     return filtrationTime(val);
+    }
+  },
   data() {
       return {
         falg:true,
@@ -162,7 +168,8 @@ export default {
   GetLatestSong(){
     GetLatestSong().then(res => {
       this.latestsong = res.result;
-      this.Singer = res.result;
+      console.log("latestsong");
+      console.log( this.latestsong);
     })
       
   },
