@@ -12,7 +12,7 @@
             <!-- 单曲 -->
             <play-song v-show="flag0" :SearchSongData="searchVal"></play-song>
 
-            
+
             <!-- 歌手 -->
               <div v-show="flag1" class="SingerList" style="dispaly:block">
                 <div class="SingerListLi" :key="index" v-for="(item,index) in searchValSinger" @click="goSingerdetails(item.id)">
@@ -144,6 +144,7 @@ export default {
 .top {
     margin-top: 20px;
     overflow: hidden;
+    margin-bottom: 20px;
     div {
       float: left;
       margin: 0 25px;

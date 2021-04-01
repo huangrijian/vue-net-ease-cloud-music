@@ -36,7 +36,6 @@
           <div>序号</div>
           <div>歌曲</div>
           <div>歌手</div>
-          <div>专辑</div>
           <div>时长</div>
         </li>
 

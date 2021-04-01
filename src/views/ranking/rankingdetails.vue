@@ -34,18 +34,9 @@
                         </div>
                     </div>
 
-                     <play-song>
-                        <li slot="songli" :key="index" v-for="(item,index) in Songcontent" @click="playMisic(item.id)">
-                        <div><span>{{index + 1 }}</span></div>
-                        <div>
-                          <img :src="item.al.picUrl"  alt="">
-                          <span>{{item.al.name}}</span>
-                        </div>
-                        <div><span>{{item.al.name}}</span></div>
-                        <div><span>{{item.al.name}}</span></div>
-                        <div><span>没做完ʕ•ﻌ•ʔ</span></div>
-                      </li>
-                    </play-song>
+                    <!-- 播放音乐 -->
+                    <play-song :SearchSongData="Songcontent"></play-song>
+                    
                 </div>
             </div>
         </el-col>
@@ -93,7 +84,6 @@
 
 <script>
 import PlaySong from '@/components/common/play_song/PlaySong'
-import {playMisic } from '@/network/PlayMisic.js'
 export default {
   components:{
     PlaySong
