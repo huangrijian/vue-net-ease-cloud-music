@@ -1,7 +1,7 @@
 <template>
 <!--  class="Determinelocation" -->
   <div>
-      <ul>
+      <!-- <ul>
         <li class="Songli">
           <div class="num">序号</div>
           <div class="song">歌曲</div>
@@ -22,15 +22,18 @@
           </div>
           <div class="time">(⑅˃◡˂⑅) 待开发ing... </div>
         </li>
-      </ul>
-
-    </div>
+      </ul> -->
+    <play-song :SearchSongData="hotSongs"/>
+  </div>
 </template>
 
 <script>
-import {playMisic } from '@/network/PlayMisic.js'
+// import {playMisic } from '@/network/PlayMisic.js'
+import PlaySong from '@/components/common/play_song/PlaySong'
 export default {
-
+  components:{
+    PlaySong
+  },
   data() {
     return {
       SingerId: this.$route.params.SingerId,
@@ -58,12 +61,11 @@ export default {
 
     async gethotSingerHotworks() {
       const result = await this.$http.get("/artist/top/song?id=" + this.SingerId);
-      if (result.status !== 200) {
-        return this.$message.error("获取失败！");
-      }
+ 
       // this.$message.success("获取成功！");
-        console.log(result.data.songs);
+        console.log("歌曲");
         this.hotSongs = result.data.songs
+        console.log(this.hotSongs);
     },
   },
     // 生命周期函数  页面刷新时调用

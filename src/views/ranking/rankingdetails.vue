@@ -19,7 +19,7 @@
                               <!-- 小图 -->
                               <img :src="rankingavatarUrl" alt="">
                               <span>{{nickname}}</span>
-                              <span>2019-06-05创建</span>
+                              <span>{{updateTime | updateTime()}} 更新</span>
                             </div>
                             <div>
                               <span>标签：</span>
@@ -84,9 +84,15 @@
 
 <script>
 import PlaySong from '@/components/common/play_song/PlaySong'
+import { GetCommonTime } from '@/assets/js/SongTime.js'
 export default {
   components:{
     PlaySong
+  },
+  filters:{
+    updateTime(val){
+      return GetCommonTime(val)
+    }
   },
   name:'rankingdetails',
   //局部刷新组件要用到的数据 
@@ -108,7 +114,7 @@ export default {
       rankingavatarUrl:'',
       // 昵称
       nickname:'',
-      // 发布时间
+      // 更新时间
       updateTime:'',
 
       // 收藏这个歌单的人
@@ -371,7 +377,7 @@ export default {
 // 按钮样式
 .el-button.is-round {
     border-radius: 20px;
-    padding: 9px 18px;
+    padding: 6px 9px;
 }
 
 .el-button--danger {

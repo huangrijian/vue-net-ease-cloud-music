@@ -18,7 +18,11 @@
   <div class="layoutBox">
      <layout class="layoutBox">
         <song-list title="推荐歌单">
-          <li slot="songlist" :key="index" v-for="(item,index) in Recommendresult" @click="gotolistdetails(item.id)">
+          <li slot="songlist" class="SongList" :key="index" v-for="(item,index) in Recommendresult" @click="gotolistdetails(item.id)">
+            <span class="PlayCount">
+              <i class="My-new-iconbofang"></i>
+              <span>{{item.playCount | GetPlayCount()}}</span>
+            </span>
             <img :src="item.picUrl" alt="" >
             <div>{{item.name}}</div>
           </li>
@@ -100,6 +104,9 @@ export default {
   filters:{
     GetTime(val){
      return filtrationTime(val);
+    },
+    GetPlayCount(val){
+      return val >= 10000 ? Math.floor(val/10000)  + 'w' : val
     }
   },
   data() {
@@ -154,6 +161,7 @@ export default {
   GetRecommendPlaylist(){
     GetRecommendPlaylist(30).then(res => {
       this.Recommendresult = res.result
+      console.log(this.Recommendresult);
     })
   },
 
@@ -319,6 +327,26 @@ export default {
 
 .layoutBox {
   margin-bottom: 30px;
+
+  .SongList {
+    position: relative;
+      .PlayCount {
+        position: absolute;
+        text-align: center;
+        right: 44px;
+        top: 1px;
+        font-size: 12px;
+        display: inline;
+        border-radius: 4px;
+        color: rgba(245, 243, 243,0.9);
+        background: rgba(0, 0, 0,0.2);
+        i,
+        span {
+          margin: 0 2px;
+        }
+      }
+  }
+
 }
 
 

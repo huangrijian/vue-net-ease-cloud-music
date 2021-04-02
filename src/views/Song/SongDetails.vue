@@ -70,7 +70,7 @@
 
                         <ul class="Commentarea">
                            <h3>最新评论</h3>
-                            <li :key="index" v-for="(item,index) in AllComments">
+                            <li :key="index" v-for="(item,index) in AllComments" v-loading="loading">
                                <div class="Commentareabox">
                                    <div class="pic">
                                         <img :src="item.user.avatarUrl" alt="">
@@ -126,7 +126,10 @@ export default {
             flag:"false",
 
             // 默认偏移量
-            offset:0
+            offset:0,
+
+            // 下拉加载等待
+            loading: false
         }
     },
     filters:{
@@ -146,7 +149,7 @@ export default {
        //下拉加载事件内容
      scrollHander(){
      if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
-       console.log(1);
+        this.loading = true
         //当滚动条到底时,这里是触发内容
           this.getAllComment(this.Songid,this.offset);
         }
@@ -190,6 +193,7 @@ export default {
             // 解构对象
             this.AllComments.push(...result.data.comments)
             this.offset += 50
+            this.loading = false
         },
 
         // 给评论点赞 /comment/like 

@@ -37,7 +37,6 @@
 </template>
 <script>
 import layout from '@/components/content/layout/layout.vue'
-// import {playMisic } from '@/network/PlayMisic.js'
 import PlaySong from '@/components/common/play_song/PlaySong'
 export default {
   components:{
@@ -67,15 +66,7 @@ export default {
     
     };
   },
-  // watch: {
-  //     searchVal: function (val) {   
-  //       console.log("searchVal");    
-  //      console.log(typeof val);   // 接收父组件的值
-  //     },
-  //     keyword1: function (val) {       
-  //      console.log(val);   // 接收父组件的值
-  //     }
-  //   },
+
    methods: {
     
     showdiv(index){
@@ -120,17 +111,6 @@ export default {
         this.flag2 = false;
         this.flag3 = true;
     },
-
-  // playMisic(id){
-  //   // 调用引入的playMisic.js 返回一个 promise对象的结果  因为promise是异步操作得到的结果所以注意必须加.then才能获取到值
-  //   playMisic(id).then(musicdata => {
-
-  //     // 通过事件总线发送事件并传入数据
-  //   this.$bus.$emit('getMusicMessage',musicdata)
-  //   // 跳转到评论区
-  //    this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-  //   });
-  // }
 
   },
    mounted() {

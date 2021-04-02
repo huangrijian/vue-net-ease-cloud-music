@@ -30,12 +30,13 @@
         </div>
     </ul>
 
-    <!-- searchDetails.vue的数据展示 -->
+    <!-- searchDetails.vue、 rankingdetails.vue的数据展示 -->
      <ul v-if="SearchSongData">
         <li class="TopSongli" style="color:rgb(100, 100, 100)">
           <div>序号</div>
           <div>歌曲</div>
           <div>歌手</div>
+          <div>专辑</div>
           <div>时长</div>
         </li>
 
@@ -52,6 +53,7 @@
               <span>{{item.name}}</span>
             </div>
             <div><span>{{item.ar[0].name}}</span></div>
+            <div><span>{{item.al.name}}</span></div>
             <div><span>{{item.dt | GetTime()}}</span></div>
           </li>   
         </div>
@@ -70,7 +72,7 @@ export default {
       type:Array,
       default: () => false
     },
-    // 来自搜索模块的歌曲数据
+    // 来自搜索模块、歌单的歌曲数据
      SearchSongData:{
       type:Array,
       default: () => false
@@ -138,7 +140,8 @@ export default {
   // 序号和时长
   div:nth-of-type(1),
   div:nth-of-type(5) {
-    width: 80px;
+    // width: 130px;
+    flex: 1;
     text-align: center;
   }
 
