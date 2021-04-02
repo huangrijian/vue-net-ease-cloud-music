@@ -41,15 +41,15 @@ $ npm run serve
 
 | 登录 ＋ 首页                                        |                                               |                                               |
 | --------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
-| <img src="C:\Users\92369\Desktop\项目\登录.png"  /> | ![](C:\Users\92369\Desktop\项目\首页1.png)    | ![](C:\Users\92369\Desktop\项目\首页2.png)    |
+| <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/登录.png"  /> | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/首页1.png"  />    | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/首页2.png"  />    |
 | **排行榜＋详情**                                    |                                               |                                               |
-| ![](C:\Users\92369\Desktop\项目\排行榜.png)         | ![](C:\Users\92369\Desktop\项目\歌单详情.png) | ![](C:\Users\92369\Desktop\项目\歌曲详细.png) |
+| <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/排行榜.png"  />         | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌单详情.png"  /> | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌曲详情.png"  /> |
 | **歌单**                                            |                                               |                                               |
-| ![](C:\Users\92369\Desktop\项目\歌单1.png)          | ![](C:\Users\92369\Desktop\项目\歌单2.png)    | ![](C:\Users\92369\Desktop\项目\歌单分页.png) |
+| <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌单1.png"  />          | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌单2.png"  />    | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌单分页.png"  /> |
 | **搜索+歌手+朋友+个人主页**                         |                                               |                                               |
-| ![](C:\Users\92369\Desktop\项目\搜索1.png)          | ![](C:\Users\92369\Desktop\项目\搜索2.png)    | ![](C:\Users\92369\Desktop\项目\搜索4.png)    |
-| ![](C:\Users\92369\Desktop\项目\歌手2.png)          |                                               |                                               |
-| ![](C:\Users\92369\Desktop\项目\歌手.png)           | ![](C:\Users\92369\Desktop\项目\朋友.png)     | ![](C:\Users\92369\Desktop\项目\个人主页.png) |
+| <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/搜索1.png"  />          | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/搜索2.png"  />    | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/搜索4.png"  />    |
+|<img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌手2.png"  />          |                                               |                                               |
+| <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/歌手.png"  />           | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/朋友.png"  />     | <img src="https://gitee.com/huang-rijian/vue-net-ease-cloud-music/tree/master/img/个人主页.png"  /> |
 
 
 
