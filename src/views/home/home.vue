@@ -60,7 +60,7 @@
           <img :src="item.img1v1Url" alt="" class="hotSingerimg">
             <div class="hotSingerdiv">
               <span>{{item.name}}</span>
-              <div>单曲数：{{item.musicSize}}</div>
+              <div>单曲数：<span class="SongCount">{{item.musicSize}}</span></div>
             </div>
         </li>
       </ul>
@@ -247,6 +247,9 @@ export default {
     height: 98px;
     font-size: 12px;
 
+  .SongCount {
+    color: red;
+  }
 }
 
 .bj {
