@@ -22,9 +22,9 @@ export default {
     return {
       loading: true,
         // 特色榜(4条）
-        featureRanking:'',
+        featureRanking:[],
          // 全球榜(n-4条）
-        featureRankingglobal:'',
+        featureRankingglobal:[],
     };
   },
   methods: {

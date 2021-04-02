@@ -50,10 +50,6 @@ export default {
       // picUrl 或 coverImgUrl
       return val.picUrl ? val.picUrl : val.coverImgUrl
     }
-  },
-  mounted(){
-
-    console.log(this.Recommendresult);
   }
 }
 </script>

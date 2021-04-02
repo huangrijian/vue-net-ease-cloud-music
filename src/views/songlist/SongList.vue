@@ -67,7 +67,7 @@ export default {
         playlists:[],
 
         // 歌单全部分类名称
-        categories:[],
+        categories:{},
 
         // 具体分类数据 -> 二维数组
        ArrayData:[]
@@ -204,7 +204,6 @@ export default {
     //  热门歌单分类
      GetHotPlaylist(){
        GetHotPlaylist().then(res => {
-         console.log(res);
          this.HotPlaylist = res.tags
        })
      },

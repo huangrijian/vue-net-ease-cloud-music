@@ -3,34 +3,23 @@
       <layout>
          <div class="top">
             <div class="top-title">搜索结果</div>
-            <div :class="{fontcolor: current == 1 }" @click="changefontdiv(1);changeflag0()">单曲</div>
-            <div :class="{fontcolor: current == 2 }" @click="changefontdiv(2);changeflag1()" >歌手</div>
-            <div :class="{fontcolor: current == 3 }" @click="changefontdiv(3);changeflag2()" >专辑</div>
-            <div :class="{fontcolor: current == 4 }" @click="changefontdiv(4);changeflag3()" >歌单</div>
-        </div>
+            <div :key="index"  :class="{fontcolor: current == index }" v-for="(item,index) in option" 
+            @click="current=index">{{item}}</div>
+         </div>
         <div class="main">
             <!-- 单曲 -->
-            <play-song v-show="flag0" :SearchSongData="searchVal"></play-song>
-
-
+            <play-song v-show="current==0" :SearchSongData="searchValSong"></play-song>
             <!-- 歌手 -->
-              <div v-show="flag1" class="SingerList" style="dispaly:block">
+              <div v-show="current==1" class="SingerList" style="dispaly:block">
                 <div class="SingerListLi" :key="index" v-for="(item,index) in searchValSinger" @click="goSingerdetails(item.id)">
                     <img :src="item.picUrl" alt="">
                     <div class="name">{{item.name}}</div>
                     <span>专辑数: {{item.albumSize}}</span>
                 </div>
-              </div>
-              <!-- 专辑 -->
-              <div v-show="flag2">
-                <ul class="rankingUl">
-                    <!-- featureRankingglobal -->
-                    <li :key="index" v-for="(item,index) in searchValAlbums" @click="GotorankingDetails(item.id)">
-                        <img :src="item.picUrl" alt="">
-                        <div class="rankingNameglobal">{{item.name}}</div>
-                    </li>
-                </ul>
-              </div>
+              </div>      
+              <!-- 歌单 -->
+               <song-list v-show="current==2" :SongListData="searchValAlbums"/>
+
         </div>
       </layout>
     </div>
@@ -38,86 +27,34 @@
 <script>
 import layout from '@/components/content/layout/layout.vue'
 import PlaySong from '@/components/common/play_song/PlaySong'
+// 歌单组件
+import SongList from '@/components/content/song_list/SongList.vue'
 export default {
   components:{
     layout,
-    PlaySong
+    PlaySong,
+    SongList
   },
     // 从父组件接受参数
-  props: ['searchVal','keyword1','searchValSinger','searchValAlbums'],
+  props: ['searchValSong','searchValSinger','searchValAlbums'],
   data() {
     return {
-      // SingerId: this.$route.params.SingerId,
-      hotSongs:'',
-      // 类名
-      num:'num',
-      // 歌曲url
-      playUrl:'',
+     // 选项数组
+      option:['单曲','歌手','歌单','专辑'],
+      // 当前的选项 歌曲
+      current:0,
 
-       isshowturediv:'',
-
-      // 当前的选项 歌曲-歌手切换
-      current:'',
-
-      flag0:false,
-      flag1:false,
-      flag2:false,
-      flag3:false,
-    
     };
   },
 
    methods: {
-    
-    showdiv(index){
-      this.isshowturediv = index
-    },
-
-    changefontdiv(index){
-        this.current = index
-    },
-
      // 跳转歌手详情
-        goSingerdetails(id) {
-            console.log(id);
-            // 传递参数  -- this.$router.push({name: ' 路由的name ', params: {key: value}})
-            // 参数取值  -- this.$route.params.key
-            // 路由跳转
-            this.$router.push('/SingerDetails/' + id )
-        },
-
-    // 点击切换
-    changeflag0(){
-        this.flag0 = true;
-        this.flag1 = false;
-        this.flag2 = false;
-        this.flag3 = false;
-    },
-    changeflag1(){
-        this.flag0 = false;
-        this.flag1 = true;
-        this.flag2 = false;
-        this.flag3 = false;
-    },
-    changeflag2(){
-        this.flag0 = false;
-        this.flag1 = false;
-        this.flag2 = true;
-        this.flag3 = false;
-    },
-    changeflag3(){
-        this.flag0 = false;
-        this.flag1 = false;
-        this.flag2 = false;
-        this.flag3 = true;
-    },
+  goSingerdetails(id) {
+      // 传递参数  -> this.$router.push({name: ' 路由的name ', params: {key: value}}) ->  参数取值  -- this.$route.params.key
+      this.$router.push('/SingerDetails/' + id )
+  },
 
   },
-   mounted() {
-    //    进入页面后默认第一个显示（歌曲）
-       this.flag0 = true;
-       this.current = 1;
-   }
 };
 </script>
 <style lang="less" scoped>
@@ -138,91 +75,6 @@ export default {
 }
 
     .main {
-    // 单曲
-            // 每一个li行
-            .Songli {
-            width: 100%;
-            height: 65px;
-            
-            .num {
-                    /*flex 布局*/
-                display: flex;
-                /*实现垂直居中*/
-                align-items: center;
-                /*实现水平居中*/
-                justify-content: center;
-            }
-            }
-            .Songli:hover {
-            background: rgb(222, 226, 217)!important;
-            }
-            .Songli:nth-child(even){
-            background: rgb(239, 241, 237);
-            }
-
-            .Songli div {
-            float: left;
-            height: 100%;
-            line-height: 65px;
-            }
-            .Songlifont {
-            cursor:pointer;//鼠标变小手
-            font-size: 14px;
-            .font-box {
-                width: 10%;
-                /*flex 布局*/
-                display: flex;
-                /*实现垂直居中*/
-                align-items: center;
-                /*实现水平居中*/
-                justify-content: center;
-            }
-            }
-            // 四个选项
-            .num {
-            width: 10%;
-
-            }
-            .song {
-            width: 40%;
-            .Songimg {
-                float: left;
-                width:50px;
-                border-radius: 10px;
-                margin-right: 10px;
-                margin-top: 10px;
-            }
-            }
-            .album {
-            width: 40%;
-            }
-            .time {
-            width: 10%;
-            }
-            .playelement {
-            height: 50px;
-            }
-            .Aplayer {
-            width: 100%;
-            position: fixed;
-            bottom: -5px;
-            left: 0;
-            }
-            .aplayer .aplayer-body {
-                display: flex;
-            }
-
-            // 显示或隐藏
-            .isshow {
-            display: none;
-            }
-            .isshowture {
-            display: inline-block;
-            color: red;
-            }
-
-     // 歌手
-
         // 歌手列表
     .SingerList {
         width: 100%;
@@ -255,39 +107,7 @@ export default {
             }
         }
     }
-
-    // 专辑
-        .rankingUl li {
-            float: left;
-            width: 10%;
-            margin-top: 15px;
-        }
-
-        .rankingUl li img{
-            width: 100px;
-            border-radius: 10px;
-        }
-        
-        // 榜单名称
-        .rankingfeatureName {
-            width: 100px;
-            font-size: 12px;
-            transform: translateX(30%);
-        }
-        .rankingNameglobal {
-            width: 95px;
-            font-size: 12px;
-            transform: translateX(15%);
-            // 强制一行
-            overflow:hidden;
-            text-overflow:ellipsis;
-            display:-webkit-box;
-            -webkit-box-orient:vertical;
-            -webkit-line-clamp:1;//以此类推，3行4行直接该数字就好啦
-        }
 }
-
-
 
 .fontcolor {
     color: red;

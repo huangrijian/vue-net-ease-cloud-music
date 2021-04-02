@@ -4,7 +4,7 @@
             <el-input v-model="keyword" placeholder="请输入内容" class="inputbox" @change="GotoSearchDetails(keyword);GotoSearchSinger(keyword);GotoSearchAlbum(keyword)"></el-input>
         </div>
             <!-- 路由占位符 -->
-        <router-view :searchVal="searchVal" :searchValSinger="searchValSinger" :searchValAlbums="searchValAlbums"></router-view>
+        <router-view :searchValSong="searchVal" :searchValSinger="searchValSinger" :searchValAlbums="searchValAlbums"></router-view>
     </div>
 
 </template>
@@ -25,7 +25,7 @@ export default {
             searchValSinger:[],
 
             // 专辑
-            searchValAlbums:'',
+            searchValAlbums:[],
             
             flag:true,
         }

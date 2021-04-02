@@ -98,10 +98,7 @@ export default {
             currentlanguage1:'',
             currenttype1:'',
             currentalphabet1:'',
-            
-     
-
-
+      
       // 分页数据
 
        // 歌手总条数

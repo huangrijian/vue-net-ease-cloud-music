@@ -54,16 +54,8 @@
     <!-- 推荐歌手 -->
    <div class="layoutBox">
     <layout class="layoutBox">
-      <title-box title="推荐歌手"></title-box>
-      <ul class="RecommendSinger">
-        <li :key="index" v-for="(item,index) in hotSinger" @click="goSingerdetails(item.id)">
-          <img :src="item.img1v1Url" alt="" class="hotSingerimg">
-            <div class="hotSingerdiv">
-              <span>{{item.name}}</span>
-              <div>单曲数：<span class="SongCount">{{item.musicSize}}</span></div>
-            </div>
-        </li>
-      </ul>
+       <title-box title="推荐歌手"></title-box>
+      <singer-list :hotSinger="hotSinger"></singer-list>
     </layout>
    </div>
 
@@ -81,15 +73,19 @@ import layout from '../../components/content/layout/layout.vue';
 import SongList from '@/components/content/song_list/SongList.vue'
 // 小标题组件
 import TitleBox from '../../components/common/Title/title.vue';
+// 歌手组件
+import SingerList from '@/components/content/singer_list/SingerList.vue'
 // 播放音乐的js
 import {playMisic } from '@/network/PlayMisic.js'
 // 格式化时间
 import { filtrationTime } from '@/assets/js/SongTime.js'
+
 export default {
   components: { 
     layout,
     SongList,
-    TitleBox
+    TitleBox,
+    SingerList
   },
   name:'home',
   filters:{
@@ -102,7 +98,6 @@ export default {
   },
   data() {
       return {
-        falg:true,
 
         isshowturediv:'',
 
@@ -119,7 +114,7 @@ export default {
         latestsong : '',
         Singer:'',
         // 热门歌手
-        hotSinger:'',
+        hotSinger:[],
 
         SongUrlid:''
       }
@@ -139,7 +134,6 @@ export default {
   GetRecommendPlaylist(){
     GetRecommendPlaylist(30).then(res => {
       this.Recommendresult = res.result
-      console.log(this.Recommendresult);
     })
   },
 
@@ -154,8 +148,6 @@ export default {
   GetLatestSong(){
     GetLatestSong().then(res => {
       this.latestsong = res.result;
-      console.log("latestsong");
-      console.log( this.latestsong);
     })
       
   },
@@ -163,26 +155,20 @@ export default {
   // 播放音乐
   playSong(id){
     playMisic(id).then(musicdata => {
+      // 通过事件总线把歌曲数据传给跟组件
       this.$bus.$emit('getMusicMessage',{musicdata,id})
+      // 路由跳转到歌曲详情并携带相关参数
       this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
     });
   },
-
 
     // 热门歌手
     async gethotSinger (){
       const result = await this.$http.get("/top/artists?offset=0&limit=30");
       this.hotSinger = result.data.artists
     },
-  // 跳转歌手详情
-  goSingerdetails(id) {
-    console.log(id);
-    // 传递参数  -- this.$router.push({name: ' 路由的name ', params: {key: value}})
-    // 参数取值  -- this.$route.params.key
-    this.$router.push('/SingerDetails/' + id )
-  },
-  },
 
+  },
 
    // 生命周期函数  页面刷新时调用
     mounted() {
@@ -234,22 +220,6 @@ export default {
        position: absolute;
        right: 25px;
     }
-
-
-}
-.RecommendSinger li {
-    text-align:center;
-    float: left;
-    width: 98px;
-    border-radius: 50%;
-    margin: 20px;
-    margin-top: 35px;
-    height: 98px;
-    font-size: 12px;
-
-  .SongCount {
-    color: red;
-  }
 }
 
 .bj {
@@ -277,11 +247,6 @@ export default {
     width: 9%;
     margin: 0 35px;
     border-radius: 3px;
-  }
-  .hotSingerimg {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
   }
   // 控制歌单图片下面的文字
   .bg-purple div{

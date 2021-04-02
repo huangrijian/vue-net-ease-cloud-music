@@ -26,7 +26,6 @@
         <router-view @getUserid="UserId"  v-if="isRouterShow"></router-view>
       </keep-alive>
     
-
    
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
        <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>

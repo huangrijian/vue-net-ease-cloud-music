@@ -198,8 +198,6 @@ export default {
 
     // 获取用户详情
     async getUserDetails(){
-      console.log("用户参数");
-      console.log(this.UserId);
         const result = await this.$http.get("/user/detail?uid=" + this.UserId);
         // 昵称
         this.nickname = result.data.profile.nickname
@@ -219,7 +217,7 @@ export default {
         this.playlist = result.data.playlist
     },
 
-    // 获取用户播放记录(所有时间) /user/record?uid=32953014&type=1 
+    // 获取用户播放记录(所有时间) 
           async getUserRecord(){
         const result = await this.$http.get("/user/record?uid=" + this.UserId + "&type=0");
         // 用户播放记录
@@ -227,7 +225,7 @@ export default {
     },
 
 
-     // 获取用户播放记录(最近一周) /user/record?uid=32953014&type=1 
+     // 获取用户播放记录(最近一周) 
         async getUserRecordWeek(){
         const result = await this.$http.get("/user/record?uid=" + this.UserId + "&type=1");
         // 用户播放记录

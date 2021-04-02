@@ -197,11 +197,6 @@ export default {
     // 获取相似MV
     async getsimiMV(){
         const result = await this.$http.get("/simi/mv?mvid=" + this.MVid);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
-        console.log("相似MV！！！！！！！");
-        console.log(result.data);
         this.mvs = result.data.mvs
     },
     // 去mv详情
@@ -213,11 +208,6 @@ export default {
     // 获取MV详细
     async getMVdetails(){
         const result = await this.$http.get("/mv/detail?mvid=" + this.MVid);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
-        console.log("获取MV详细!!!!!!!!!!");
-        console.log(result.data);
         this.MVname = result.data.data.name;
         this.desc = result.data.data.desc;
         this.publishTime = result.data.data.publishTime;
@@ -232,11 +222,6 @@ export default {
     // 获取MV地址
     async getMVURL(){
         const result = await this.$http.get("/mv/url?id=" + this.MVid);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
-        console.log("获取MV地址");
-        console.log(result.data);
         this.MVurl = result.data.data.url;
         console.log(this.MVurl);
     },
@@ -244,13 +229,6 @@ export default {
     // 获取 mv 点赞转发评论数数据
         async getMVflowData(){
         const result = await this.$http.get("/mv/detail/info?mvid=" + this.MVid);
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
-        console.log("获取 mv 点赞转发评论数数据");
-        console.log(result.data);
-        // this.MVurl = result.data.data.url;
-        // console.log(this.MVurl);
         this.commentCount = result.data.commentCount;
         this.likedCount = result.data.likedCount;
         this.shareCount = result.data.shareCount;
@@ -259,11 +237,6 @@ export default {
     // 获取热门评论
       async getMVHotcomment(){
         const result = await this.$http.get("/comment/hot?id="+ this.MVid +"&type=1" );
-        if (result.status !== 200) {
-          return this.$message.error("获取用户信息失败！");
-        }
-        console.log("获取热门评论成功");
-        console.log(result.data);
         this.hotComments = result.data.hotComments
     },
 

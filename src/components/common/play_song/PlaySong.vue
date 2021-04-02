@@ -66,18 +66,19 @@ import {playMisic } from '@/network/PlayMisic.js'
 // 格式化时间
 import { filtrationTime } from '@/assets/js/SongTime.js'
 export default {
-  props:{
-    // 来自用户模块的歌曲数据
-    SongData:{
-      type:Array,
-      default: () => false
-    },
-    // 来自搜索模块、歌单的歌曲数据
-     SearchSongData:{
-      type:Array,
-      default: () => false
-    }
-  },
+  // props:{
+  //   // 来自用户模块的歌曲数据
+  //   SongData:{
+  //     type:Array,
+  //     default: () => false
+  //   },
+  //   // 来自搜索模块、歌单的歌曲数据
+  //    SearchSongData:{
+  //     type:Array,
+  //     default: () => false
+  //   }
+  // },
+  props:['SongData','SearchSongData'],
   filters:{
     GetTime(val){
      return filtrationTime(val);
