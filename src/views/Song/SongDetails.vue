@@ -165,7 +165,10 @@ export default {
       },
 
       GetData(data){
+        console.log("路由传来的数据对象");
+        console.log(data);
        this.currentData = data
+       console.log( this.currentData);
       },
 
       // 发表评论
@@ -230,11 +233,15 @@ export default {
        this.getAllComment(this.Songid,this.offset);
       //  添加下拉监听事件函数
        window.addEventListener( 'scroll', this.scrollHander)
+       console.log("created");
+       
     },
     // DOM渲染完毕可执行
     mounted() {
+      
         this.getHotComment();
         this.GetData(this.data);
+        console.log("mounted");
     },
     // vue实例销毁时
     destroyed () {

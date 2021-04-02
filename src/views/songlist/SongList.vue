@@ -12,14 +12,9 @@
         ></song-list-nav>
       </layout>
 
-      <!-- 内容 -->
+      <!-- 歌单展示区 -->
       <layout>
-        <song-list>
-          <li slot="songlist" :key="index" v-for="(item,index) in playlists" @click="GotorankingDetails(item.id)">
-            <img :src="item.coverImgUrl" alt="">
-            <div>{{item.name}}</div>
-          </li>
-        </song-list>
+        <song-list :SongListData="playlists"/>
       </layout>
 
       <!-- 分页 -->
@@ -87,30 +82,26 @@ export default {
 
     // 过滤数组
     FilterData(arr){
+      // 将需要的分类数据过滤，并且保存
       let res0 = arr.filter(function(item){
-        // 将需要的分类数据过滤，并且保存
         return (item.category == 0);
       });
       let res1 = arr.filter(function(item){
-        // 将需要的分类数据过滤，并且保存
         return (item.category == 1);
       });
       let res2 = arr.filter(function(item){
-        // 将需要的分类数据过滤，并且保存
         return (item.category == 2);
       });
       let res3 = arr.filter(function(item){
-        // 将需要的分类数据过滤，并且保存
         return (item.category == 3);
       });
       let res4 = arr.filter(function(item){
-        // 将需要的分类数据过滤，并且保存
         return (item.category == 4);
       });
       // 把得到的数据再push到一个新数组  得到一个二维数组
+      // 一维（ArrayData）装的是 大分类 -> 比如 语种、风格
+      // 二维（res0、res1）装的是 小分类 -> 比如 华语、欧美、日语、
       this.ArrayData.push(res0,res1,res2,res3,res4)
-      console.log("9999999");
-      console.log(this.ArrayData);
     },
 
     // goto 排行榜详情页
@@ -221,23 +212,18 @@ export default {
     //  获取歌单
      GetPlaylistContent(order,cat,limit,offset){
         GetPlaylistContent(order,cat,limit,offset).then(res => {
-          console.log("歌单数据");
-          console.log(res);
           this.playlists = res.playlists
         })
       },
-    // 获取全部歌单分类
+    // 获取 全部歌单分类 -> 然后分类 
     GetAllPlaylist(){
       GetAllPlaylist().then(res => {
-        console.log("全部歌单");
-        console.log(res);
         this.categories = res.categories
         // 过滤数据
         this.FilterData(res.sub)
       })
     }
-
-    },
+  },
     mounted() {
       // 展示默认热门歌单分类
       this.GetHotPlaylist();

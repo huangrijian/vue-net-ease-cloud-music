@@ -27,8 +27,12 @@
       </keep-alive>
     
 
+   
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-      <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>
+       <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>
+       <!-- 点击查看详情 -->
+       <span class="My-new-iconyinle1" id="goToDetail" v-if="IsShowgoToDetail" @click="goToDetail"></span>
+     
     
   <!-- 底部 -->
   <Bottom></Bottom>
@@ -75,13 +79,22 @@ export default {
 
       input:'',
 
-      aplayerFlag : false
+      aplayerFlag : false,
+
+      // 当前播放的歌曲数据
+      musicdata:{},
+      SongId:null,
+
+      IsShowgoToDetail:false
     }
   },
   created(){
     // 接收音乐数据
     this.$bus.$on('getMusicMessage', (val) => {
-           // 音乐组件做一次上移操作
+      // 显示音乐图标
+      setTimeout(() => {  this.IsShowgoToDetail = true },1000)
+
+      // 音乐组件做一次上移操作
         {
           let Aplayer = document.querySelector('.Aplayer')
           let strat = -90;
@@ -100,18 +113,24 @@ export default {
         }
       //  获取得到的音乐数据 
         var data = {
-            src: val.playUrl,
-            title:val.picname,
-            artist:val.Singer,
-            pic:val.picUrl,
-            lrc: val.lyric,
+            src: val.musicdata.playUrl,
+            title:val.musicdata.picname,
+            artist:val.musicdata.Singer,
+            pic:val.musicdata.picUrl,
+            lrc: val.musicdata.lyric,
         }
+        // 保存音乐数据对象 和 当前播放歌曲Id
+        this.musicdata = data;
+        this.SongId = val.id
+
         // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
         this.$set(this.audio,0,data);
     })
   },
   methods: {
-
+  goToDetail(){
+    this.$router.push({name:'SongDetails',query: {id:this.SongId,data:this.musicdata}})
+  },
   //  搜索弹框处理函数 
   GotosearchDetails(keyword){
   // 跳转路由并把关键词传过去
@@ -152,6 +171,16 @@ export default {
 </script>
 <style  lang="less">
 @import '~@/assets/css/base.less';
+
+#goToDetail {
+  font-size: 25px;
+  position: fixed!important;
+  bottom: 24px;
+  left: 107px;
+  z-index: 999;
+  color: #db0e0e;
+  cursor: pointer;
+}
 
   //音乐组件
 .Aplayer {

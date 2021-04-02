@@ -15,18 +15,9 @@
   </div>
 
   <!-- 推荐歌单 -->
-  <div class="layoutBox">
-     <layout class="layoutBox">
-        <song-list title="推荐歌单">
-          <li slot="songlist" class="SongList" :key="index" v-for="(item,index) in Recommendresult" @click="gotolistdetails(item.id)">
-            <span class="PlayCount">
-              <i class="My-new-iconbofang"></i>
-              <span>{{item.playCount | GetPlayCount()}}</span>
-            </span>
-            <img :src="item.picUrl" alt="" >
-            <div>{{item.name}}</div>
-          </li>
-        </song-list>
+  <div>
+     <layout>
+        <song-list title="推荐歌单" :SongListData="Recommendresult"/>
      </layout>
   </div>
 
@@ -120,7 +111,7 @@ export default {
         input:'',
 
         // 推荐歌单
-        Recommendresult:'',
+        Recommendresult:[],
         // 最近专辑
         latestAlbum:'',
 
@@ -138,19 +129,6 @@ export default {
   showdiv(index){
       this.isshowturediv = index
     },
-  /*
-  *
-  * 以下是路由跳转相关的方法
-  * 
-  */ 
-  //  去歌单详细
-   gotolistdetails(id){
-      this.$router.push("/rankingdetails/" + id);
-   },
-  // 去歌曲详细
-  GotoSongDetails(id,musicdata){
-    this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
-  },
 
   /*
   *
@@ -183,10 +161,10 @@ export default {
   },
 
   // 播放音乐
-  playSong(SongUrlid){
-    playMisic(SongUrlid).then(musicdata => {
-      this.$bus.$emit('getMusicMessage',musicdata)
-      this.$router.push({name:'SongDetails',query: {id:SongUrlid,data:musicdata}})
+  playSong(id){
+    playMisic(id).then(musicdata => {
+      this.$bus.$emit('getMusicMessage',{musicdata,id})
+      this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
     });
   },
 
@@ -323,31 +301,5 @@ export default {
   
     background: rgba(0,0,0,0);
 }
-
-
-.layoutBox {
-  margin-bottom: 30px;
-
-  .SongList {
-    position: relative;
-      .PlayCount {
-        position: absolute;
-        text-align: center;
-        right: 44px;
-        top: 1px;
-        font-size: 12px;
-        display: inline;
-        border-radius: 4px;
-        color: rgba(245, 243, 243,0.9);
-        background: rgba(0, 0, 0,0.2);
-        i,
-        span {
-          margin: 0 2px;
-        }
-      }
-  }
-
-}
-
 
 </style>
