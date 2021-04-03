@@ -13,7 +13,12 @@ export default {
       type:Array,
       default :() => []
     }
-  }
+  },
+  methods: {
+      GoToMVdetails(id){
+            this.$router.push({name:'MVdetails',params: {id:id}})
+        },
+  },
 }
 </script>
 <style lang="less" scoped>

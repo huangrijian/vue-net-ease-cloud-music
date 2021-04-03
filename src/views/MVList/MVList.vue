@@ -13,20 +13,18 @@ export default {
     props: ['currentarea','currenttype','currentorder'],
     components: { layout, MvList },
     watch: {
+      // 监听父类传来的数据
       currentarea: function (val) {       
-       console.log(val);   // 接收父组件的值
         this.currentarea1 = val
-         this.getSingerlist(1,this.offset);
+        this.getSingerlist(1,this.offset);
       },
        currenttype: function (val) {       
-       console.log(val);   // 接收父组件的值
-          this.currenttype1 = val   
-           this.getSingerlist(1,this.offset);
+        this.currenttype1 = val   
+        this.getSingerlist(1,this.offset);
       },
        currentorder: function (val) {       
-       console.log(val);   // 接收父组件的值
-            this.currentorder1 = val
-             this.getSingerlist(1,this.offset);
+        this.currentorder1 = val
+        this.getSingerlist(1,this.offset);
       },
 
     },
@@ -37,7 +35,7 @@ export default {
             currentorder1:'',
             offset:0,
             // 歌手
-            artists:'',
+            artists:[],
         }
     },
     methods: {

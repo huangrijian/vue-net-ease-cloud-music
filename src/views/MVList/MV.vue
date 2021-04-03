@@ -1,34 +1,28 @@
 <template>
     <div>
-             <!-- 导航栏 -->
-    <el-row :gutter="10" class="el-row01" style="margin-bottom: 20px">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
-            <div class="grid-content homenav">
-                <!-- 按钮层 -->
-              <div>
-                  <!-- 第一层 语言-->
-                  <div>
-                       <div class="btn" :class="{btnActive:areaflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in area">{{item}}</div>
-                  </div>
-                   <!-- 第二层 -->
-                  <div>
-                       <div class="btn" :class="{btnActive:typeflag == index}" @click="typeStyle(index,item)" :key="index" v-for="(item,index) in type">{{item}}</div>
-                  </div>
-                   <!-- 第三层 -->
-                  <div>
-                       <div class="btn" :class="{btnActive:orderflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in order">{{item}}</div>
-                  </div>
-              </div>
+      <layout>
+        <div>
+            <!-- 第一层 语言-->
+            <div>
+                  <div class="btn" :class="{btnActive:areaflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in area">{{item}}</div>
             </div>
-            </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    </el-row>
+              <!-- 第二层 -->
+            <div>
+                  <div class="btn" :class="{btnActive:typeflag == index}" @click="typeStyle(index,item)" :key="index" v-for="(item,index) in type">{{item}}</div>
+            </div>
+              <!-- 第三层 -->
+            <div>
+                  <div class="btn" :class="{btnActive:orderflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in order">{{item}}</div>
+            </div>
+        </div>
+      </layout>
     <router-view :currentarea="currentarea" :currenttype="currenttype" :currentorder="currentorder"></router-view>
     </div>
 </template>
 <script>
+import layout from '../../components/content/layout/layout.vue';
 export default {
+  components: { layout },
     data() {
         return {
             area:['全部','内地','港台','欧美','韩国','日本'],
@@ -40,19 +34,16 @@ export default {
             orderflag:0,
 
             // 当前选择的歌手类型
-            currentarea:'',
-            currenttype:'',
-            currentorder:'',
+            currentarea:[],
+            currenttype:[],
+            currentorder:[],
 
-            // 需要传给子路由的数组
-            dataAarry:[]
         }
     },
     methods: {
         languageStyle(index,item){
-            // 改样式
+            // 改样式 存数值
          this.areaflag = index;
-        //  存数值
          this.currentarea = item;
         },
         typeStyle(index,item){
@@ -63,6 +54,7 @@ export default {
             this.orderflag = index;
             this.currentorder = item;
         },
+
     },
 }
 </script>
