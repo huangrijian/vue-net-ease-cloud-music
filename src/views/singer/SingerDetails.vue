@@ -1,73 +1,58 @@
 <template>
   <div class="SingerDetails">
-
-
-    <el-row :gutter="10">
-      <div  class="Topbg">
-          <!-- 大背景 -->
-      </div>
-    <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
-        <div class="grid-content">
-                <!-- 大盒子 -->
-                <div class="Singerbox"  >
-                    <div class="Singerboxbg">
-                      <div class="center">
-                           <img  class="transform-auto margin-top Singerboxbg-img" :src="SingerPic"  alt="">
-                        <!-- 名字 -->
-                      <h3 class="transform-auto margin-top">{{ SingerName }}</h3>
-                      <el-button type="success" icon="el-icon-check" class="transform-auto margin-top" circle></el-button>
-                      <!-- 描述 -->
-                      <div  class="transform-auto Singer-describes margin-top">
-                        <div>
-                            {{SingerDescribe}}
-                        </div>
-                      </div>
-                      <!-- 成就 -->
-                      <div  class="transform-auto">
-                        <div class="transform-auto-left">
-                          <div>645</div>
-                          <div>单曲</div>
-                        </div>
-                         <div class="transform-auto-left">
-                          <div>645</div>
-                          <div>单曲</div>
-                        </div>
-                         <div class="transform-auto-left">
-                          <div>645</div>
-                          <div>单曲</div>
-                        </div>
-                         <div class="transform-auto-left">
-                          <div>645</div>
-                          <div>单曲</div>
-                        </div>
-                      </div>
-                      </div>
-                     
-                        <div class="SingerboxdetailsF">
-                            <div class="Singerboxdetails" @click="goToHotworks">热门作品</div>
-                            <div class="Singerboxdetails" @click="goToallAlbum">所有专辑</div>
-                            <div class="Singerboxdetails" @click="goToallMV">相关MV</div>
-                            <div class="Singerboxdetails" @click="goToArtistMessage">艺人介绍</div>
-                        </div>
+      <div  class="Topbg"></div>
+      <layout>
+        <div class="Singerbox">
+                <div class="Singerboxbg">
+                  <div class="center">
+                        <img  class="transform-auto margin-top Singerboxbg-img" :src="SingerPic"  alt="">
+                    <!-- 名字 -->
+                  <h3 class="transform-auto margin-top">{{ SingerName }}</h3>
+                  <el-button type="success" icon="el-icon-check" class="transform-auto margin-top" circle></el-button>
+                  <!-- 描述 -->
+                  <div  class="transform-auto Singer-describes margin-top">
+                    <div>
+                        {{SingerDescribe}}
+                    </div>
+                  </div>
+                  <!-- 成就 -->
+                  <div  class="transform-auto">
+                    <div class="transform-auto-left">
+                      <div>645</div>
+                      <div>单曲</div>
+                    </div>
+                      <div class="transform-auto-left">
+                      <div>645</div>
+                      <div>单曲</div>
+                    </div>
+                      <div class="transform-auto-left">
+                      <div>645</div>
+                      <div>单曲</div>
+                    </div>
+                      <div class="transform-auto-left">
+                      <div>645</div>
+                      <div>单曲</div>
+                    </div>
+                  </div>
+                  </div>
+                  
+                    <div class="SingerboxdetailsF">
+                        <div class="Singerboxdetails" @click="goToHotworks">热门作品</div>
+                        <div class="Singerboxdetails" @click="goToallAlbum">所有专辑</div>
+                        <div class="Singerboxdetails" @click="goToallMV">相关MV</div>
+                        <div class="Singerboxdetails" @click="goToArtistMessage">艺人介绍</div>
                     </div>
                 </div>
-              <!-- 子路由占位符 -->                 
         </div>
-       
           <router-view  @getMusicMessage="showMusicMessage"></router-view>
-       
-    </el-col>
-  <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-</el-row>
-
-
-   
+      </layout>
   </div>
 </template>
 
 <script>
+import layout from '../../components/content/layout/layout.vue';
 export default {
+  components: { layout },
   name:'SingerDetails',
   data() {
     return {
@@ -117,16 +102,6 @@ export default {
       // 歌手描述
       const describeResult = await this.$http.get("/artist/desc?id=" + this.SingerId);
 
-      if (result.status !== 200) {
-        return this.$message.error("获取失败！");
-      }
-      // this.$message.success("获取成功！");
-
-      console.log("歌手详情");
-      console.log(result.data);
-
-      console.log("歌手描述");
-      console.log(describeResult.data.briefDesc);
       this.SingerDescribe = describeResult.data.briefDesc
 
       console.log(result.data.data.artist);
@@ -134,12 +109,19 @@ export default {
       this.SingerName = result.data.data.artist.name;
       // 歌手照片
       this.SingerPic = result.data.data.artist.cover;
-      console.log(this.SingerPic);
+
     },
   },
   // 生命周期函数  页面刷新时调用
   mounted() {
     this.gethotSingerDetails();
+  },
+  // 正常情况下离开组件就会执行下面这个方法，如果该组件被<keep-alive></keep-alive>包裹着，则会被缓存，不被销毁
+  beforeDestroy() {
+    console.log("歌手细节里的beforeDestroy");
+  },
+  destroyed() {
+    console.log("歌手细节里的destroyed");
   },
 };
 </script>

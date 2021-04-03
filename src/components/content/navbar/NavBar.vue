@@ -20,7 +20,7 @@
                   <el-button class="el-icon-search" type="text" @click="Search"></el-button>
                   <span style="padding:0 15px">|</span>
                   <span  @click="login" v-if="islogin"><i class="My-new-iconwode1" style="margin-right:3px"></i>登录</span>
-                   <Dialog v-if="dialogFlag"></Dialog> 
+
                   <img :src="avatarUrls" v-if="dialogFlag" alt=""  class="SearchAndLoginImg">
                   <!-- 登录后的下拉选项 -->
                     <el-col :span="12" class="pull-down" v-if="dialogFlag">
@@ -147,6 +147,8 @@ export default {
        if(result.data.code !== 400){
        // 保存头像地址
         this.avatarUrls = result.data.profile.avatarUrl;
+        // 保存在本地
+       window.sessionStorage.setItem('avatarUrls', this.avatarUrls);
         // 保存昵称
         this.nickname = result.data.profile.nickname
         // 保存用户id值

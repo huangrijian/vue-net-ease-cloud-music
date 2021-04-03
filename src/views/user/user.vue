@@ -102,32 +102,13 @@
               <div class="grid-content-right">
                 <div class="grid-content-right-title">
                   <span>|</span>
-                  <strong>我创建的歌单</strong>
+                  <strong>我的歌单</strong>
                 </div>
                 <div class="mycover">
                   <ul class="grid-content-right-ul">
-                    <li :key="index" v-for="(item,index) in playlist" >
+                    <li :key="index" v-for="(item,index) in playlist" @click="gotolistdetails(item.id)">
                       <img :src="item.coverImgUrl" alt="">
                       <div class="grid-content-right-li-title">{{item.name}}</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="grid-content-right">
-                <div class="grid-content-right-title">
-                  <span>|</span>
-                  <strong>我收藏的歌单</strong>
-                </div>
-                <div class="mycover">
-                  <ul class="grid-content-right-ul">
-                    <li>
-                      <img src="https://p1.music.126.net/xe1F96UCN5arTvjBTjtISQ==/100055558139748.jpg?param=200y200" alt="">
-                      <div class="grid-content-right-li-title">每日推荐2020</div>
-                    </li>
-                    <li>
-                      <img src="https://p1.music.126.net/xe1F96UCN5arTvjBTjtISQ==/100055558139748.jpg?param=200y200" alt="">
-                      <div class="grid-content-right-li-title">每日推荐2020</div>
                     </li>
                   </ul>
                 </div>
@@ -195,6 +176,11 @@ export default {
      changeStyle(index){
        this.changeSelectStyle = index;
      },
+
+    //去歌单详细
+   gotolistdetails(id){
+      this.$router.push("/rankingdetails/" + id);
+   },
 
     // 获取用户详情
     async getUserDetails(){
@@ -398,8 +384,10 @@ export default {
     width: 100%;
       .grid-content-right-ul {
           width: 100%;
+          display: flex;
+          flex-wrap: wrap;
           li {
-            display: inline-block;
+            cursor:pointer;
             width: 40%;
             margin-right: 20px;
             margin-left: 8px;

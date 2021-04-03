@@ -1,42 +1,25 @@
 <template>
-    <div v-loading="loading">
-         <el-row :gutter="10" class="el-row01" style="margin-bottom: 20px">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
-            <div class="grid-content">
-                  <!-- 歌手列表 -->
-                 <div class="SingerList" style="dispaly:block">
-                     <div class="SingerListLi" :key="index" v-for="(item,index) in dataShow" @click="goSingerdetails(item.id)">
-                         <img :src="item.picUrl" alt="">
-                         <div class="name">{{item.name}}</div>
-                         <span>单曲数: {{item.musicSize}}</span>
-                     </div>
-                </div>
-                <!-- 分页 -->
-                <el-pagination
-                background
-                layout="prev, pager, next"
-                :total="artists.length"
-                :page-size="pageSize"
-                @next-click="NextClick"
-                @prev-click="PrevClick"
-                @current-change="currentChange">
-                </el-pagination>
-            </div>
-        </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    </el-row>
-       
-    </div>
+<div v-loading="loading">
+  <layout>
+    <!-- 歌手列表 -->
+    <singer-list :hotSinger="dataShow"></singer-list>
+ </layout>
+  
+  </div>
 </template>
 <script>
+import layout from '../../components/content/layout/layout.vue';
+// 歌手组件
+import SingerList from '@/components/content/singer_list/SingerList.vue'
+// 引入下拉需要的函数
+import { getDocumentTop,getWindowHeight, getScrollHeight } from '@/assets/js/downLoad.js'
 export default {
+  components: { layout, SingerList },
     props: ['currentlanguage','currenttype','currentalphabet'],
 
     watch: {
+      // 监听来自父组件的数据
       currentlanguage: function (val) {       
-       //console.log(val);   // 接收父组件的值
-    //    area
                 switch (val) {
                 case '全部':
                     this.currentlanguage1 = -1;
@@ -58,8 +41,9 @@ export default {
                     break;
             } 
             // 监听父类传来的数据的变化，直接通过发请求响应变化
-             this.getSingerlist();
+             this.getSingerlist(1,this.offset);
       },
+
        currenttype: function (val) {       
        //console.log(val);   // 接收父组件的值
              switch (val) {
@@ -77,7 +61,7 @@ export default {
                     break;
             } 
             // 监听父类传来的数据的变化，直接通过发请求响应变化
-             this.getSingerlist();
+             this.getSingerlist(1,this.offset);
       },
        currentalphabet: function (val) {       
        //console.log(val);   // 接收父组件的值
@@ -87,8 +71,8 @@ export default {
            this.currentalphabet1 = val.toLowerCase()
        }
     
-    // 监听父类传来的数据的变化，直接通过发请求响应变化
-     this.getSingerlist();
+        // 监听父类传来的数据的变化，直接通过发请求响应变化
+        this.getSingerlist(1,this.offset);
       },
 
     },
@@ -98,100 +82,67 @@ export default {
             currentlanguage1:'',
             currenttype1:'',
             currentalphabet1:'',
-      
-      // 分页数据
-
-       // 歌手总条数
-      artists:[],
-      // 所有页面的数据
-      totalPage: [],
-      // 每页显示数量
-      pageSize: 45,
-      // 共几页
-      pageNum: 3,
+            
+            offset:0,
       // 当前显示的数据
-      dataShow: "",
-      // 默认当前显示第一页
-      currentPage: 0
-    
+      dataShow:[],
         }
     },
     methods: {
+      //下拉加载事件内容
+     scrollHander(){
+        if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+            //当滚动条到底时,这里是触发内容
+              console.log("scrollHander");
+              this.getSingerlist(2,this.offset)
+        }
+     },
     // 跳转歌手详情
         goSingerdetails(id) {
             console.log(id);
-            // 传递参数  -- this.$router.push({name: ' 路由的name ', params: {key: value}})
-            // 参数取值  -- this.$route.params.key
-            // 路由跳转
+            // 传递参数  -- this.$router.push({name: ' 路由的name ', params: {key: value}}) 参数取值  -- this.$route.params.key
             this.$router.push('/SingerDetails/' + id )
         },
 
 
-            // 获取歌手列表
-        getSingerlist(){
-            this.$http.get("/artist/list?type=" 
-            + this.currenttype1 +"&area="
-            + this.currentlanguage1 +"&initial=" 
-            + this.currentalphabet1+"&limit=100&offset=100")
-            .then(result=> {
-                  
-                if (result.status !== 200) {
-                return this.$message.error("获取用户信息失败！");
-            }
-                console.log("获取歌手列表！！！！！！");
-                
-                // 歌手总条数
-                console.log(result.data.artists);
-                this.artists = result.data.artists;
-                
-                  // 根据后台数据的条数和每页显示数量算出一共几页,得0时设为1 ;
-                this.pageNum = Math.ceil(this.artists.length / this.pageSize) || 1;
-                // 一共几页
-                console.log(this.pageNum);
+         async getSingerlist(type,offset){
+          //  获取MV有两种情况，一是下拉获取，二是更新获取
+           if(type == 1){
+            //  当type == 1 时，属于更新获取  所以不需要offset
+              const result = await this.$http.get("/artist/list?type=" + this.currenttype1 
+              +"&area="+ this.currentlanguage1 +"&initial=" + this.currentalphabet1 +
+              '&limit=30');
+              this.dataShow = result.data.artists;
+           }else {
+              const result = await this.$http.get("/artist/list?type=" + this.currenttype1 
+              +"&area="+ this.currentlanguage1 +"&initial=" + this.currentalphabet1 +
+              '&limit=30&offset='+ offset);
+              // 解构对象
+              this.dataShow.push(...result.data.artists)
+              this.offset += 30
+           }
 
-                 for (let i = 0; i < this.pageNum; i++) {
-                // 每一页都是一个数组 形如 [['第一页的数据'],['第二页的数据'],['第三页数据']]
-                // 根据每页显示数量 将后台的数据分割到 每一页,假设pageSize为5， 则第一页是1-5条，即slice(0,5)，
-                //第二页是6-10条，即slice(5,10)...
-                    this.totalPage[i] = this.artists.slice(this.pageSize * i, this.pageSize * (i + 1))
-                }
-            // 获取到数据后显示第一页内容
-            this.dataShow = this.totalPage[this.currentPage];
-
-            })
+           this.loading = false
         },
-
-        // 下一页
-        NextClick(){
-          if (this.currentPage === this.pageNum - 1) return ;
-          this.dataShow = this.totalPage[++this.currentPage];
-        },
-        // 上一页
-        PrevClick(){
-          if (this.currentPage === 0) return ;
-          this.dataShow = this.totalPage[--this.currentPage];
-        },
-
-        currentChange(){
-            console.log(8);
-            var text = document.querySelector('.active')
-            console.log(text.innerText);
-             this.dataShow = this.totalPage[text.innerText-1];
-        },
-
-        // 延时方法
-        get(){
-            this.loading = false;
-        }
-      
-    },
+   },
     mounted() {
-        this.getSingerlist()
-        // 延时器
-        setTimeout(this.get,1000)
+        this.getSingerlist(1,this.offset)
     },
-    
+
+    created(){
+      //  添加下拉监听事件函数
+       window.addEventListener( 'scroll', this.scrollHander);
+    },
+    // vue实例销毁时  该组件被alive包裹着，所以不会被销毁，所以用deactivated （不活跃）
+    deactivated () {
+      // 移除下拉监听事件
+      console.log("歌手列表deactivated ");
+	    window.removeEventListener('scroll', this.scrollHander);
+    },
+
 }
+
+
 </script>
 <style lang="less" scoped>
 .SingerList {

@@ -1,34 +1,28 @@
 <template>
     <div>
-             <!-- 导航栏 -->
-    <el-row :gutter="10" class="el-row01" style="margin-bottom: 20px">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :xs="22" :sm="18" :md="16" :lg="18" :xl="18">
-            <div class="grid-content homenav">
-                <!-- 按钮层 -->
-              <div>
-                  <!-- 第一层 语言-->
-                  <div>
-                       <div class="btn" :class="{btnActive:languageflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in language">{{item}}</div>
-                  </div>
-                   <!-- 第二层 -->
-                  <div>
-                       <div class="btn" :class="{btnActive:typeflag == index}" @click="typeStyle(index,item)" :key="index" v-for="(item,index) in type">{{item}}</div>
-                  </div>
-                   <!-- 第三层 -->
-                  <div>
-                       <div class="btn" :class="{btnActive:alphabetflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in alphabet">{{item}}</div>
-                  </div>
-              </div>
-            </div>
-            </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
-    </el-row>
+      <layout>
+        <div>
+          <!-- 第一层 语言-->
+          <div>
+              <div class="btn" :class="{btnActive:languageflag == index}" @click="languageStyle(index,item)"  :key="index" v-for="(item,index) in language">{{item}}</div>
+          </div>
+          <!-- 第二层 -->
+          <div>
+              <div class="btn" :class="{btnActive:typeflag == index}" @click="typeStyle(index,item)" :key="index" v-for="(item,index) in type">{{item}}</div>
+          </div>
+          <!-- 第三层 -->
+          <div>
+              <div class="btn" :class="{btnActive:alphabetflag == index}" @click="alphabetStyle(index,item)" :key="index" v-for="(item,index) in alphabet">{{item}}</div>
+          </div>
+        </div>
+      </layout>     
     <router-view :currentlanguage="currentlanguage" :currenttype="currenttype" :currentalphabet="currentalphabet"></router-view>
     </div>
 </template>
 <script>
+import layout from '../../components/content/layout/layout.vue';
 export default {
+  components: { layout },
     data() {
         return {
             language:['全部','华语','欧美','日本','韩国','其他'],
@@ -46,8 +40,6 @@ export default {
             currenttype:'',
             currentalphabet:'',
 
-            // 需要传给子路由的数组
-            dataAarry:[]
         }
     },
     methods: {
@@ -75,6 +67,7 @@ export default {
 <style lang="less" scoped>
 // 按钮样式
 .btn {
+    cursor:pointer;
     display: inline-block;
     width: 70px;
     height: 32px;

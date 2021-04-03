@@ -25,10 +25,10 @@
                    <div class="bottom">
                        <div class="dec">
                            <span>评论</span>
-                           <span>共999+条评论</span>
+                           <span>共<span class="commentTotal">{{total}}</span>条评论</span>
                        </div>
                        <div class="CommentInput">
-                           <img src="http://p1.music.126.net/hcx4MIKS1fc_JuSdu_W9lA==/109951165000584159.jpg" alt="">
+                           <img :src="avatarUrls" alt="">
                            <el-input
                             type="textarea"
                             :rows="3"
@@ -178,7 +178,8 @@ export default {
         // 清空输入域
         this.textarea = '';
         // 新增数据
-        this.AllComments.unshift(result.data.comment)
+        this.AllComments.unshift(result.data.comment);
+        this.total++;
       },
 
         // 获取热门评论
@@ -193,6 +194,7 @@ export default {
         // 获取全部评论 
         async getAllComment(Songid, offset){
             const result = await this.$http.get("/comment/music?id="+ Songid +'&limit=50&offset='+ offset);
+            this.total = result.data.total
             // 解构对象
             this.AllComments.push(...result.data.comments)
             this.offset += 50
@@ -238,7 +240,7 @@ export default {
     },
     // DOM渲染完毕可执行
     mounted() {
-      
+        this.avatarUrls = window.sessionStorage.getItem('avatarUrls')
         this.getHotComment();
         this.GetData(this.data);
         console.log("mounted");
@@ -296,7 +298,9 @@ export default {
     }
 }
 
-
+.commentTotal {
+  color: red;
+}
 .Commentarea {
     li {
         font-size: 14px;

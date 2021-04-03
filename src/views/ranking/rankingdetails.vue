@@ -1,5 +1,5 @@
 <template>
-  <div class="SingerDetails">
+  <div class="SingerDetails" v-cloak>
 
 
      <!-- mian -->
@@ -19,7 +19,7 @@
                               <!-- 小图 -->
                               <img :src="rankingavatarUrl" alt="">
                               <span>{{nickname}}</span>
-                              <span>{{updateTime | updateTime()}} 更新</span>
+                              <span v-cloak>{{updateTime | updateTime()}} 更新</span>
                             </div>
                             <div>
                               <span>标签：</span>
@@ -200,6 +200,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+
+ [v-cloak] {
+  display: none !important;
+  }
 
 // 导航栏
 .homenav {

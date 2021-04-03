@@ -3,7 +3,7 @@
     <div class="grid-content-tit">
       <title-box :title="title"></title-box>
     </div>
-     <ul class="rankingUl songlistBox">
+     <ul class="rankingUl">
       <li slot="songlist" class="SongList" :key="index" v-for="(item,index) in SongListData" @click="gotolistdetails(item.id)">
         <span class="PlayCount" v-if="ShowPlayCount">
           <i class="My-new-iconbofang"></i>
@@ -63,6 +63,7 @@ export default {
     width: 10%;
     margin-top: 15px;
     position: relative;
+    cursor:pointer;
     .PlayCount {
         position: absolute;
         text-align: center;

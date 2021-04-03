@@ -49,7 +49,6 @@ export default {
      },
 
        async getSingerlist(type,offset){
-
           //  获取MV有两种情况，一是下拉获取，二是更新获取
            if(type == 1){
             //  当type == 1 时，属于更新获取  所以不需要offset
@@ -80,8 +79,9 @@ export default {
        window.addEventListener( 'scroll', this.scrollHander);
     },
     // vue实例销毁时
-    destroyed () {
+    deactivated  () {
       // 移除下拉监听事件
+      console.log("MV的deactivated ");
 	    window.removeEventListener('scroll', this.scrollHander);
     }
     

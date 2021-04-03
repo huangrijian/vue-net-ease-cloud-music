@@ -39,7 +39,7 @@ export default {
     margin-top: 35px;
     height: 98px;
     font-size: 12px;
-
+    cursor:pointer;
   .SongCount {
     color: red;
   }
