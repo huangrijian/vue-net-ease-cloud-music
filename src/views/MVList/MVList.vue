@@ -1,6 +1,5 @@
 <template>
     <layout>
-      <div class="btn" @click="handle">点击更新</div>
       <h1>MV</h1>
       <mv-list  :artists="artists"/>
     </layout>
@@ -17,16 +16,17 @@ export default {
       currentarea: function (val) {       
        console.log(val);   // 接收父组件的值
         this.currentarea1 = val
-  
+         this.getSingerlist(1,this.offset);
       },
        currenttype: function (val) {       
        console.log(val);   // 接收父组件的值
           this.currenttype1 = val   
-   
+           this.getSingerlist(1,this.offset);
       },
        currentorder: function (val) {       
        console.log(val);   // 接收父组件的值
             this.currentorder1 = val
+             this.getSingerlist(1,this.offset);
       },
 
     },
@@ -73,12 +73,6 @@ export default {
         GoToMVdetails(id){
             this.$router.push({name:'MVdetails',params: {id:id}})
         },
-
-        // 点击更新 （重新发起请求）
-        handle(){
-             this.getSingerlist(1,this.offset);
-        },
-
     },
     mounted() {
         this.getSingerlist(1,this.offset);
@@ -126,20 +120,4 @@ export default {
     }
 }
 
-// 按钮样式
-.btn {
-    color: rgb(255, 255, 255);
-    width: 70px;
-    height: 32px;
-    // background: #ff0000;
-    border:1px solid  #e6e6e6;
-    border-radius: 24px;
-    line-height: 32px;
-    text-align: center;
-    font-weight: 600;
-    // color: whitesmoke;
-    font-size: 14px;
-    margin: 15px;
-    background: rgb(255, 0, 0);
-}
 </style>

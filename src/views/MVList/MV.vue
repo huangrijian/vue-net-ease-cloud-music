@@ -81,6 +81,8 @@ export default {
     // color: whitesmoke;
     font-size: 14px;
     margin: 15px;
+       // 鼠标小手
+   cursor:pointer;
 }
 .btnActive {
     background: #ff0000;
