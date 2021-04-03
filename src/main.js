@@ -14,7 +14,7 @@ import './assets/css/NewIcon/iconfont.css';
 // 导入axios
 import axios from 'axios'
 // 配置请求的跟路径
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://bao.lqjhome.cn:3000'
     // 全局配置  挂载到vue的原型对象上  这样每个vue组件都可以通过this.$http 使用axios
 Vue.prototype.$http = axios;
 

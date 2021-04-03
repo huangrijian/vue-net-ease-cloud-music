@@ -78,7 +78,11 @@ export default {
       //  添加下拉监听事件函数
        window.addEventListener( 'scroll', this.scrollHander);
     },
-    // vue实例销毁时
+    // 活跃时添加
+    activated() {
+      window.addEventListener( 'scroll', this.scrollHander);
+    },
+    // 不活跃时移除
     deactivated  () {
       // 移除下拉监听事件
       console.log("MV的deactivated ");
