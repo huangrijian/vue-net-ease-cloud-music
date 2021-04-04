@@ -165,29 +165,29 @@ export default {
       },
 
       GetData(data){
-        console.log("路由传来的数据对象");
-        console.log(data);
        this.currentData = data
-       console.log( this.currentData);
       },
 
       // 发表评论
       async SendComment(content){
         let cookie = window.sessionStorage.getItem('cookie', cookie);
-        const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+cookie);
-        // 清空输入域
-        this.textarea = '';
-        // 新增数据
-        this.AllComments.unshift(result.data.comment);
-        this.total++;
+        if(cookie){
+          const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+cookie);
+          // 清空输入域
+          this.textarea = '';
+          // 新增数据
+          this.AllComments.unshift(result.data.comment);
+          this.total++;
+        }else {
+          this.$message.warning(" 请登录后再操作！");
+          return  this.$router.push("/login");
+        }
+        
       },
 
         // 获取热门评论
         async getHotComment(){
             const result = await this.$http.get("/comment/hot?id="+ this.Songid +"&type=0");
-             if (result.status !== 200) {
-                return this.$message.error(" 获取热门评论失败！");
-            }
             this.hotComments = result.data.hotComments
         },
 
@@ -240,7 +240,8 @@ export default {
     },
     // DOM渲染完毕可执行
     mounted() {
-        this.avatarUrls = window.sessionStorage.getItem('avatarUrls')
+
+        this.avatarUrls = window.sessionStorage.getItem('avatarUrls') ? window.sessionStorage.getItem('avatarUrls'):"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fkpi.ftmsreport.com%2Fstatic%2Fimages%2Favatar.jpg&refer=http%3A%2F%2Fkpi.ftmsreport.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620105163&t=5a502ca318f5f3d7ee2ef9963dc8875a"
         this.getHotComment();
         this.GetData(this.data);
         console.log("mounted");

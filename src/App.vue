@@ -201,7 +201,6 @@ height: 468px;
 filter:(2px)!important;
 }
 .el-input__inner {
-  width: 100px;
   height: 60px!important;
    background-color:rgba(233, 233, 233, 0.2)!important;
    color: #fff!important;
