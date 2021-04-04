@@ -4,6 +4,11 @@
 
 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
+## 线上项目地址 
+
+[vue_project_music 仿网易云音乐网站](http://bao.lqjhome.cn:13008)
+
+
 ## 安装运行
 ```
 $后端
