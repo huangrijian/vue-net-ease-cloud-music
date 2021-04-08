@@ -54,6 +54,7 @@ export default {
 }
 </script>
 <style lang="less">
+
 .rankingUl {
   width: 100%;
   display: flex;

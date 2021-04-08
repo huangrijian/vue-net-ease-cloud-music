@@ -6,9 +6,9 @@
 
     <!-- 个人中心 -->
     <el-row :gutter="10" class="el-row01">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content adapt"></div></el-col>
         <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="4" class="personalLeft">
-            <div class="grid-content">
+            <div class="grid-content Userleft">
             <!-- 左边 -->
               <!-- 左上 -> 封面 -->
               <div class="grid-content-cover">
@@ -68,7 +68,7 @@
         </el-col>
          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="10" class="personalCneter">
           
-            <div class="grid-content">
+            <div class="grid-content UserlMain">
               <!-- 中间 -->
                 <!-- 第一层-->
                 <div class="main01">
@@ -97,7 +97,7 @@
             
          </el-col>
          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="4" class="personalRight">
-            <div class="grid-content">
+            <div class="grid-content UserlRight">
               <!-- 右 -->
               <div class="grid-content-right">
                 <div class="grid-content-right-title">
@@ -115,7 +115,7 @@
               </div>
             </div>
         </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content adapt"></div></el-col>
     </el-row>
   </div>
   

@@ -3,56 +3,75 @@ import VueRouter from 'vue-router'
 import { Message } from "element-ui";
 
 // 登录
-import login from '@/views/login/login.vue'
+const login = () =>
+    import ('@/views/login/login.vue')
+
 // 家
-import home from '@/views/home/home.vue'
+const home = () =>
+    import ('@/views/home/home.vue')
 
 // 用户
-import user from '@/views/user/user.vue'
+const user = () =>
+    import ('@/views/user/user.vue')
 
 // 排行榜
-import ranking from '@/views/ranking/ranking.vue'
-// 排行榜细节
-import rankingdetails from '@/views/ranking/rankingdetails.vue'
+const ranking = () =>
+    import ('@/views/ranking/ranking.vue')
 
+// 排行榜细节
+const rankingdetails = () =>
+    import ('@/views/ranking/rankingdetails.vue')
 
 // 歌手
-import Singer from '@/views/singer/Singer.vue'
+const Singer = () =>
+    import ('@/views/singer/Singer.vue')
+
 // 歌手子路由 -> 歌手列表
-import Singerlist from '@/views/singer/Singerlist.vue'
+const Singerlist = () =>
+    import ('@/views/singer/Singerlist.vue')
+
 // 艺人详情页组件
-import SingerDetails from '@/views/singer/SingerDetails.vue'
+const SingerDetails = () =>
+    import ('@/views/singer/SingerDetails.vue')
 
 // 艺人详情页组件子路由 -> 艺人介绍
-import artistMessage from '@/views/singer/artist/artistMessage.vue'
-// 艺人详情页组件子路由 -> 艺人热门作品
-import hotworks from '@/views/singer/artist/hotworks.vue'
-// 艺人详情页组件子路由 -> 艺人所有专辑
-import allAlbum from '@/views/singer/artist/allAlbum.vue'
-// 艺人详情页组件子路由 -> 艺人所有MV
-import allMV from '@/views/singer/artist/allMV.vue'
+const artistMessage = () =>
+    import ('@/views/singer/artist/artistMessage.vue')
+    // 艺人详情页组件子路由 -> 艺人热门作品
+const hotworks = () =>
+    import ('@/views/singer/artist/hotworks.vue')
+    // 艺人详情页组件子路由 -> 艺人所有专辑
+const allAlbum = () =>
+    import ('@/views/singer/artist/allAlbum.vue')
+    // 艺人详情页组件子路由 -> 艺人所有MV
+const allMV = () =>
+    import ('@/views/singer/artist/allMV.vue')
 
 
 // MV
-import MV from '@/views/MVList/MV.vue'
-// 歌单
-import SongList from '@/views/songlist/SongList.vue'
-
-// MV子路由 -> MV列表
-import MVList from '@/views/MVList/MVList.vue'
-// MV子路由 -> MV列表子路由 -> MV详情页面
-import MVdetails from '@/views/MVList/MVdetails.vue'
-
-// 搜索
-import search from '@/views/search/search.vue'
-// 搜索子路由
-import searchDetails from '@/views/search/searchDetails.vue'
-
-// 歌曲详情
-import SongDetails from '@/views/Song/SongDetails.vue'
-
-// 朋友
-import friend from '@/views/friend/friend.vue'
+const MV = () =>
+    import ('@/views/MVList/MV.vue')
+    // 歌单
+const SongList = () =>
+    import ('@/views/songlist/SongList.vue')
+    // MV子路由 -> MV列表
+const MVList = () =>
+    import ('@/views/MVList/MVList.vue')
+    // MV子路由 -> MV列表子路由 -> MV详情页面
+const MVdetails = () =>
+    import ('@/views/MVList/MVdetails.vue')
+    // 搜索
+const search = () =>
+    import ('@/views/search/search.vue')
+    // 搜索子路由
+const searchDetails = () =>
+    import ('@/views/search/searchDetails.vue')
+    // 歌曲详情
+const SongDetails = () =>
+    import ('@/views/Song/SongDetails.vue')
+    // 朋友
+const friend = () =>
+    import ('@/views/friend/friend.vue')
 
 // 全局使用路由
 Vue.use(VueRouter)

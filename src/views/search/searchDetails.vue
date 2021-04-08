@@ -40,7 +40,7 @@ export default {
   data() {
     return {
      // 选项数组
-      option:['单曲','歌手','歌单','专辑'],
+      option:['单曲','歌手','歌单'],
       // 当前的选项 歌曲
       current:0,
 

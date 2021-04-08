@@ -44,3 +44,11 @@ export function GetSongUrl(id){
     }
   })
 }
+
+
+// 获取热门歌手
+export function GetGotSinger(){
+  return request({
+    url:'/top/artists?offset=0&limit=30'
+  })
+}

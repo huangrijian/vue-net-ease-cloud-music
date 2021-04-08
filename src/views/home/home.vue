@@ -65,7 +65,8 @@
 <script>
 import { GetRecommendPlaylist,
          GetLatestAlbum,
-         GetLatestSong
+         GetLatestSong,
+         GetGotSinger
 } from '@/network/home.js'
 // 布局组件
 import layout from '../../components/content/layout/layout.vue';
@@ -163,9 +164,10 @@ export default {
   },
 
     // 热门歌手
-    async gethotSinger (){
-      const result = await this.$http.get("/top/artists?offset=0&limit=30");
-      this.hotSinger = result.data.artists
+    gethotSinger (){
+      GetGotSinger().then(res => {
+        this.hotSinger = res.artists
+      })
     },
 
   },
@@ -180,7 +182,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-
 // 显示或隐藏
 .isshow {
   display: none;

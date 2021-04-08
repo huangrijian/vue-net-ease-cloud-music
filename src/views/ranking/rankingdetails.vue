@@ -4,10 +4,10 @@
 
      <!-- mian -->
      <el-row :gutter="10" class="mian">
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content adapt"></div></el-col>
         <!-- 左侧 -->
-        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="12">
-            <div class="grid-content">
+        <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="12" class="rankLeftBox">
+            <div class="grid-content rankLeft">
                 <div class="main-left">
                     <div class="top">
                         <!-- 图片 -->
@@ -42,7 +42,7 @@
         </el-col>
         <!-- 右侧 -->
          <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="6">
-            <div class="grid-content">
+            <div class="grid-content rankRight">
                 <div class="main-right">
                    <div class="top">
                      <div class="top-title">
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content adapt"></div></el-col>
     </el-row>
 
   </div>

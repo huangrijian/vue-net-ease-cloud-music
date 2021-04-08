@@ -3,7 +3,7 @@
           <el-row :gutter="10">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox"></div></el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="12">
-                <div class="grid-content">
+                <div class="grid-content SDleft">
                    <div class="top">
                        <div class="top-left">
                            <img :src="currentData.picUrl" alt="">
@@ -97,7 +97,7 @@
                 </div>
             </el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="6">
-                <div class="grid-content">
+                <div class="grid-content SDright">
                    
                 </div>
             </el-col>
@@ -240,11 +240,10 @@ export default {
     },
     // DOM渲染完毕可执行
     mounted() {
-
+        // 是否登录？未登录则显示未登录的图片
         this.avatarUrls = window.sessionStorage.getItem('avatarUrls') ? window.sessionStorage.getItem('avatarUrls'):"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fkpi.ftmsreport.com%2Fstatic%2Fimages%2Favatar.jpg&refer=http%3A%2F%2Fkpi.ftmsreport.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620105163&t=5a502ca318f5f3d7ee2ef9963dc8875a"
         this.getHotComment();
         this.GetData(this.data);
-        console.log("mounted");
     },
     // vue实例销毁时
     destroyed () {

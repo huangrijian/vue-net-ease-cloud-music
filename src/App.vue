@@ -2,11 +2,11 @@
   <div id="app">
 
     <!-- 搜索弹框 -->
-    <el-dialog
+    <el-dialog 
       title="珍惜所有的不期而遇，看淡所有的不辞而别~"
       :visible.sync="dialogVisible"
       width="30%">
-       <el-input prefix-icon="el-icon-search" v-model="input" 
+        <el-input prefix-icon="el-icon-search" v-model="input" 
        placeholder="请输入关键词并按下回车键" 
         @change="GotosearchDetails(input)" clearable></el-input>
       <span slot="footer" class="dialog-footer">
@@ -213,4 +213,5 @@ filter:(2px)!important;
 .dialog-footer {
   display: none!important;
 }
+
 </style>

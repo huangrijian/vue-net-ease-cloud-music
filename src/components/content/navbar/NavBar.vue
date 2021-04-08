@@ -37,7 +37,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content"></div></el-col>
+        <el-col :xs="1" :sm="3" :md="4" :lg="3" :xl="3"><div class="grid-content adapt"></div></el-col>
     </el-row>
 </template>
 
