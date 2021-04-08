@@ -23,6 +23,7 @@ ul,li {
   list-style: none;
   margin: 0;
   padding: 0;
+  cursor:pointer!important;
 }
 
 /* 容器布局样式 */
@@ -182,6 +183,15 @@ ul,li {
     .main-left .top img{
       display: none;
     }
+    .top-description {
+      .title,
+      .smbox {
+        margin: 15px 0px;
+      }
+      .title {
+        margin-top: 0px!important;
+      }
+    }
     // 歌单文字介绍
     .main-left .top .top-description p {
       width: 95%!important;
@@ -195,7 +205,10 @@ ul,li {
     .main-left .top[data-v-7ff52f42] {
       width: 100%!important;
       padding: 20px!important;
+      padding-top: 0px!important;
       overflow: hidden!important;
+      box-sizing: border-box!important;
+      height: inherit!important;
     }
 
     // 搜索框

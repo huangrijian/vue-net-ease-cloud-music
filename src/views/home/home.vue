@@ -7,7 +7,7 @@
       <el-carousel :interval="4000" type="card" height="245px">
         <el-carousel-item v-for="(item,index) in latestAlbum" :key="index">
           <a :href="item.url">
-            <img :src="item.imageUrl" alt="" class="img-row-2">
+            <img :src="item.imageUrl+'?param=661y245'" alt="" class="img-row-2">
           </a>
         </el-carousel-item>
       </el-carousel>
@@ -32,7 +32,7 @@
               <span class="marginbox" :class="{isshow: isshowturediv == index+1 }" >0{{index + 1 }}</span>
             </div>
             <!-- 歌曲封面 -->
-            <img :src="item.picUrl" alt="" class="img-sm">
+            <img :src="item.picUrl+'?param=100y100'" alt="" class="img-sm">
             <!-- 歌名与歌手名称 -->
             <div style="display:inline-block">
               <div>{{item.name}}</div>

@@ -2,7 +2,7 @@
   <div>
       <ul class="RecommendSinger">
         <li :key="index" v-for="(item,index) in hotSinger" @click="goSingerdetails(item.id)">
-          <img :src="item.img1v1Url" alt="" class="hotSingerimg">
+          <img :src="item.img1v1Url+'?param=100y100'" alt="" class="hotSingerimg">
             <div class="hotSingerdiv">
               <span>{{item.name}}</span>
               <div>单曲数：<span class="SongCount">{{item.musicSize}}</span></div>

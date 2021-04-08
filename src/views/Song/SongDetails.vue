@@ -6,7 +6,7 @@
                 <div class="grid-content SDleft">
                    <div class="top">
                        <div class="top-left">
-                           <img :src="currentData.picUrl" alt="">
+                           <img :src="currentData.picUrl+'?param=130y130'" alt="">
                        </div>
                         <div class="top-right">
                             <div>
@@ -48,7 +48,7 @@
                             <li :key="index" v-for="(item,index) in hotComments">
                                <div class="Commentareabox">
                                    <div class="pic">
-                                        <img :src="item.user.avatarUrl" alt="">
+                                        <img :src="item.user.avatarUrl+'?param=50y50'" alt="">
                                    </div>
                                     <div class="side">
                                         <div class="CommentTitle">
@@ -73,7 +73,7 @@
                             <li :key="index" v-for="(item,index) in AllComments" v-loading="loading">
                                <div class="Commentareabox">
                                    <div class="pic">
-                                        <img :src="item.user.avatarUrl" alt="">
+                                        <img :src="item.user.avatarUrl+'?param=50y50'" alt="">
                                    </div>
                                     <div class="side">
                                         <div class="CommentTitle">

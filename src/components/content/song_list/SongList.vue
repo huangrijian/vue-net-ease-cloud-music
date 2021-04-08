@@ -4,12 +4,12 @@
       <title-box :title="title"></title-box>
     </div>
      <ul class="rankingUl">
-      <li slot="songlist" class="SongList" :key="index" v-for="(item,index) in SongListData" @click="gotolistdetails(item.id)">
+      <li v-loading="loading" slot="songlist" class="SongList" :key="index" v-for="(item,index) in SongListData" @click="gotolistdetails(item.id)">
         <span class="PlayCount" v-if="ShowPlayCount">
           <i class="My-new-iconbofang"></i>
           <span>{{item.playCount | GetPlayCount()}}</span>
         </span>
-        <img :src="item | GetPic()" alt="" >
+        <img :src="item | GetPic()" alt="">
         <div>{{item.name}}</div>
       </li>
      </ul>
@@ -33,6 +33,20 @@ export default {
       default:true
     }
   },
+  watch:{
+    SongListData(){
+      // 监听当前数据变化，然后停止加载动画
+      setTimeout(() => {
+        this.loading = false
+      },500)
+      this.loading = true
+    }
+  },
+  data() {
+    return {
+      loading:true
+    }
+  },
   components:{
     TitleBox
   },
@@ -48,8 +62,13 @@ export default {
     },
     GetPic(val){
       // picUrl 或 coverImgUrl
-      return val.picUrl ? val.picUrl : val.coverImgUrl
+      return val.picUrl ? val.picUrl+"?param=130y130" : val.coverImgUrl+"?param=130y130"
     }
+  },
+  mounted(){
+    setTimeout(() => {
+      this.loading = false
+    },500)
   }
 }
 </script>
@@ -117,6 +136,10 @@ export default {
       background-color: red;
       margin-right: 7px;
   }
+}
+
+.el-loading-mask {
+  left: -5px!important;
 }
 
 </style>

@@ -20,7 +20,7 @@
               </span>
             </div>
             <div>
-              <img :src="item.song.al.picUrl" alt="">
+              <img :src="item.song.al.picUrl+'?param=40y40'" alt="">
               <span>{{item.song.name}}</span>
             </div>
             <div><span>{{item.song.ar[0].name}}</span></div>
@@ -49,7 +49,7 @@
               </span>
             </div>
             <div>
-              <img :src="item.al.picUrl" alt="">
+              <img :src="item.al.picUrl+'?param=40y40'" alt="">
               <span>{{item.name}}</span>
             </div>
             <div><span>{{item.ar[0].name}}</span></div>

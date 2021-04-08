@@ -5,7 +5,7 @@
         <div class="Singerbox">
                 <div class="Singerboxbg">
                   <div class="center">
-                        <img  class="transform-auto margin-top Singerboxbg-img" :src="SingerPic"  alt="">
+                        <img  class="transform-auto margin-top Singerboxbg-img" :src="SingerPic+'?param=100y100'"  alt="">
                     <!-- 名字 -->
                   <h3 class="transform-auto margin-top">{{ SingerName }}</h3>
                   <el-button type="success" icon="el-icon-check" class="transform-auto margin-top" circle></el-button>

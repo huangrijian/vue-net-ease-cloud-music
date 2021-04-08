@@ -11,7 +11,7 @@
                 <div class="main-left">
                     <div class="top">
                         <!-- 图片 -->
-                        <img class="floatLeft" :src="rankingPic" alt="">
+                        <img class="floatLeft" :src="rankingPic+'?param=250y250'" alt="">
                         <!-- 歌单描述 -->
                         <div class="top-description floatLeft">
                           <div class="title">{{rankingname}}</div>
@@ -50,7 +50,9 @@
                        <strong>喜欢这个歌单的人</strong>
                      </div>
                       <ul class="loveThat">
-                        <li  :key="index" v-for="(item,index) in getSongCollectorpic"><img class="loveThatPic" :src="item.avatarUrl" alt=""></li>
+                        <li  :key="index" v-for="(item,index) in getSongCollectorpic">
+                          <img class="loveThatPic" :src="item.avatarUrl+'?param=40y40'" alt="">
+                        </li>
                       </ul>
 
                     </div>
@@ -63,7 +65,7 @@
                           </div>
                           <ul class="bottomAaboutList">
                             <li :key="index" v-for="(item,index) in playlists" @click="gotolikeness(item.id)">
-                              <img :src="item.coverImgUrl" alt="">
+                              <img :src="item.coverImgUrl+'?param=100y100'" alt="">
                               <div class="dec">
                                 <strong>{{item.name}}</strong>
                                 <div>{{item.creator.nickname}}</div>

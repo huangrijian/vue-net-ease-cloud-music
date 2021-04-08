@@ -1,7 +1,7 @@
 <template>
   <div class="SingerList" style="dispaly:block">
       <div class="SingerListLi" :key="index" v-for="(item,index) in artists" @click="GoToMVdetails(item.id)">
-          <img :src="item.cover" alt="">
+          <img :src="item.cover+'?param=300y168'" alt="">
           <span>{{item.name}}</span>
       </div>
   </div>

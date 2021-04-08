@@ -153,6 +153,7 @@ export default {
             this.InitializePage('ACG')
             break;
         }
+        
     },
 
       // 点击热门标签 -> 初始化数据
