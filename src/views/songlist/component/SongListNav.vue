@@ -12,6 +12,7 @@
         <li class="LastListNew"><span class="new" :class="{activeBackgroundColor: 2 == currentRightItim}" @click="(ChangerRightColor(2))"><i class="My-new-iconshuaxin"></i>最新</span></li>
       </ul>
 
+      <!-- 全部按钮 -->
       <div class="unfold">
         <transition name="el-fade-in-linear">
           <div v-show="show" class="transition-box">
@@ -30,7 +31,6 @@
                 >{{item.name}}</span>
               </div>
             </div>
-
           </div>
         </transition>
       </div>

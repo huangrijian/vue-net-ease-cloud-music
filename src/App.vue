@@ -21,18 +21,16 @@
         <!-- 导航栏 -->
       <nav-bar :UserId="Uid" @ClickSearch="ClickSearch"></nav-bar>
 
-      <!-- 局部刷新以下页面  keep-alive 保存状态-->
+      <!-- 主页面 局部刷新以下页面  keep-alive 保存状态-->
       <keep-alive exclude="search,SongDetails,rankingdetails,MVdetails,SingerDetails,user">
         <router-view @getUserid="UserId"  v-if="isRouterShow"></router-view>
       </keep-alive>
-    
-   
+
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
        <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>
        <!-- 点击查看详情 -->
        <span class="My-new-iconyinle1" id="goToDetail" v-if="IsShowgoToDetail" @click="goToDetail"></span>
-     
-    
+
   <!-- 底部 -->
   <Bottom></Bottom>
 
@@ -57,9 +55,14 @@ export default {
   },
 
   //局部刷新组件要用到的方法 
+  /*
+    provide / inject
+    就是父组件中使用provide提供变量(对象或者是一个函数),在子组件中通过inject来注入变量
+    不管层级有多深，并在起上下游关系成立的时间始终生效
+  */ 
   provide () {
     return {
-      reload: this.reload,
+      reload: this.reload,//把刷新方法传给子组件
     }
   },
   data() {
@@ -127,6 +130,7 @@ export default {
     })
   },
   methods: {
+  // 去歌曲详情
   goToDetail(){
     this.$router.push({name:'SongDetails',query: {id:this.SongId,data:this.musicdata}})
   },
@@ -150,21 +154,22 @@ export default {
       console.log(this.Uid);
     },
       //局部刷新组件要用到的方法 
-    async reload () {
+    reload () {
       this.isRouterShow = false
-      await this.$nextTick()
-      this.isRouterShow = true
+      this.$nextTick(()=> {
+        this.isRouterShow = true
+        // Vue.nextTick()  在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+      })
+      
     },
-
 },
 
-
-  // 监听局部刷新
-   watch: {
-      '$route' (to, from) {
-        this.reload();
-      }
-    },
+  // // 监听局部刷新
+  //  watch: {
+  //     '$route' (to, from) {
+  //       this.reload();
+  //     }
+  //   },
 };
 
 </script>

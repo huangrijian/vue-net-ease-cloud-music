@@ -9,7 +9,7 @@
         @GetSongType="GetSongType"
         @GetAllSongType="GetAllSongType"
         @GetHotOrNew="GetHotOrNew"
-        ></song-list-nav>
+        />
       </layout>
 
       <!-- 歌单展示区 -->
@@ -20,18 +20,15 @@
       <!-- 分页 -->
       <layout class="PagingBox">
         <div class="paging">
+          <!--  :current-page="currentPage" @prev-click="prev"   @next-click="next"-->
           <el-pagination
-            :key="elementui_page_component_key"
             background
             layout="prev, pager, next"
             :total="220"
-            :current-page="currentPage"
-            @prev-click="prev"
-            @next-click="next"
-            @current-change="currentChange">
-          </el-pagination>
+            :key="elementui_page_component_key"
+            @current-change="currentChange"
+          />
         </div>
-
       </layout>
     </div>
 </template>
@@ -51,9 +48,6 @@ export default {
       return {
         // 热门标签
         HotPlaylist:[],
-
-        // 当前页码
-        currentPage:1,
         // 当前key -> 用于解决当前页码不能手动刷新的问题
         elementui_page_component_key:1,
 
@@ -82,6 +76,7 @@ export default {
 
     // 过滤数组
     FilterData(arr){
+      let array = [];
       // 将需要的分类数据过滤，并且保存
       let res0 = arr.filter(function(item){
         return (item.category == 0);
@@ -101,7 +96,9 @@ export default {
       // 把得到的数据再push到一个新数组  得到一个二维数组
       // 一维（ArrayData）装的是 大分类 -> 比如 语种、风格
       // 二维（res0、res1）装的是 小分类 -> 比如 华语、欧美、日语、
-      this.ArrayData.push(res0,res1,res2,res3,res4)
+      array.push(res0,res1,res2,res3,res4);
+      return array
+     
     },
 
     // goto 排行榜详情页
@@ -109,18 +106,24 @@ export default {
        this.$router.push("/rankingdetails/" + id);
     },
 
-    /*
-    *
-    * 页码相关方法
-    * 
-    */
-   GetAllSongType(data){
-     this.InitializePage(data)
-   },
 
+  /**
+   * 
+   * 获取全部歌单
+   * 获取歌单
+   * 获取最新或者热门
+   * 
+   * */ 
+   GetAllSongType(data){
+    //  data为全部歌单分类中的一个分类
+    // 当子组件点击全部歌单分类中的一个分类会把这个分类传过来
+    // 再调用 InitializePage 进行歌单内容初始化
+     this.InitializePage(data)
+     console.log("GetAllSongType",data);
+   },
+ 
    GetSongType(index){
         // 华语流行摇滚民谣电子另类/独立轻音乐综艺影视原声ACG
-        console.log(index);
         switch(index) {
           case 0: 
             this.InitializePage('华语')
@@ -156,44 +159,32 @@ export default {
         
     },
 
+    // 点击热门或最新按钮 -> 初始化数据
+  GetHotOrNew(index){
+    switch(index){
+      case 1:
+        this.order = 'hot'
+        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+        break;
+      case 2:
+        this.order = 'new'
+        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
+        break;
+    }
+  },
       // 点击热门标签 -> 初始化数据
       InitializePage(cat){
         this.cat = cat;
         this.offset = 0;
-        // 用于解决当前页码不能手动刷新的问题
+        // 用于解决切换分类当前页码不能刷新的问题
         this.autoIncrasePageComKey();
-        this.currentPage = 1;
         this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
       },
 
-      // 点击热门或最新按钮 -> 初始化数据
-      GetHotOrNew(index){
-        switch(index){
-          case 1:
-            this.order = 'hot'
-            this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
-            break;
-          case 2:
-            this.order = 'new'
-            this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
-            break;
-        }
-      },
-      // 上一页
-      prev(){
-        this.offset -= 60
-        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
-      },
-
-      // 下一页
-      next(){
-        this.offset += 60
-        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
-      },
-     
     //  当前页数改变
       currentChange(currentPage){
-       this.offset = (currentPage-1) * 60
+        console.log(currentPage);
+       this.offset = (currentPage-1) * 60//设置偏移量，一页60个歌单
        this.GetPlaylistContent(this.order,this.cat,this.limit,this.offset)
       },
 
@@ -202,14 +193,14 @@ export default {
       * 网络请求相关
       * 
       */ 
-    //  热门歌单分类
+    //  获取热门歌单分类
      GetHotPlaylist(){
        GetHotPlaylist().then(res => {
          this.HotPlaylist = res.tags
        })
      },
 
-    //  获取歌单
+    //  获取歌单内容
      GetPlaylistContent(order,cat,limit,offset){
         GetPlaylistContent(order,cat,limit,offset).then(res => {
           this.playlists = res.playlists
@@ -218,9 +209,9 @@ export default {
     // 获取 全部歌单分类 -> 然后分类 
     GetAllPlaylist(){
       GetAllPlaylist().then(res => {
-        this.categories = res.categories
-        // 过滤数据
-        this.FilterData(res.sub)
+        this.categories = res.categories //歌单全部分类名称(对象)
+        this.ArrayData = this.FilterData(res.sub)// 过滤数据得到一个二维数组,里面装着全部分类数据
+        console.log("全部分类数据",this.ArrayData);//全部分类数据 (5) [Array(5), Array(22), Array(12), Array(12), Array(18), __ob__: Observer]
       })
     }
   },
