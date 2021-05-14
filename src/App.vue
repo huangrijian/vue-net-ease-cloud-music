@@ -27,7 +27,7 @@
       </keep-alive>
 
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
-       <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"></aplayer>
+       <aplayer :music="audio[0]" :showLrc="true" :autoplay="true"  id="play" class="Aplayer"/>
        <!-- 点击查看详情 -->
        <span class="My-new-iconyinle1" id="goToDetail" v-if="IsShowgoToDetail" @click="goToDetail"></span>
 
@@ -147,11 +147,9 @@ export default {
       this.dialogVisible = true
   },
 
-    // 将登录后传入的用户id再次
+    // 将登录后传入的用户id存储
     UserId(val){
-      console.log(val);
       this.Uid = val;
-      console.log(this.Uid);
     },
       //局部刷新组件要用到的方法 
     reload () {

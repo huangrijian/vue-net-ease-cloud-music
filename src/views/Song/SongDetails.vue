@@ -107,6 +107,7 @@
 </template>
 
 <script>
+// 引入监听下拉的js文件
 import { getDocumentTop,getWindowHeight, getScrollHeight } from '@/assets/js/downLoad.js'
 export default {
     name:'SongDetails',

@@ -73,18 +73,17 @@ export default {
         }
         if(result.data.code == 200){
           this.$message.success("登录成功！");
-          console.log(result);
           // 保存用户id
           this.id = result.data.account.id;
-          // 获取token
+          // 获取后端返回的token
           var token = result.data.token;
 
            //存放userTokenb
           window.sessionStorage.setItem('userToken', token);
-          console.log(window.sessionStorage.getItem("userToken"))
+
           //存放userid
           window.sessionStorage.setItem('UserId', this.id);
-          console.log(result.data.cookie);
+
           // 保存 cookie (大部分需要登录的接口都要用到) encodeURIComponent()用于编译cookie
           // var cookie = encodeURIComponent(result.data.cookie)
           var cookie = result.data.cookie
@@ -94,7 +93,6 @@ export default {
         // 跳转到首页
         this.$router.push('/home')
         this.$emit('getUserid', this.id);
-        console.log(this.id);
       })    
     },
   },
