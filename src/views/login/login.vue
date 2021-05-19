@@ -79,20 +79,27 @@ export default {
           var token = result.data.token;
 
            //存放userTokenb
-          window.sessionStorage.setItem('userToken', token);
+          this.$store.commit("setUserToken",token)
 
           //存放userid
-          window.sessionStorage.setItem('UserId', this.id);
+          this.$store.commit("setUserId",this.id)
 
-          // 保存 cookie (大部分需要登录的接口都要用到) encodeURIComponent()用于编译cookie
-          // var cookie = encodeURIComponent(result.data.cookie)
+          // 保存 cookie (大部分需要登录的接口都要用到) 
           var cookie = result.data.cookie
-          window.sessionStorage.setItem('cookie', cookie);
+          this.$store.commit("setCookie",cookie)
         }else return this.$message.error("登录失败");
 
         // 跳转到首页
         this.$router.push('/home')
-        this.$emit('getUserid', this.id);
+        let userdata = {
+          token,
+          cookie,
+          id:this.id
+        }
+        this.$bus.$emit("getUserData",userdata)
+
+
+        this.$bus.$emit('getUserid', this.id);
       })    
     },
   },

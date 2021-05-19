@@ -270,7 +270,7 @@ const router = new VueRouter({
 // 在路由跳转之前提交路由导航守卫
 router.beforeEach((to, from, next) => {
 
-    let userToken = window.sessionStorage.getItem("userToken")
+    let userToken = window.sessionStorage.getItem("USERTOKEN")
     if (to.name == 'friend' && !userToken) {
         Message.warning("请登录后再操作")
         next({ name: 'login' })

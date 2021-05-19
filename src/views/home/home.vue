@@ -158,8 +158,15 @@ export default {
     playMisic(id).then(musicdata => {
       // 通过事件总线把歌曲数据传给跟组件
       this.$bus.$emit('getMusicMessage',{musicdata,id})
+      let newsData = {
+        picUrl:musicdata.picUrl,
+        Singer:musicdata.Singer,
+        picname:musicdata.picname
+      }
+      // 将当前播放的音乐数据传给vuex进行管理
+      this.$store.commit("setMusicData",newsData)
       // 路由跳转到歌曲详情并携带相关参数
-      this.$router.push({name:'SongDetails',query: {id:id,data:musicdata}})
+      this.$router.push({name:'SongDetails',query: {id:id,data:newsData}})
     });
   },
 

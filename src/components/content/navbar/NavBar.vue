@@ -43,11 +43,13 @@
 
 <script>
 export default {
-   props:['UserId'],
+  inject: ['reload'],
   data() {
     return {
-            // 搜索关键字
-      // searchKeyword:'',
+       
+       UserId:this.$store.state.userId,
+       userToken:this.$store.state.userToken,
+       cookie:this.$store.state.cookie,
 
         // 导航更换初始化样式
         fontlist:1,
@@ -99,7 +101,7 @@ export default {
       // 个人主页
       if(command == 'u'){
         //    跳转到登录页
-        this.$router.push("/user/"+ window.sessionStorage.getItem("UserId"));
+        this.$router.push("/user/"+ this.UserId);
       }
 
       },
@@ -142,25 +144,15 @@ export default {
         if (result.status !== 200) {
           return this.$message.error("获取用户信息失败！");
         }
-        // 获取用户详情
-        console.log(result.data);
        if(result.data.code !== 400){
        // 保存头像地址
         this.avatarUrls = result.data.profile.avatarUrl;
-        // 保存在本地
-       window.sessionStorage.setItem('avatarUrls', this.avatarUrls);
-        // 保存昵称
-        this.nickname = result.data.profile.nickname
-        // 保存用户id值
-        this.Userid = result.data.profile.Userid
        } else return
 
   },
   // 根据token值判断当前页面是否登录了，如果登录则显示头像 隐藏'登录‘
   judgelogin(){
-      var userToken = window.sessionStorage.getItem("userToken");
-      console.log(userToken);
-      if(userToken) {
+      if(this.userToken) {
         // 显示头像
         this.dialogFlag = true
         // 隐藏登录
@@ -174,11 +166,19 @@ export default {
   },
 
   },
-  
+  created(){
+    // 接收来自login组件的数据
+    this.$bus.$on('getUserData',(userdata) => {
+       this.UserId = userdata.id
+       this.userToken = userdata.token
+       this.cookie = userdata.cookie
+    })
+  },
     // 生命周期函数  页面刷新(重新渲染)时调用
   mounted() {
-     this.showMsg(window.sessionStorage.getItem("UserId"));
-      
+    this.getUserDetails();
+    this.judgelogin();
+    this.showMsg(window.sessionStorage.getItem("UserId"));
   },
 }
 </script>

@@ -148,7 +148,7 @@ export default {
       // 默认值
       lasttime:-1,
       pagesize:30,
-      cookie:window.sessionStorage.getItem('cookie'),
+      cookie:this.$store.state.cookie,
 
       flag:false
     }

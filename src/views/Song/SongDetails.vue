@@ -6,14 +6,14 @@
                 <div class="grid-content SDleft">
                    <div class="top">
                        <div class="top-left">
-                           <img :src="currentData.picUrl+'?param=130y130'" alt="">
+                           <img :src=" `${data.picUrl }` +'?param=130y130'" alt="">
                        </div>
                         <div class="top-right">
                             <div>
                                 <span class="el-icon-loading"></span>
-                                <span class="title">{{currentData.picname}}</span>
+                                <span class="title">{{data.picname}}</span>
                             </div>
-                            <div>歌手：{{currentData.Singer}}</div>
+                            <div>歌手：{{data.Singer}}</div>
                             <div>所属专辑：Joy</div>
                         </div>
                          <div class="top-right-btn">
@@ -28,7 +28,6 @@
                            <span>共<span class="commentTotal">{{total}}</span>条评论</span>
                        </div>
                        <div class="CommentInput">
-                           <img :src="avatarUrls" alt="">
                            <el-input
                             type="textarea"
                             :rows="3"
@@ -113,9 +112,14 @@ export default {
     name:'SongDetails',
     data() {
         return {
+
+           UserId:this.$store.state.userId,
+            userToken:this.$store.state.userToken,
+            cookie:this.$store.state.cookie,
+
             Songid:this.$route.query.id,
             // 接收的是对象
-            data:this.$route.query.data,
+            data:this.$store.state.musicData,
             hotComments:'',
             textarea:'',
             // 当前数据
@@ -165,15 +169,10 @@ export default {
         return date > 10 ? date : '0' + date
       },
 
-      GetData(data){
-       this.currentData = data
-      },
-
       // 发表评论
       async SendComment(content){
-        let cookie = window.sessionStorage.getItem('cookie', cookie);
-        if(cookie){
-          const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+cookie);
+        if(this.cookie){
+          const result = await this.$http.get("/comment?t=1&type=0&id="+ this.Songid +"&content="+ content +"&cookie="+this.cookie);
           // 清空输入域
           this.textarea = '';
           // 新增数据
@@ -189,7 +188,8 @@ export default {
         // 获取热门评论
         async getHotComment(){
             const result = await this.$http.get("/comment/hot?id="+ this.Songid +"&type=0");
-            this.hotComments = result.data.hotComments
+            this.hotComments = result.data.hotComments;
+            console.log(this.hotComments);
         },
 
         // 获取全部评论 
@@ -205,7 +205,7 @@ export default {
         // 给评论点赞 /comment/like 
         clickLike(commentId,e){
             // 先判断用户有没有登录 /comment/like?id=29178366&cid=12840183&t=1&type=0
-            if(window.sessionStorage.getItem("userToken")){
+            if(this.cookie){
               // 先判断有没有点过赞
               if(e.target.getAttribute("data-islike")){
                  // 如果已经点赞了
@@ -217,13 +217,11 @@ export default {
                 e.target.setAttribute("data-islike","1");
                 e.target.textContent = parseInt(e.target.textContent)+1;
                 e.target.setAttribute('style', 'color: red');
-                  // 获取cookie 然后发起点赞请求接口
-                var cookie = window.sessionStorage.getItem("cookie");
                 // 然后发起点赞请求接口
                  this.$http.get("/comment/like?id=" +
                   this.Songid + "&cid=" +
                   commentId + "&t=1&type=0"+
-                  "&cookie=" + cookie)
+                  "&cookie=" + this.cookie)
               }
             }else {
               // 没登录则请登录后再操作
@@ -233,18 +231,11 @@ export default {
         }
     },
     created(){
-       this.getAllComment(this.Songid,this.offset);
+      this.getHotComment();
+      this.getAllComment(this.Songid,this.offset);
       //  添加下拉监听事件函数
        window.addEventListener( 'scroll', this.scrollHander)
-       console.log("created");
-       
-    },
-    // DOM渲染完毕可执行
-    mounted() {
-        // 是否登录？未登录则显示未登录的图片
-        this.avatarUrls = window.sessionStorage.getItem('avatarUrls') ? window.sessionStorage.getItem('avatarUrls'):"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fkpi.ftmsreport.com%2Fstatic%2Fimages%2Favatar.jpg&refer=http%3A%2F%2Fkpi.ftmsreport.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620105163&t=5a502ca318f5f3d7ee2ef9963dc8875a"
-        this.getHotComment();
-        this.GetData(this.data);
+       console.log("created"); 
     },
     // vue实例销毁时
     destroyed () {

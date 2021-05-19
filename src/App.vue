@@ -19,11 +19,11 @@
     <back-top></back-top>
 
         <!-- 导航栏 -->
-      <nav-bar :UserId="Uid" @ClickSearch="ClickSearch"></nav-bar>
+      <nav-bar @ClickSearch="ClickSearch"></nav-bar>
 
       <!-- 主页面 局部刷新以下页面  keep-alive 保存状态-->
       <keep-alive exclude="search,SongDetails,rankingdetails,MVdetails,SingerDetails,user">
-        <router-view @getUserid="UserId"  v-if="isRouterShow"></router-view>
+        <router-view  v-if="isRouterShow"></router-view>
       </keep-alive>
 
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
@@ -41,7 +41,6 @@
 <script>
 import aplayer from "vue-aplayer";  
 import Bottom from '@/components/content/Bottom'
-import PopupSearchBox from '@/components/content/PopupSearchBox'
 import NavBar from '@/components/content/navbar/NavBar'
 import BackTop from './components/common/backTop/backTop.vue';
 
@@ -49,7 +48,6 @@ export default {
   components: { 
     aplayer,
     Bottom,
-    PopupSearchBox,
     NavBar,
     BackTop
   },
@@ -132,7 +130,7 @@ export default {
   methods: {
   // 去歌曲详情
   goToDetail(){
-    this.$router.push({name:'SongDetails',query: {id:this.SongId,data:this.musicdata}})
+    this.$router.push({name:'SongDetails',query: {id:this.SongId}})
   },
   //  搜索弹框处理函数 
   GotosearchDetails(keyword){
@@ -147,10 +145,6 @@ export default {
       this.dialogVisible = true
   },
 
-    // 将登录后传入的用户id存储
-    UserId(val){
-      this.Uid = val;
-    },
       //局部刷新组件要用到的方法 
     reload () {
       this.isRouterShow = false
