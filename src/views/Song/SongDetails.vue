@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="SongDetails">
           <el-row :gutter="10">
             <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3"><div class="grid-content bg-purple visibilityBox"></div></el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="12">
                 <div class="grid-content SDleft">
                    <div class="top">
                        <div class="top-left">
-                           <img :src=" `${data.picUrl }` +'?param=130y130'" alt="">
+                           <img :src=" `${data.picUrl }?param=130y130`" alt="">
                        </div>
                         <div class="top-right">
                             <div>
@@ -189,7 +189,6 @@ export default {
         async getHotComment(){
             const result = await this.$http.get("/comment/hot?id="+ this.Songid +"&type=0");
             this.hotComments = result.data.hotComments;
-            console.log(this.hotComments);
         },
 
         // 获取全部评论 
@@ -246,6 +245,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
 .top {
     overflow: hidden;
     position: relative;

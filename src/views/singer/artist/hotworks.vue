@@ -1,28 +1,5 @@
 <template>
-<!--  class="Determinelocation" -->
   <div>
-      <!-- <ul>
-        <li class="Songli">
-          <div class="num">序号</div>
-          <div class="song">歌曲</div>
-          <div class="album">专辑</div>
-          <div class="time">时长</div>
-        </li>
-         <li class="Songli Songlifont" :key="index" v-for="(item,index) in hotSongs"  @mouseover="showdiv(index + 1 )"   @click="playMisic(item.id)">
-           <div class="font-box">
-              <div :class="{isshow: isshowturediv == index + 1 }">{{index + 1}}</div>
-              <span class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index + 1 }"></span>
-           </div>
-          <div class="song">
-            <img :src="item.al.picUrl" alt="" class="Songimg">
-            <div style="float: left;">{{item.name}}</div>
-          </div>
-          <div class="album">
-            <span>{{item.al.name}}</span>
-          </div>
-          <div class="time">(⑅˃◡˂⑅) 待开发ing... </div>
-        </li>
-      </ul> -->
     <play-song :SearchSongData="hotSongs"/>
   </div>
 </template>

@@ -36,15 +36,19 @@
                   </div>
                   </div>
                   
-                    <div class="SingerboxdetailsF">
-                        <div class="Singerboxdetails" @click="goToHotworks">热门作品</div>
-                        <div class="Singerboxdetails" @click="goToallAlbum">所有专辑</div>
-                        <div class="Singerboxdetails" @click="goToallMV">相关MV</div>
-                        <div class="Singerboxdetails" @click="goToArtistMessage">艺人介绍</div>
+                    <div class="SingerboxdetailsF" id="frozen-btn">
+                        <button class="Singerboxdetails green" @click="goToHotworks">热门作品</button>
+                        <button class="Singerboxdetails purple" @click="goToallAlbum">所有专辑</button>
+                        <button class="Singerboxdetails green" @click="goToallMV">相关MV</button>
+                        <button class="Singerboxdetails purple" @click="goToArtistMessage">艺人介绍</button>
                     </div>
                 </div>
         </div>
-          <router-view  @getMusicMessage="showMusicMessage"></router-view>
+        
+        <div class="view">
+           <router-view  @getMusicMessage="showMusicMessage"></router-view>
+        </div>
+         
       </layout>
   </div>
 </template>
@@ -139,7 +143,9 @@ export default {
   z-index: -1;
 }
 
-
+.view {
+  transform: translateY(30px);
+}
 
 
 .SearchAndLogin {
@@ -184,8 +190,9 @@ export default {
     width: 100%;
     position: absolute;
     bottom: -60px;
+    display: flex;
+    justify-content: center;
     .Singerboxdetails{
-    float: left;
     width: 25%;
     height: 60px;
     text-align: center;
@@ -237,5 +244,54 @@ export default {
     margin-top:10px;
   }
 
+ #frozen-btn button {
+    cursor:pointer;
+    border: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 50px;
+    color: white;
+    outline: none;
+    position: relative;
+    margin-top: 35px;
+    height: 50px;
+    width: 20%;
+    margin: 0 25px;
+        }
 
+        #frozen-btn button:before {
+            content: '';
+            display: block;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.4) 50%);
+            background-size: 210% 100%;
+            background-position: right bottom;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            border-radius: 50px;
+            transition: all 1s;
+            -webkit-transition: all 1s;
+        }
+
+        #frozen-btn .green {
+            background-image: linear-gradient(to right, #25aae1, #40e495);
+            box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+        }
+
+        #frozen-btn .purple {
+            background-image: linear-gradient(to right, #6253e1, #852D91);
+            box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+        }
+
+        #frozen-btn .purple:hover:before {
+            background-position: left bottom;
+        }
+
+        #frozen-btn .green:hover:before {
+            background-position: left bottom;
+        }
 </style>

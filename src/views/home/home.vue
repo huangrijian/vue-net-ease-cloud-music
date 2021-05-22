@@ -24,12 +24,12 @@
     <!-- 推荐新歌 -->
   <div class="layoutBox">
     <layout>
-      <title-box title="推荐新歌"></title-box>
+      <title-box title="推荐新歌"/>
       <ul class="RecommendSong">
         <li :key="index" v-for="(item,index) in latestsong" @mouseover="showdiv(index + 1 )"  @click="playSong(item.id)">
             <div style="display:inline-block;padding-left:25px">
-              <a href="javascript:;" class="el-icon-video-play isshow" :class="{isshowture: isshowturediv == index+1 }"></a>
-              <span class="marginbox" :class="{isshow: isshowturediv == index+1 }" >0{{index + 1 }}</span>
+              <a href="javascript:;" class="el-icon-video-play hide" :class="{showIcon: isshowturediv == index+1 }"></a>
+              <span class="marginbox" :class="{hide: isshowturediv == index+1 }" >0{{index + 1 }}</span>
             </div>
             <!-- 歌曲封面 -->
             <img :src="item.picUrl+'?param=100y100'" alt="" class="img-sm">
@@ -190,10 +190,10 @@ export default {
 </script>
 <style lang="less" scoped>
 // 显示或隐藏
-.isshow {
+.hide {
   display: none;
 }
-.isshowture {
+.showIcon {
   display: inline-block;
   color: red;
 }

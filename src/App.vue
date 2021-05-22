@@ -23,7 +23,7 @@
 
       <!-- 主页面 局部刷新以下页面  keep-alive 保存状态-->
       <keep-alive exclude="search,SongDetails,rankingdetails,MVdetails,SingerDetails,user">
-        <router-view  v-if="isRouterShow"></router-view>
+        <router-view  v-if="isRouterShow"/>
       </keep-alive>
 
     <!--music：当前播放的音乐。 list：播放列表 ：showlrc：是否显示歌词-->
@@ -72,11 +72,6 @@ export default {
         // 局部刷新变量
       isRouterShow: true,
 
-        // 登录后的用户id
-      Uid:'',
-
-      IsShow:false,
-
       input:'',
 
       aplayerFlag : false,
@@ -91,7 +86,30 @@ export default {
   created(){
     // 接收音乐数据
     this.$bus.$on('getMusicMessage', (val) => {
-      // 显示音乐图标
+      // 上移音乐组件
+    this.DisplayMusicComponent()
+
+      //  获取得到的音乐数据 
+        var data = {
+            src: val.musicdata.playUrl,
+            title:val.musicdata.picname,
+            artist:val.musicdata.Singer,
+            pic:val.musicdata.picUrl,
+            lrc: val.musicdata.lyric,
+        }
+        // 保存音乐数据对象 和 当前播放歌曲Id
+        this.musicdata = data;
+        this.SongId = val.id
+
+        // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
+        this.$set(this.audio,0,data);
+    })
+  },
+  methods: {
+
+// 上移音乐组件
+DisplayMusicComponent() {
+        // 显示音乐图标
       setTimeout(() => {  this.IsShowgoToDetail = true },1000)
 
       // 音乐组件做一次上移操作
@@ -111,23 +129,8 @@ export default {
             } else return 
           },1)
         }
-      //  获取得到的音乐数据 
-        var data = {
-            src: val.musicdata.playUrl,
-            title:val.musicdata.picname,
-            artist:val.musicdata.Singer,
-            pic:val.musicdata.picUrl,
-            lrc: val.musicdata.lyric,
-        }
-        // 保存音乐数据对象 和 当前播放歌曲Id
-        this.musicdata = data;
-        this.SongId = val.id
+},
 
-        // 把接收到的音乐数据添加到audio[0]中  令播放组件获取数据后进入待播放
-        this.$set(this.audio,0,data);
-    })
-  },
-  methods: {
   // 去歌曲详情
   goToDetail(){
     this.$router.push({name:'SongDetails',query: {id:this.SongId}})
@@ -155,13 +158,6 @@ export default {
       
     },
 },
-
-  // // 监听局部刷新
-  //  watch: {
-  //     '$route' (to, from) {
-  //       this.reload();
-  //     }
-  //   },
 };
 
 </script>
